@@ -8,7 +8,7 @@ intro part
 
 ------------
 
-## What to Use PixiJS for and When to Use It
+## What to Use 'Project Name' for and When to Use It
 
 
 
