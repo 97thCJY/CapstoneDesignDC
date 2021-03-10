@@ -8,30 +8,30 @@ intro part
 
 ------------
 
-h3 What to Use PixiJS for and When to Use It
+## What to Use PixiJS for and When to Use It
 
 
 
 
-h3 Setup
+## Setup
 
 
 
-h3 Current features
+## Current features
 
 
-h3 Basic Usage Example
+## Basic Usage Example
 ```
 
  sample codes........
 ```
 
 
-h3 How to build
+## How to build
 
-h3 Reference
+## Reference
 
-h3 License
+## License
 
 
 
