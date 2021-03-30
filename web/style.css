@@ -1,0 +1,56 @@
+/* CSS 색감 참고 */
+/* https://www.w3schools.com/w3css/tryit.asp?filename=tryw3css_templates_social&stacked=h */
+
+/* CSS 초기화 */
+html, body, h1, h2, h3, h4, h5, h6, p{
+    margin: 0px;
+    padding: 0px;
+}
+
+a {
+    color: #fff;
+    text-decoration: none;
+    outline: none;
+}
+
+html, body {
+    font-family: 'Nanum Gothic', sans-serif;
+    background-color: rgb(248, 249, 250);
+}
+
+/* 네비게이션 바 */
+header {
+    background-color: #4d636f;
+}
+
+.route-list {
+    /* background-color: lightslategrey; */
+    color: white;
+    border-radius: 100px;
+    border: 2px solid #A2D1EB;
+    padding: 15px 10px;
+    margin-bottom: 10px;
+    display: inline-block;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.route-list-activate {
+    /* background-color: lightgreen; */
+    background-color: #A2D1EB;
+    color: #444;
+    font-weight: 600;
+}
+
+/* 메인 콘텐츠 */
+.contents {
+    background-color: white;
+}
+
+/* 푸터 */
+footer {
+    background-color: #495057;
+    color: #ADB5BD;
+    font-size: 12px;
+}
+
