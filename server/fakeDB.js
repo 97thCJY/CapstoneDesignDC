@@ -11,7 +11,10 @@ export const onAuthenticatedId = {
 			cost: 30000,
 			transActionEnd: 123500
 		}
-	]
+	],
+	currentConsumption: 536349,
+	solarSupply: 1209312,
+	currentDeal: 35398493
 };
 
 export const notAuthenticatedId = {
@@ -27,5 +30,8 @@ export const notAuthenticatedId = {
 			cost: 98444,
 			transActionEnd: 21314
 		}
-	]
+	],
+	currentConsumption: 8293,
+	solarSupply: 120,
+	currentDeal: -123412
 };

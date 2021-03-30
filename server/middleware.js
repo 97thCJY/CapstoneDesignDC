@@ -1,4 +1,10 @@
-import routes from './routes';
+import routes from './routes.js';
+import { onAuthenticatedId, notAuthenticatedId } from './fakeDB.js';
+
+export const fakeSeries = {
+	User1: onAuthenticatedId,
+	User2: notAuthenticatedId
+};
 
 export const breakSecurityPolicy = (req, res, next) => {
 	res.setHeader('Content-Security-policy', "* 'inline-eval';");
