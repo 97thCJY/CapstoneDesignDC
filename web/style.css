@@ -2,15 +2,17 @@
 /* https://www.w3schools.com/w3css/tryit.asp?filename=tryw3css_templates_social&stacked=h */
 
 /* CSS 초기화 */
-html, body, h1, h2, h3, h4, h5, h6, p{
+html, body, h1, h2, h3, h4, h5, h6, p, div, span{
     margin: 0px;
     padding: 0px;
 }
-
 a {
-    color: #fff;
+    color: black;
     text-decoration: none;
     outline: none;
+}
+a:hover {
+    color: inherit;
 }
 
 html, body {
@@ -20,14 +22,14 @@ html, body {
 
 /* 네비게이션 바 */
 header {
-    background-color: #4d636f;
+    background-color: #ffeb60;
 }
 
 .route-list {
     /* background-color: lightslategrey; */
-    color: white;
+    color: #505;
     border-radius: 100px;
-    border: 2px solid #A2D1EB;
+    border: 2px solid #505;
     padding: 15px 10px;
     margin-bottom: 10px;
     display: inline-block;
@@ -37,14 +39,15 @@ header {
 
 .route-list-activate {
     /* background-color: lightgreen; */
-    background-color: #A2D1EB;
-    color: #444;
+    background-color: #505;
+    color: #EEE;
     font-weight: 600;
 }
 
 /* 메인 콘텐츠 */
 .contents {
     background-color: white;
+    min-height: 50vh;
 }
 
 /* 푸터 */

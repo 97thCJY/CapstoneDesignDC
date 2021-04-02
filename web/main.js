@@ -18,8 +18,8 @@ function getWeather(lat, lon) {
             const temperature = Math.floor(data.main.temp) + '°C';
             const city = data.name;
 
-            document.getElementById("weather").innerHTML = '<i class="' + weatherIcon[icon] + '"></i> ' + temperature
-                + '<br><p>' + city + '</p>';
+            document.getElementById("weather").innerHTML =
+                '<i class="' + weatherIcon[icon] + '"></i> ' + temperature + '<br>' + city;
         })
 }
 
