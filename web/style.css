@@ -47,7 +47,8 @@ header {
 /* 메인 콘텐츠 */
 .contents {
     background-color: white;
-    min-height: 50vh;
+    margin-bottom: 20px;
+    padding-bottom: 20px
 }
 
 /* 푸터 */
@@ -59,7 +60,7 @@ footer {
 
 
 
-/* Login, Signup page */
+/* 로그인, 회원가입 페이지 */
 .login-contents {
     background-color: white;
     max-width: 600px;
@@ -88,4 +89,15 @@ footer {
     max-width: 400px;
     font-size: 18px;
     font-weight: 600;
+}
+
+
+/* 전력거래소 page */
+.contents-header {
+    padding:10px;
+}
+
+.content-row {
+    border-bottom: 2px solid gray;
+    padding-bottom: 5px;
 }
