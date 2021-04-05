@@ -1,8 +1,13 @@
 import routes from './routes.js';
+import multer from 'multer';
 import { onAuthenticatedId, notAuthenticatedId } from './fakeDB.js';
 
+export const globalMiddleWare = (req, res, next) => {
+	res.locals.routes = routes;
+	res.locals.siteName = 'CapstonePJ';
 
-
+	next();
+};
 
 export const fakeSeries = {
 	User1: onAuthenticatedId,
@@ -30,7 +35,6 @@ export const onlyPrivate = (req, res, next) => {
 		res.redirect(routes.home);
 	}
 };
-
 
 export const isUnvalidRoutes = (req, res, next) => {
 	if (res.status(404)) {

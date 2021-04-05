@@ -3,7 +3,9 @@ export const home = (req, res) => {
 };
 
 export const logIn = (req, res) => {
-	res.send('in login');
+	res.render('login', {
+		pageTitle: 'Login'
+	});
 };
 
 export const logOut = (req, res) => {
@@ -11,5 +13,7 @@ export const logOut = (req, res) => {
 };
 
 export const join = (req, res) => {
-	res.send('in join');
+	res.render('signUp', {
+		pageTitle: 'Sign Up'
+	});
 };
