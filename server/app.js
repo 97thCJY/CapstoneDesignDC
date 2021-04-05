@@ -11,6 +11,8 @@ import homeRouter from './router/homeRouter.js';
 const app = express();
 
 app.use(helmet());
+
+
 app.use(breakSecurityPolicy);
 app.use(cookieParser());
 app.use(bodyParser.json());
@@ -20,3 +22,4 @@ app.use(logger('dev'));
 app.use(routes.home, homeRouter);
 
 export default app;
+
