@@ -1,6 +1,9 @@
 import routes from './routes.js';
 import { onAuthenticatedId, notAuthenticatedId } from './fakeDB.js';
 
+
+
+
 export const fakeSeries = {
 	User1: onAuthenticatedId,
 	User2: notAuthenticatedId
@@ -27,6 +30,7 @@ export const onlyPrivate = (req, res, next) => {
 		res.redirect(routes.home);
 	}
 };
+
 
 export const isUnvalidRoutes = (req, res, next) => {
 	if (res.status(404)) {
