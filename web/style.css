@@ -92,28 +92,23 @@ footer {
 }
 
 /* 원격 제어 page*/
+.card_round {
+    height: 100%;
+    border-radius:25%;
+}
+
 .card_name {
     text-align:center;
     border:none;
     background:transparent;
-}
-
-.card_footer {
-    border:none;
-    background:transparent;
-    position:relative;
-}
-
-.card_switch {
-    position:absolute;
-    top:0;
-    right:50%;
+    margin-top:0.5rem;
 }
 
 .card_setting {
     position:absolute;
-    top:0;
-    right:0;
+    right:-1%;
+    top:-1%;
+    width:auto;
 }
 
 /* 전력거래소 page */
