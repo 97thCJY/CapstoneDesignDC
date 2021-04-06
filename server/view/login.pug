@@ -1,0 +1,22 @@
+extends layout/main
+
+
+block content
+    .text-center.container-sm
+        .login-contents
+            h1 LOGO
+            br
+
+            input.login-input(type ="text" placeholder="이메일")
+            input.login-input(type ="password" placeholder="비밀번호")
+            
+            hr
+            
+
+            button.btn.btn-outline-primary.login-btn 로그인
+
+            a(href=routes.join)
+                button.btn.btn-outline-success.login-btn 회원가입 
+            a(href=routes.home)
+                button.btn.btn-outline-secondary.login-btn 뒤로가기
+

@@ -14,8 +14,11 @@ import routes from '../routes.js';
 import { onlyPublic, onlyPrivate, isUnvalidRoutes } from '../middleware.js';
 import { home, join, logIn, logOut } from '../controller/homeController.js';
 
+import mainRouter from './mainRouter.js';
+
 const homeRouter = express.Router();
 
+homeRouter.use(routes.main, mainRouter);
 homeRouter.get(routes.home, home); // router.home 접근시, homecontroller -> home 실행
 homeRouter.get(routes.login, logIn);
 homeRouter.get(routes.logOut, logOut);
