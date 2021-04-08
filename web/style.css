@@ -111,6 +111,17 @@ footer {
     width:auto;
 }
 
+.card_plus {
+    text-align:center;
+    height:100%;
+    border:none;
+}
+
+.card_plus_icon {
+    padding:25%;
+}
+
+
 /* 전력거래소 page */
 .contents-header {
     padding:10px;
