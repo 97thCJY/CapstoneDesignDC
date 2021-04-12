@@ -1,3 +1,12 @@
+// 원격 제어
+var myModal = document.getElementById('myModal');
+var myInput = document.getElementById('myInput');
+
+myModal.addEventListener('shown.bs.modal', function () {
+    myInput.focus();
+})
+
+
 // 날씨 함수
 function getWeather(lat, lon) {
     let weatherIcon = {
