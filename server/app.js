@@ -21,6 +21,11 @@ const CookieStore = MongoStore(session);
 
 app.use(helmet({ contentSecurityPolicy: false }));
 
+app.use(express.static('public'));
+
+app.use(helmet());
+app.use(breakSecurityPolicy);
+
 app.set('view engine', 'pug');
 app.set('views', './view');
 
