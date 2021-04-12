@@ -20,6 +20,20 @@ html, body {
     background-color: rgb(248, 249, 250);
 }
 
+/* 화면 Fade-in 효과 */
+body{
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+
 /* 네비게이션 바 */
 header {
     background-color: #ffeb60;
@@ -57,8 +71,6 @@ footer {
     color: #ADB5BD;
     font-size: 12px;
 }
-
-
 
 /* 로그인, 회원가입 페이지 */
 .login-contents {
