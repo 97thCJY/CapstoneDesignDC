@@ -12,6 +12,8 @@ import mainRouter from './router/mainRouter';
 
 const app = express();
 
+app.use(express.static('public'));
+
 app.use(helmet());
 app.use(breakSecurityPolicy);
 
