@@ -1,10 +1,12 @@
 // 원격 제어
-var myModal = document.getElementById('myModal');
-var myInput = document.getElementById('myInput');
+window.onload = function () {
+    var myModal = document.getElementById('plus_btn');
+    var myInput = document.getElementById('PlusModal');
 
-myModal.addEventListener('shown.bs.modal', function () {
-    myInput.focus();
-})
+    myModal.addEventListener('shown.bs.modal', function () {
+        myInput.focus()
+    });
+}
 
 
 // 날씨 함수
