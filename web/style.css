@@ -20,6 +20,13 @@ html, body {
     background-color: rgb(248, 249, 250);
 }
 
+/* input-number 화살표 지우기 */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
 /* 화면 Fade-in 효과 */
 body{
     animation: fadeIn 0.5s ease-in;
@@ -110,17 +117,16 @@ footer {
 }
 
 .card_name {
-    text-align:center;
-    border:none;
-    background:transparent;
-    margin-top:0.5rem;
+    text-align: center;
+    border: none;
+    background: transparent;
+    margin-top: 0.5rem;
 }
 
 .card_setting {
-    position:absolute;
-    right:-1%;
-    top:-1%;
-    width:auto;
+    margin-right: 15%;
+    margin-top: 10%;
+    cursor: pointer;
 }
 
 .card_plus {
@@ -129,17 +135,26 @@ footer {
     border:none;
 }
 
-.card_plus_icon {
-    padding:25%;
+.card-img-top {
+    width: 60%;
+    margin: 15px auto;
+    margin-bottom: 10px;
+    cursor: pointer;
 }
-
 
 /* 전력거래소 page */
 .contents-header {
-    padding:10px;
+    padding: 10px;
 }
 
 .content-row {
     border-bottom: 2px solid gray;
     padding-bottom: 5px;
+}
+
+/* 판매글 작성 page */
+.form-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
 }
