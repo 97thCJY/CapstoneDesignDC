@@ -50,3 +50,23 @@ function requestCoords() {
 }
 
 requestCoords();
+
+
+/* remote 페이지 */
+// 원격 기기 on/off 요청
+function requestRemoteOnOff(product_id) {
+    alert("Product Id값 " + product_id + "번 on/off 요청");
+}
+
+// 원격 기기 추가 요청
+function requestRemoteSave() {
+    var name = document.getElementById("new_name").value;
+    var port = document.getElementById("new_port").value;
+
+    if (name==="" || port==="") {
+        alert("이름과 포트번호를 입력해주세요.")
+    }
+    else {
+        alert("새 기기 추가 요청\n이름: " + name + "\n포트: " + port);
+    }
+}

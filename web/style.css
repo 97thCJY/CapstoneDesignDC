@@ -117,17 +117,16 @@ footer {
 }
 
 .card_name {
-    text-align:center;
-    border:none;
-    background:transparent;
-    margin-top:0.5rem;
+    text-align: center;
+    border: none;
+    background: transparent;
+    margin-top: 0.5rem;
 }
 
 .card_setting {
-    position:absolute;
-    right:-1%;
-    top:-1%;
-    width:auto;
+    margin-right: 15%;
+    margin-top: 10%;
+    cursor: pointer;
 }
 
 .card_plus {
@@ -136,10 +135,12 @@ footer {
     border:none;
 }
 
-.card_plus_icon {
-    padding:25%;
+.card-img-top {
+    width: 60%;
+    margin: 15px auto;
+    margin-bottom: 10px;
+    cursor: pointer;
 }
-
 
 /* 전력거래소 page */
 .contents-header {
