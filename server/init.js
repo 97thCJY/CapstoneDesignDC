@@ -5,7 +5,7 @@ dotenv.config();
 import app from './app';
 import './db';
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3000;
 
 const portListener = () => console.log(`✅listening to PORT:: ${PORT} `);
 

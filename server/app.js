@@ -36,7 +36,7 @@ app.use(logger('dev'));
 
 app.use(
 	session({
-		secret: ``,
+		secret: `tlzmflt`,
 		resave: true,
 		saveUninitialized: false,
 		store: new CookieStore({ mongooseConnection: mongoose.connection })
