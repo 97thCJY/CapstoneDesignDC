@@ -21,6 +21,7 @@ export const breakSecurityPolicy = (req, res, next) => {
 };
 
 export const onlyPublic = (req, res, next) => {
+	console.log(req.user);
 	if (req.user) {
 		res.redirect(routes.home);
 	} else {

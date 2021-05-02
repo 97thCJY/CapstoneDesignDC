@@ -1,4 +1,6 @@
+import passport from "passport";
 import routes from "../routes";
+import User from '../models/user';
 
 export const home = (req, res) => {
 	res.send('in home');
@@ -6,20 +8,15 @@ export const home = (req, res) => {
 
 export const getLogIn = (req, res) => {
 
-
-
-
 	res.render('login', {
-		pageTitle: 'Login'
+		pageTitle: 'Log In'
 	});
 };
 
-export const postLogIn = (req , res) =>{
-
-	
-
-
-}
+export const postLogIn = passport.authenticate('local' , {
+		failureRedirect: routes.login,
+		successRedirect: routes.home
+	})
 
 export const logOut = (req, res) => {
 	res.send('in logout');
@@ -32,7 +29,7 @@ export const join = (req, res) => {
 	});
 };
 
-export const postJoin = async (req ,res ) => {
+export const postJoin = async (req ,res  ) => {
 
 	const {email , password , verifyPassword , name , contact} = req.body;
 
@@ -44,22 +41,25 @@ export const postJoin = async (req ,res ) => {
 
 	}else{
 		try{
+
 			const user = await User({
-				name,email,password,contact
+				name,email,password,contact,
+				PK: 0,
+				batteryMax: 0,
+				IP: req.ip
 			});
 
 			await User.register(user , password);
 			console.log('register finish!!');
 
-			next();
-
+			res.redirect(routes.home);
 
 		}catch(e){
 
 			console.log(e);
 			console.log('❌ error occured on function:: postJoin');
 
-			res.redirect(routes.home);
+			res.redirect(routes.join);
 
 
 
@@ -69,3 +69,6 @@ export const postJoin = async (req ,res ) => {
 
 
 }
+
+
+///  call backs 

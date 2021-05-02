@@ -7,13 +7,14 @@ block content
             h1 LOGO
             br
 
-            input.login-input(type ="text" placeholder="이메일")
-            input.login-input(type ="password" placeholder="비밀번호")
-            
-            hr
-            
+            form(action=routes.login, method="post")
+                input.login-input(type ="text" name='email' placeholder="이메일")
+                input.login-input(type ="password" name='password' placeholder="비밀번호")
+                
+                hr
+                
 
-            button.btn.btn-outline-primary.login-btn 로그인
+                input.btn.btn-outline-primary.login-btn(type='submit' value='로그인')
 
             a(href=routes.join)
                 button.btn.btn-outline-success.login-btn 회원가입 

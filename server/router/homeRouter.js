@@ -23,12 +23,14 @@ homeRouter.use(routes.main, mainRouter);
 
 
 homeRouter.get(routes.home, home); // router.home 접근시, homecontroller -> home 실행
-homeRouter.get(routes.login, getLogIn);
-homeRouter.post(routes.login , postLogIn,getLogIn);
+homeRouter.get(routes.login,onlyPublic, getLogIn);
+homeRouter.post(routes.login ,onlyPublic, postLogIn);
 
-homeRouter.get(routes.logOut, logOut);
-homeRouter.get(routes.join, join);
-homeRouter.post(routes.join , postJoin)
+homeRouter.get(routes.logOut,onlyPrivate, logOut);
+
+homeRouter.get(routes.join,onlyPublic, join);
+homeRouter.post(routes.join ,onlyPublic, postJoin);
+
 homeRouter.get('*', isUnvalidRoutes); // 이외에  지정하지 않은 라우트에 대해서 전부 home으로 redirect
 
 export default homeRouter;
