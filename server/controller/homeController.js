@@ -15,11 +15,15 @@ export const getLogIn = (req, res) => {
 
 export const postLogIn = passport.authenticate('local' , {
 		failureRedirect: routes.login,
-		successRedirect: routes.home
+		successRedirect: routes.main
 	})
 
 export const logOut = (req, res) => {
-	res.send('in logout');
+
+	req.logout();
+
+	res.redirect(routes.login);
+
 };
 
 export const join = (req, res) => {

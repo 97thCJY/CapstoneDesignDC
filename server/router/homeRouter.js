@@ -22,7 +22,7 @@ homeRouter.use(routes.main, mainRouter);
 
 
 
-homeRouter.get(routes.home, home); // router.home 접근시, homecontroller -> home 실행
+homeRouter.get(routes.home, onlyPublic, home); // router.home 접근시, homecontroller -> home 실행
 homeRouter.get(routes.login,onlyPublic, getLogIn);
 homeRouter.post(routes.login ,onlyPublic, postLogIn);
 
