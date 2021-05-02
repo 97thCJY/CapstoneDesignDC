@@ -28,6 +28,7 @@
 </head>
 
 <body>
+
     <!-- Navigation Bar -->
     <header>
         <div class="container">
@@ -80,31 +81,8 @@
             </div>
 
             <!-- Contents List -->
-            <div class="list-group">
-                <a href="#" class="list-group-item list-group-item-action">
-                    <div class="d-flex w-100 justify-content-between">
-                        <h5 class="mb-1">거래 전~</h5>
-                        <small>2021.04.06</small>
-                    </div>
-                    <p class="mb-1">장현희 010-0000-0000</p>
-                    <small>500kw</small>
-                </a>
-                <a href="#" class="list-group-item list-group-item-action">
-                    <div class="d-flex w-100 justify-content-between">
-                        <h5 class="mb-1">거래 전~</h5>
-                        <small class="text-muted">3 days ago</small>
-                    </div>
-                    <p class="mb-1">장현희 010-0000-0000</p>
-                    <small>500kw</small>
-                </a>
-                <a href="#" class="list-group-item list-group-item-action">
-                    <div class="d-flex w-100 justify-content-between">
-                        <h5 class="mb-1">거래 중~</h5>
-                        <small class="text-muted">3 days ago</small>
-                    </div>
-                    <p class="mb-1">장현희 010-0000-0000</p>
-                    <small>500kw</small>
-                </a>
+            <div class="list-group" id="deal-list">
+                
             </div>
 
         <div>
@@ -118,7 +96,56 @@
         </div>
     </footer>
 
+    <script>
+        var deal_list = [
+            {
+                "transaction_id": 17,
+                "transaction_amount": 550.0,
+                "transaction_status": 1,
+                "created_date": 1642911202432,
+                "transaction_description": "안녕하세열",
+                "seller_name": "장현희",
+                "seller_phone": "010-1111-2222"
+            },
+            {
+                "transaction_id": 23,
+                "transaction_amount": 300.0,
+                "transaction_status": 0,
+                "created_date": 1652911202432,
+                "transaction_description": "안녕하씨뽕!!!",
+                "seller_name": "서지상",
+                "seller_phone": "010-2222-3333"
+            }
+        ];
 
+        var tmp_str = "";
+        for(var i=0; i<deal_list.length; i++) {
+            var date = new Date(deal_list[i].created_date);
+            var tmp_month = date.getUTCMonth() + 1;
+            var tmp_date = date.getUTCDate();
+            var tmp_hours = date.getUTCHours();
+            var tmp_minutes = date.getUTCMinutes();
+
+            var date_str = date.getFullYear() + "/"
+                + (tmp_month < 10 ? '0' + tmp_month : tmp_month) + "/"
+                + (tmp_date < 10 ? '0' + tmp_date : tmp_date) + " "
+                + (tmp_hours < 10 ? '0' + tmp_hours : tmp_hours) + ":"
+                + (tmp_minutes < 10 ? '0' + tmp_minutes : tmp_minutes);
+
+            tmp_str += 
+                '<a href="'+ '#' + '" class="list-group-item list-group-item-action">\
+                    <div class="d-flex w-100 justify-content-between">\
+                        <h5 class="mb-1">' + deal_list[i].transaction_description + '</h5>\
+                            <small class="text-muted">'+ date_str +'</small>\
+                        </div>\
+                        <p class="mb-1">' + deal_list[i].seller_name + ' ' + deal_list[i].seller_phone + '</p>\
+                        <small>' + deal_list[i].transaction_amount + 'kw</small>\
+                    </div>\
+                </a>'
+        }
+    
+        document.getElementById("deal-list").innerHTML = tmp_str;
+    </script>
 </body>
 
 </html>

@@ -76,61 +76,8 @@
             <hr>
 
             <!-- Contents List -->
-            <div class="row row-cols-2 row-cols-md-4 g-4">
-                <div class="col">
-                    <div class="card card_round">
-                        <img class="card-img-top" src="images\off_btn_img.png" id="card_btn" />
-                        <i class="fas fa-cog card-img-top card_setting"></i>
-                        <div class="card-title py-0">
-                            <input class="card-title form-control card_name" type="text" placeholder="전자기기">
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card card_round">
-                        <img class="card-img-top" src="images\on_btn_img.png" id="card_btn" />
-                        <i class="fas fa-cog card-img-top card_setting"></i>
-                        <div class="card-title py-0">
-                            <input class="card-title form-control card_name" type="text" placeholder="전자기기">
-                        </div>
-                    </div>
-                </div>
+            <div class="row row-cols-2 row-cols-md-4 g-4" id="remote-list">
 
-                <!--추가 버튼-->
-                <div class="col">
-                    <div class="card card_plus" id="plus_btn" data-bs-toggle="modal" data-bs-target="#PlusModal">
-                        <img class="card-img card_plus_icon" src="images\plus_img.png" />
-                    </div>
-                </div>
-
-                <!--Modal-->
-                <div class="modal fade" id="PlusModal" tabindex="-1" aria-labelledby="PlusModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal_state">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="PlusModalLabel">전자기기 추가</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="select_elec mb-3">
-                                    <input class="form-control" placeholder="전자기기 이름"/>
-                                </div>
-                                <select class="form-select select_port">
-                                    <option value="" selected disabled hidden>포트 선택</option>
-                                    <option value="1">port-1</option>
-                                    <option value="2">Port-2</option>
-                                    <option value="3">Port-3</option>
-                                    <option value="4">Port-4</option>
-                                    <option value="5">Port-5</option>
-                                </select>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                                <button type="button" class="btn btn-primary">저장</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
         <br>
@@ -144,5 +91,90 @@
         </div>
     </footer>
 
+    <script>
+        var remote_list = [
+            {
+                "product_id": 0,
+                "product_name": "선풍기",
+                "product_status": 1,
+                "product_port": 1
+            },
+            {
+                "product_id": 2,
+                "product_name": "폰 충전기",
+                "product_status": 0,
+                "product_port": 3
+            },
+            {
+                "product_id": 4,
+                "product_name": "거실등",
+                "product_status": 0,
+                "product_port": 4
+            },
+            {
+                "product_id": 6,
+                "product_name": "에어컨",
+                "product_status": 1,
+                "product_port": 7
+            }
+        ];
+
+        var tmp_str = "";
+        for (var i = 0; i < remote_list.length; i++) {
+            var img_src = "images/off_btn_img.png";
+            if (remote_list[i].product_status == 1)
+                img_src = "images/on_btn_img.png"
+
+            tmp_str += 
+                '<div class="col">\
+                    <div class="card card_round">\
+                        <img class="card-img-top" src="' + img_src + '" id="card_btn" />\
+                        <i class="fas fa-cog card-img-top card_setting"></i>\
+                        <div class="card-title py-0">\
+                            <p class="card-title form-control card_name">'+ remote_list[i].product_name +'</p>\
+                        </div>\
+                    </div>\
+                </div>';
+        }
+
+        tmp_str += 
+            '<!--추가 버튼-->\
+            <div class="col"\
+                <div class="card card_plus" id="plus_btn" data-bs-toggle="modal" data-bs-target="#PlusModal">\
+                    <img class="card-img card_plus_icon" src="images/plus_img.png" />\
+                </div>\
+            </div>';
+        tmp_str +=
+            '<!--Modal-->\
+            <div class="modal fade" id="PlusModal" tabindex="-1" aria-labelledby="PlusModalLabel" aria-hidden="true">\
+                <div class="modal-dialog modal-dialog-centered modal_state">\
+                    <div class="modal-content">\
+                        <div class="modal-header">\
+                            <h5 class="modal-title" id="PlusModalLabel">전자기기 추가</h5>\
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>\
+                        </div>\
+                        <div class="modal-body">\
+                            <div class="select_elec mb-3">\
+                                <input class="form-control" placeholder="전자기기 이름"/>\
+                            </div>\
+                            <select class="form-select select_port">\
+                                <option value="" selected disabled hidden>포트 선택</option>\
+                                <option value="1">port-1</option>\
+                                <option value="2">Port-2</option>\
+                                <option value="3">Port-3</option>\
+                                <option value="4">Port-4</option>\
+                                <option value="5">Port-5</option>\
+                            </select>\
+                        </div>\
+                        <div class="modal-footer">\
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>\
+                            <button type="button" class="btn btn-primary">저장</button>\
+                        </div>\
+                    </div>\
+                </div>\
+            </div>';
+            
+        document.getElementById("remote-list").innerHTML = tmp_str;
+    </script>
 
 </body>
