@@ -12,17 +12,23 @@
 import express from 'express';
 import routes from '../routes.js';
 import { onlyPublic, onlyPrivate, isUnvalidRoutes } from '../middleware.js';
-import { home, join, logIn, logOut } from '../controller/homeController.js';
+import { home, join, getLogIn,postLogIn, logOut ,postJoin} from '../controller/homeController.js';
 
 import mainRouter from './mainRouter.js';
 
 const homeRouter = express.Router();
 
 homeRouter.use(routes.main, mainRouter);
+
+
+
 homeRouter.get(routes.home, home); // router.home 접근시, homecontroller -> home 실행
-homeRouter.get(routes.login, logIn);
+homeRouter.get(routes.login, getLogIn);
+homeRouter.post(routes.login , postLogIn,getLogIn);
+
 homeRouter.get(routes.logOut, logOut);
 homeRouter.get(routes.join, join);
+homeRouter.post(routes.join , postJoin)
 homeRouter.get('*', isUnvalidRoutes); // 이외에  지정하지 않은 라우트에 대해서 전부 home으로 redirect
 
 export default homeRouter;

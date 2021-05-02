@@ -5,6 +5,7 @@
 const HOME = '/';
 const LOGIN = '/login';
 const JOIN = '/join';
+const POST_JOIN='/post_join'
 const LOGOUT = '/logout';
 
 // user router
@@ -25,6 +26,7 @@ const routes = {
 	home: HOME,
 	login: LOGIN,
 	join: JOIN,
+	postJoin:POST_JOIN,
 	logOut: LOGOUT,
 	main: MAIN,
 	user: USER,

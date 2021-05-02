@@ -13,7 +13,7 @@ import routes from './routes';
 import homeRouter from './router/homeRouter.js';
 import transActionRouter from './router/transActionRouter';
 import mainRouter from './router/mainRouter';
-import './passport';
+import './passport.js';
 
 const app = express();
 

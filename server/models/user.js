@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-
+import passportLocalMongoose from "passport-local-mongoose";
 /// must Make Model (data)  Schema ( shape, format)
 
 
@@ -9,18 +9,18 @@ const UserSchema = new mongoose.Schema({
         type: Number,
         required: ' PK is required'
     },
-    userEmail: {
+    email: {
         type: String,
         required: 'Email is required'
     },
-    userPW:{
+    password:{
         type:String,
         required: 'password required'
     },
     contact:{
         type: String
     },
-    userName:{
+    name:{
         type:String,
         required: 'user name required'
     },
@@ -43,8 +43,13 @@ const UserSchema = new mongoose.Schema({
     }
 
 });
+UserSchema.plugin(passportLocalMongoose, {
+	usernameField: 'email'
+});
 
 const model = mongoose.model("User",UserSchema);
+
+
 
 
 export default model;
