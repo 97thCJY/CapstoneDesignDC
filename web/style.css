@@ -20,6 +20,13 @@ html, body {
     background-color: rgb(248, 249, 250);
 }
 
+/* input-number 화살표 지우기 */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
 /* 화면 Fade-in 효과 */
 body{
     animation: fadeIn 0.5s ease-in;
@@ -133,16 +140,20 @@ footer {
     padding:25%;
 }
 
-.modal_state {
-
-}
 
 /* 전력거래소 page */
 .contents-header {
-    padding:10px;
+    padding: 10px;
 }
 
 .content-row {
     border-bottom: 2px solid gray;
     padding-bottom: 5px;
+}
+
+/* 판매글 작성 page */
+.form-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
 }
