@@ -22,7 +22,8 @@ const CookieStore = MongoStore(session);
 app.use(helmet({ contentSecurityPolicy: false }));
 
 app.use(express.static('public'));
-
+app.use('/static', express.static('static'));
+app.use('/assets', express.static('assets'));
 app.use(helmet());
 app.use(breakSecurityPolicy);
 

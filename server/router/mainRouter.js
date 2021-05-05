@@ -17,11 +17,13 @@ import { home, userProfile, checkElec } from '../controller/mainController.js';
 
 const mainRouter = express.Router();
 
-mainRouter.use(routes.deal, transActionRouter);
+mainRouter.use(routes.deal, onlyPrivate,transActionRouter);
 
-mainRouter.get('/', home);
-mainRouter.get(routes.user, userProfile);
+mainRouter.get('/', onlyPrivate,home);
+mainRouter.get(routes.user, onlyPrivate ,userProfile);
 
-mainRouter.get(routes.checkElec, checkElec);
+mainRouter.get(routes.checkElec, onlyPrivate,checkElec);
+
+mainRouter.get('*' , isUnvalidRoutes);
 
 export default mainRouter;

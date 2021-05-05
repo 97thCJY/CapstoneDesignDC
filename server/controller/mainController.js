@@ -9,5 +9,9 @@ export const home = (req, res) => {
 };
 
 export const checkElec = (req, res) => {
-	res.send('check elec');
+	console.log('on check elec');
+	res.render('checkElec',{
+		pageTitle: 'Check Elec'
+	});
+
 };

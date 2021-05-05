@@ -39,8 +39,15 @@ export const onlyPrivate = (req, res, next) => {
 
 export const isUnvalidRoutes = (req, res, next) => {
 	if (res.status(404)) {
-		res.redirect(routes.home);
+
+		if(req.user){
+			res.redirect(routes.main);
+
+		}else{
+			res.redirect(routes.login);
+
+		}
+		
 	}
 
-	next();
 };
