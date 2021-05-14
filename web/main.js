@@ -82,7 +82,7 @@ function addDeal() {
     var price = amount * price_per_kw 
 
     if (amount < 1) {
-        alert("판매량은 1보다 커야합니다.")
+        alert("판매량은 1보다 커야합니다.");
         return;
     }
 
@@ -100,4 +100,29 @@ function addDeal() {
 function calculatePrice() {
     var amount = document.getElementById("transaction_amount").value;
     document.getElementById("transaction_price").value = amount * price_per_kw + "원";
+}
+
+
+/* Setting Modal 창*/
+var portid;
+function requestRemoteSetting(name, port, id) {
+    portid = id;
+    document.getElementById("SettingModalLabel").innerText = name;
+    document.getElementById("now_name").value = name;
+    document.getElementById("now_port").value = port;
+
+}
+
+// 수정 요청
+function requestRemoteFix() {
+    var name = document.getElementById("now_name").value;
+    var port = document.getElementById("now_port").value;
+
+
+    if (name === "" || port === "") {
+        alert("이름과 포트번호를 입력해주세요.")
+    }
+    else {
+        alert("변경 내용 수정 요청\nID: " + portid + "\n이름: " + name + "\n포트: " + port);
+    }
 }
