@@ -153,6 +153,16 @@ footer {
 	cursor: pointer;
 }
 
+/* 전력 확인 page */
+.card-check-title {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.card-check {
+    height: 100%;
+}
+
 /* 전력거래소 page */
 .contents-header {
 	padding: 10px;
@@ -163,7 +173,7 @@ footer {
 	padding-bottom: 5px;
 }
 
-/* 판매글 작성 page */
+/* 판매글 작성 page, 내용 page */
 .form-container {
 	width: 100%;
 	max-width: 800px;

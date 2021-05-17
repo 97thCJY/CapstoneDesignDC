@@ -68,14 +68,78 @@
 
     <!-- Main Contents -->
     <main>
+        <br>
         <div class="container contents">
-
             <!-- Contents Header -->
             <div class="row contents-header">
                 <h3>전력 확인</h3>
             </div>
+            <hr>
 
             <!-- Contents List -->
+            <div class="row row-cols-2 row-cols-md-4 g-4" id="check-list">
+
+            </div>
+        </div>
+        <br>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-4">
+        <div class="text-center align-self-center">
+            <div>Copyrightⓒ 지하보다지상. All rights reserved.</div>
+            <div>서울특별시 광진구 능동로 209, 세종대학교</div>
+        </div>
+    </footer>
+
+    <script>
+        var check_list = [{
+            "id": 1,
+            "tmp": "100W",
+            "name": "총 전력 사용량"
+        }, {
+            "id": 2,
+            "tmp": "200W",
+            "name": "전기 충전량"
+        }, {
+            "id": 3,
+            "tmp": "300W",
+            "name": "배터리 전력량"
+        }, {
+            "id": 4,
+            "tmp": "500W",
+            "name": "태양광 발전량"
+        }, ];
+
+        var tmp_str = "";
+        for (var i = 0; i < check_list.length; i++) {
+            var img_src = "images/elec.jpg";
+            tmp_str +=
+                '<div class="col">\
+                    <div class="card card-check">\
+                        <div class="card-title text-center py-0">\
+                            <h5 class="card-title card-check-title">' + check_list[i].name + '</h5>\
+                            <img class="card-img-top" src="' + img_src + '"/>\
+                            <p class="card-text form-control card_name">' + check_list[i].tmp + ' </p>\
+                        </div>\
+                    </div>\
+                </div>';
+        }
+        document.getElementById("check-list").innerHTML = tmp_str;
+    </script>
+</body>
+
+</html>
+
+<!--<main>
+        <div class="container contents">
+
+
+            <div class="row contents-header">
+                <h3>전력 확인</h3>
+            </div>
+
+           
             <div class="list-group">
                 <a class="list-group-item list-group-item-action">
                     <div class="d-flex w-100 justify-content-between">
@@ -95,19 +159,13 @@
                         <p>배터리 전력량</p>
                     </div>
                 </a>
+                <a class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5><img src="./images/elec_charge.jpg" height="200px" width="200px"></h5>
+                        <p>태양광 발전량</p>
+                    </div>
+                </a>
             </div>
 
-        <div>
-    </main>
-
-    <!-- Footer -->
-    <footer class="py-4">
-        <div class="text-center align-self-center">
-            <div>Copyrightⓒ 지하보다지상. All rights reserved.</div>
-            <div>서울특별시 광진구 능동로 209, 세종대학교</div>
-        </div>
-    </footer>
-
-</body>
-
-</html>
+            <div>
+    </main>-->

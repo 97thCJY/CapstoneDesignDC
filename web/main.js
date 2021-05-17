@@ -1,3 +1,6 @@
+// kw당 가격 (원)
+var price_per_kw = 100;
+
 // 원격 제어
 window.onload = function () {
     var myModal = document.getElementById('plus_btn');
@@ -48,7 +51,6 @@ function handleGeoErr(err) {
 function requestCoords() {
     navigator.geolocation.getCurrentPosition(handleGeoSucc, handleGeoErr);
 }
-
 requestCoords();
 
 
@@ -68,5 +70,59 @@ function requestRemoteSave() {
     }
     else {
         alert("새 기기 추가 요청\n이름: " + name + "\n포트: " + port);
+    }
+}
+
+
+/* deal 페이지 */
+// 전력 판매글 추가 요청
+function addDeal() {
+    var amount = document.getElementById("transaction_amount").value;
+    var description = document.getElementById("transaction_description").value;
+    var price = amount * price_per_kw 
+
+    if (amount < 1) {
+        alert("판매량은 1보다 커야합니다.");
+        return;
+    }
+
+    var input_confirm = confirm("판매글을 추가하시겠습니까?\n판매량: "
+        + amount + "kw (" + price + "원)\n내용: " + description);
+
+    if (input_confirm) {
+        alert("새 판매글 추가 요청\n판매량: " + amount + "kw\n내용: " + description);
+    } else {
+        alert("취소되었습니다.");
+    }
+}
+
+// 판매량 입력에 따른 예상 가격 계산
+function calculatePrice() {
+    var amount = document.getElementById("transaction_amount").value;
+    document.getElementById("transaction_price").value = amount * price_per_kw + "원";
+}
+
+
+/* Setting Modal 창*/
+var portid;
+function requestRemoteSetting(name, port, id) {
+    portid = id;
+    document.getElementById("SettingModalLabel").innerText = name;
+    document.getElementById("now_name").value = name;
+    document.getElementById("now_port").value = port;
+
+}
+
+// 수정 요청
+function requestRemoteFix() {
+    var name = document.getElementById("now_name").value;
+    var port = document.getElementById("now_port").value;
+
+
+    if (name === "" || port === "") {
+        alert("이름과 포트번호를 입력해주세요.")
+    }
+    else {
+        alert("변경 내용 수정 요청\nID: " + portid + "\n이름: " + name + "\n포트: " + port);
     }
 }
