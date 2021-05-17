@@ -95,21 +95,21 @@
     <script>
         var check_list = [{
             "id": 1,
-            "tmp": "100W",
+            "amount": "100kw",
             "name": "총 전력 사용량"
         }, {
             "id": 2,
-            "tmp": "200W",
-            "name": "전기 충전량"
+            "amount": "200kw",
+            "name": "전기 충전량?"
         }, {
             "id": 3,
-            "tmp": "300W",
+            "amount": "300kw",
             "name": "배터리 전력량"
         }, {
             "id": 4,
-            "tmp": "500W",
+            "amount": "500kw",
             "name": "태양광 발전량"
-        }, ];
+        }];
 
         var tmp_str = "";
         for (var i = 0; i < check_list.length; i++) {
@@ -120,7 +120,7 @@
                         <div class="card-title text-center py-0">\
                             <h5 class="card-title card-check-title">' + check_list[i].name + '</h5>\
                             <img class="card-img-top" src="' + img_src + '"/>\
-                            <p class="card-text form-control card_name">' + check_list[i].tmp + ' </p>\
+                            <h5 class="card_name">' + check_list[i].amount + ' </h5>\
                         </div>\
                     </div>\
                 </div>';

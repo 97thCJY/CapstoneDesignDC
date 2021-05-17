@@ -131,7 +131,7 @@ footer {
 	text-align: center;
 	border: none;
 	background: transparent;
-	margin-top: 0.5rem;
+	margin: 1rem 0;
 }
 
 .card_setting {
@@ -146,10 +146,19 @@ footer {
 	border: none;
 }
 
-.card-img-top {
+.card-img-remote {
 	width: 60%;
 	margin: 15px auto;
 	margin-bottom: 10px;
+}
+
+.card-img-top {
+	width: 70%;
+	margin: 15px auto;
+	margin-bottom: 10px;
+}
+
+.img-pointer {
 	cursor: pointer;
 }
 
@@ -178,4 +187,30 @@ footer {
 	width: 100%;
 	max-width: 800px;
 	margin: 0 auto;
+}
+
+
+/* Footer 아래 고정 */
+html {
+    position: relative;
+    min-height: 100%;
+    margin: 0;
+}
+
+body {
+    min-height: 100%;
+}
+
+footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+	padding: 15px 0;
+	text-align: center;
+	color: white;
+}
+
+main {
+	margin-bottom: 50px;
 }

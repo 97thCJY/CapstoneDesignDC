@@ -131,10 +131,10 @@
                 '<div class="col">\
                     <div class="card card_round">';
             tmp_str +=
-                '<div align="right"><i class="fas fa-cog card_setting" onClick="requestRemoteSetting(`' + remote_list[i].product_name + '`, `' + remote_list[i].product_port + '`, `' + remote_list[i].product_id + '`)" data-bs-toggle="modal" data-bs-target="#SettingModal"></i></div>\
-                        <img class="card-img-top" src="' + img_src + '" id="card_btn" onClick="requestRemoteOnOff(' + remote_list[i].product_id + ')" />\
+                '<div align="right"><i class="fas fa-cog fa-lg card_setting" onClick="requestRemoteSetting(`' + remote_list[i].product_name + '`, `' + remote_list[i].product_port + '`, `' + remote_list[i].product_id + '`)" data-bs-toggle="modal" data-bs-target="#SettingModal"></i></div>\
+                        <img class="card-img-remote img-pointer" src="' + img_src + '" id="card_btn" onClick="requestRemoteOnOff(' + remote_list[i].product_id + ')" />\
                         <div class="card-title py-0">\
-                            <p class="card-title form-control card_name">'+ remote_list[i].product_name + '</p>\
+                            <h5 class="card-title card_name">'+ remote_list[i].product_name + '</h5>\
                         </div>\
                     </div>\
                 </div>';
@@ -144,7 +144,7 @@
             '<!--추가 버튼-->\
             <div class="col">\
                 <div class="card card_plus">\
-                    <img class="card-img-top" data-bs-toggle="modal" data-bs-target="#PlusModal" src="images/plus_img.png" />\
+                    <img class="card-img-remote img-pointer" data-bs-toggle="modal" data-bs-target="#PlusModal" src="images/plus_img.png" />\
                 </div>\
             </div>';
 
@@ -155,7 +155,7 @@
                     <div class="modal-content">\
                         <div class="modal-header" style="background: #505; color:white">\
                             <h5 class="modal-title" id="PlusModalLabel">전자기기 추가</h5>\
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>\
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>\
                         </div>\
                         <div class="modal-body">\
                             <div class="select_elec mb-3">\
@@ -184,7 +184,7 @@
                     <div class="modal-content">\
                         <div class="modal-header" style="background: #505; color:white">\
                            <h5 class="modal-title" id="SettingModalLabel"></h5>\
-                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>\
+                           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>\
                         </div>\
                         <div class="modal-body">\
                             <div class="select_elec mb-3">\
