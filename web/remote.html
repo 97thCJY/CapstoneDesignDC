@@ -69,12 +69,9 @@
     <main>
         <br>
         <div class="container contents">
-            <!-- Contents Header -->
-            <div class="row contents-header">
-            </div>
 
             <!-- Contents List -->
-            <div class="row row-cols-2 row-cols-md-4 g-4" id="remote-list">
+            <div class="row row-cols-2 row-cols-md-4" id="remote-list">
 
             </div>
         </div>
@@ -82,7 +79,7 @@
     </main>
 
     <!-- Footer -->
-    <footer class="py-4">
+    <footer>
         <div class="text-center align-self-center">
             <div>Copyrightⓒ 지하보다지상. All rights reserved.</div>
             <div>서울특별시 광진구 능동로 209, 세종대학교</div>
@@ -139,10 +136,10 @@
                     <div class="card card_round">';
 
             tmp_str +=
-                '<div align="right"><i class="fas fa-cog fa-lg card_setting" onClick="requestRemoteSetting(`' + remote_list[i].product_name + '`, `' + remote_list[i].product_port + '`, `' + remote_list[i].product_id + '`)" data-bs-toggle="modal" data-bs-target="#SettingModal"></i></div>\
+                '<i class="fas fa-cog card_setting" onClick="requestRemoteSetting(`' + remote_list[i].product_name + '`, `' + remote_list[i].product_port + '`, `' + remote_list[i].product_id + '`)" data-bs-toggle="modal" data-bs-target="#SettingModal"></i>\
                         <img class="card-img-remote img-pointer" src="' + img_src + '" id="card_btn" onClick="requestRemoteOnOff(' + remote_list[i].product_id + ')" />\
                         <div class="card-title py-0">\
-                            <h5 class="card-title card_name">'+ remote_list[i].product_name + '</h5>\
+                            <p class="card_name">'+ remote_list[i].product_name + '</p>\
                         </div>\
                     </div>\
                 </div>';

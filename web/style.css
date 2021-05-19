@@ -31,10 +31,52 @@ a:hover {
     color: inherit;
 }
 
+html {
+    min-height: 100%;
+    margin: 0;
+}
+
+main {
+    margin: -0.3rem 0;
+}
+
+main .col {
+    padding: 1rem;
+}
+
+body {
+    min-height: 100%;
+}
+
 html,
 body {
     font-family: 'Nanum Gothic', sans-serif;
-    background-color: rgb(248, 249, 250);
+    background-color: rgb(240, 240, 240);
+}
+
+/* 화면 Fade-in 효과 */
+body {
+    animation: fadeIn 0.2s ease-in;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+/* 푸터 */
+footer {
+    width: 100%;
+    padding: 2rem 0;
+    text-align: center;
+    background-color: #495057;
+    color: #adb5bd;
+    font-size: 12px;
 }
 
 
@@ -44,22 +86,6 @@ input[type='number']::-webkit-outer-spin-button,
 input[type='number']::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
-}
-
-
-/* 화면 Fade-in 효과 */
-
-body {
-    animation: fadeIn 0.2s ease-in;
-}
-
-@keyframes fadeIn {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
 }
 
 
@@ -93,17 +119,8 @@ header {
 
 .contents {
     background-color: white;
-    margin-bottom: 20px;
-    padding-bottom: 20px;
-}
-
-
-/* 푸터 */
-
-footer {
-    background-color: #495057;
-    color: #adb5bd;
-    font-size: 12px;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
 }
 
 
@@ -143,7 +160,7 @@ footer {
 /* 원격 제어 page*/
 
 .card_round {
-    height: 100%;
+    width: 100%;
     border-radius: 25%;
     border: 1px solid green;
 }
@@ -157,8 +174,9 @@ footer {
 
 .card-img-remote {
     width: 60%;
-    margin: 0.3rem auto;
-    margin-bottom: 10px;
+    margin: 0 auto;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
 }
 
 .img-pointer {
@@ -166,8 +184,9 @@ footer {
 }
 
 .card_setting {
-    margin-right: 15%;
-    margin-top: 10%;
+    position: absolute;
+    top: 8%;
+    right: 8%;
     cursor: pointer;
 }
 
@@ -179,12 +198,6 @@ footer {
 
 .card_plus_image {
     padding: 3rem 2rem;
-}
-
-.card-img-remote {
-    width: 60%;
-    margin: 15px auto;
-    margin-bottom: 10px;
 }
 
 .card-img-top {
@@ -239,31 +252,4 @@ footer {
     width: 100%;
     max-width: 800px;
     margin: 0 auto;
-}
-
-
-/* Footer 아래 고정 */
-
-html {
-    position: relative;
-    min-height: 100%;
-    margin: 0;
-}
-
-body {
-    min-height: 100%;
-}
-
-footer {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    padding: 15px 0;
-    text-align: center;
-    color: white;
-}
-
-main {
-    margin-bottom: 50px;
 }
