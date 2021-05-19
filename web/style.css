@@ -79,9 +79,9 @@ header {
 
 .route-list {
     /* background-color: lightslategrey; */
-    color: #505;
-    border-radius: 100px;
-    border: 2px solid #927da6;
+    color: black;
+    border-radius: 10px;
+    border: 0px solid #927da6;
     padding: 15px 10px;
     margin-bottom: 10px;
     display: inline-block;
@@ -94,6 +94,11 @@ header {
     background-color: #7b68ee;
     color: #eee;
     font-weight: 600;
+}
+
+.route-list-padding {
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 
