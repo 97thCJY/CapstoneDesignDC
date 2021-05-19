@@ -7,7 +7,7 @@ window.onload = function () {
     var myInput = document.getElementById('PlusModal');
 
     myModal.addEventListener('shown.bs.modal', function () {
-        myInput.focus()
+        myInput.focus();
     });
 }
 
@@ -58,6 +58,7 @@ requestCoords();
 // 원격 기기 on/off 요청
 function requestRemoteOnOff(product_id) {
     alert("Product Id값 " + product_id + "번 on/off 요청");
+    document.getElementsByClassName("card_round").style.border = '5px solid red';
 }
 
 // 원격 기기 추가 요청
@@ -108,7 +109,13 @@ var portid;
 function requestRemoteSetting(name, port, id) {
     portid = id;
     document.getElementById("SettingModalLabel").innerText = name;
-    document.getElementById("now_name").value = name;
+    if (name == "태양열 전지") {
+        document.getElementById("now_name").value = name;
+        document.getElementById("now_name").readOnly = true;
+    } else {
+        document.getElementById("now_name").value = name;
+        document.getElementById("now_name").readOnly = false;
+    }
     document.getElementById("now_port").value = port;
 
 }
