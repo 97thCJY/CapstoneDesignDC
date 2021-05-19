@@ -10,9 +10,7 @@ block content
             form(action=routes.login, method="post")
                 input.login-input(type ="text" name='email' placeholder="이메일")
                 input.login-input(type ="password" name='password' placeholder="비밀번호")
-                
                 hr
-                
 
                 input.btn.btn-outline-primary.login-btn(type='submit' value='로그인')
 
@@ -20,4 +18,3 @@ block content
                 button.btn.btn-outline-success.login-btn 회원가입 
             a(href=routes.home)
                 button.btn.btn-outline-secondary.login-btn 뒤로가기
-
