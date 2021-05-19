@@ -15,15 +15,17 @@ import { onlyPublic, onlyPrivate, isUnvalidRoutes } from '../middleware.js';
 import transActionRouter from './transActionRouter.js';
 import { home, userProfile, checkElec } from '../controller/mainController.js';
 
-const mainRouter = express.Router();
+const mainRouter = express.Router({
+	mergeParams: true
+});
 
-mainRouter.use(routes.deal, onlyPrivate,transActionRouter);
+mainRouter.use(routes.deal, onlyPrivate, transActionRouter);
 
-mainRouter.get('/', onlyPrivate,home);
-mainRouter.get(routes.user, onlyPrivate ,userProfile);
+mainRouter.get('/', onlyPrivate, home);
+mainRouter.get(routes.user, onlyPrivate, userProfile);
 
-mainRouter.get(routes.checkElec, onlyPrivate,checkElec);
+mainRouter.get(routes.checkElec, onlyPrivate, checkElec);
 
-mainRouter.get('*' , isUnvalidRoutes);
+mainRouter.get('*', isUnvalidRoutes);
 
 export default mainRouter;
