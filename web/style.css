@@ -155,6 +155,16 @@ footer {
     margin: 1rem 0;
 }
 
+.card-img-remote {
+	width: 60%;
+	margin: 0.3rem auto;
+	margin-bottom: 10px;
+}
+
+.img-pointer {
+	cursor: pointer;
+}
+
 .card_setting {
     margin-right: 15%;
     margin-top: 10%;
@@ -167,6 +177,7 @@ footer {
     border: none;
 }
 
+<<<<<<< HEAD
 .card_plus_image {
     padding: 3rem 2rem;
 }
@@ -185,6 +196,14 @@ footer {
 
 .img-pointer {
     cursor: pointer;
+=======
+.card-img-plus {
+	position: absolute;
+	top: 45%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 60%;
+>>>>>>> e3b7f13993f016755ccc8a3e0903d14c4be8f350
 }
 
 
@@ -205,12 +224,16 @@ footer {
 /* 전력거래소 page */
 
 .contents-header {
+<<<<<<< HEAD
     padding: 10px;
 }
 
 .content-row {
     border-bottom: 2px solid gray;
     padding-bottom: 5px;
+=======
+	padding: 0.5rem;
+>>>>>>> e3b7f13993f016755ccc8a3e0903d14c4be8f350
 }
 
 
