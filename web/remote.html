@@ -129,16 +129,15 @@
         var requset_id;
         var img_src;
         for (var i = 0; i < remote_list.length; i++) {
-            if (remote_list[i].product_status == 0) {
+            if (remote_list[i].product_status == 0) { // 이미지 변경
                 img_src = "images/off_btn_img.png";
-                //document.getElementsByClassName("card_round").style.borderColor = "red";  // 야팔아ㅏㄹ머인러;ㅓㅁㄴ아ㅣ허
             } if (remote_list[i].product_status == 1) {
                 img_src = "images/on_btn_img.png";
-                //document.getElementsByClassName("card_round").style.borderColor = "green";
             }
             tmp_str +=
                 '<div class="col">\
                     <div class="card card_round">';
+
             tmp_str +=
                 '<div align="right"><i class="fas fa-cog fa-lg card_setting" onClick="requestRemoteSetting(`' + remote_list[i].product_name + '`, `' + remote_list[i].product_port + '`, `' + remote_list[i].product_id + '`)" data-bs-toggle="modal" data-bs-target="#SettingModal"></i></div>\
                         <img class="card-img-remote img-pointer" src="' + img_src + '" id="card_btn" onClick="requestRemoteOnOff(' + remote_list[i].product_id + ')" />\
@@ -153,7 +152,7 @@
             '<!--추가 버튼-->\
             <div class="col">\
                 <div class="card card_plus">\
-                    <img class="card-img-remote img-pointer" data-bs-toggle="modal" data-bs-target="#PlusModal" src="images/plus_img.png" />\
+                    <img class="card-img-plus img-pointer" data-bs-toggle="modal" data-bs-target="#PlusModal" src="images/plus_img.png" />\
                 </div>\
             </div>';
 

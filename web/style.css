@@ -135,6 +135,16 @@ footer {
 	margin: 1rem 0;
 }
 
+.card-img-remote {
+	width: 60%;
+	margin: 0.3rem auto;
+	margin-bottom: 10px;
+}
+
+.img-pointer {
+	cursor: pointer;
+}
+
 .card_setting {
 	margin-right: 15%;
 	margin-top: 10%;
@@ -147,24 +157,12 @@ footer {
 	border: none;
 }
 
-.card_plus_image {
-	padding: 3rem 2rem;
-}
-
-.card-img-remote {
+.card-img-plus {
+	position: absolute;
+	top: 45%;
+	left: 50%;
+	transform: translate(-50%, -50%);
 	width: 60%;
-	margin: 15px auto;
-	margin-bottom: 10px;
-}
-
-.card-img-top {
-	width: 70%;
-	margin: 15px auto;
-	margin-bottom: 10px;
-}
-
-.img-pointer {
-	cursor: pointer;
 }
 
 /* 전력 확인 page */
@@ -179,12 +177,7 @@ footer {
 
 /* 전력거래소 page */
 .contents-header {
-	padding: 10px;
-}
-
-.content-row {
-	border-bottom: 2px solid gray;
-	padding-bottom: 5px;
+	padding: 0.5rem;
 }
 
 /* 판매글 작성 page, 내용 page */
