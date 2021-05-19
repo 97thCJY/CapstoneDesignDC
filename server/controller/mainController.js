@@ -1,12 +1,33 @@
+import Device from '../models/device';
+
 export const userProfile = (req, res) => {
 	res.send('userprofile');
 };
 
-export const home = (req, res) => {
-	res.render('route_main', {
-		pageTitle: 'Main',
-		ass: [1, 2, 3, 4, 5, 6]
-	});
+export const home = async (req, res) => {
+	const deviceObj = [];
+	try {
+		const deviceData = req.user.deviceList;
+
+		for (let i = 0; i < deviceData.length; i++) {
+			console.log('on search!!!');
+			await deviceObj.push(
+				Device.find({
+					PK: deviceData[i]
+				})
+			);
+		}
+	} catch (e) {
+		console.log('hit error!!!!!');
+		console.log(e);
+	} finally {
+		console.dir(deviceObj);
+
+		res.render('route_main', {
+			pageTitle: 'Main',
+			deviceList: deviceObj | []
+		});
+	}
 };
 
 export const checkElec = (req, res) => {
