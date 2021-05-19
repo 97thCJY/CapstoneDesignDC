@@ -145,6 +145,7 @@ footer {
 .card_round {
     height: 100%;
     border-radius: 25%;
+	border: 1px solid green;
 }
 
 .card_name {
@@ -164,6 +165,10 @@ footer {
     text-align: center;
     height: 100%;
     border: none;
+}
+
+.card_plus_image {
+	padding: 3rem 2rem;
 }
 
 .card-img-remote {
