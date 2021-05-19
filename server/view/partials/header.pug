@@ -6,22 +6,20 @@ header
         .col-4.pt-1
           a#weather(href='https://weather.naver.com/')
         .col-4.text-center
-          h1
-            a(href=`/main`) LOGO
+          a(href=`/main`) LOGO
         .col-4.d-flex.justify-content-end.align-items-center
-          a(href=`/login`) &#xB85C;&#xADF8;&#xC778;
-
+          a(href='/logout') 로그아웃
     div(style='border-top: 2px solid #555; padding-top:15px; margin-top: 15px;')
+    
     // Route List
     .nav-scroller.py-1.mb-2
       nav.nav.d-flex.justify-content-between
         .col.text-center.align-self-center(style='border-right: 2px solid #555;')
-          a(href=`/main`)
-            span.route-list &#xC6D0;&#xACA9;&#xC81C;&#xC5B4;
+          a(href='./remote.html')
+            span.route-list.route-list-activate &#xC6D0;&#xACA9;&#xC81C;&#xC5B4;
         .col.text-center.align-self-center(style='border-right: 2px solid #555;')
-          a(href=`/main${routes.transAction}`)
-            span.route-list.route-list-activate &#xC804;&#xB825; &#xAC70;&#xB798;&#xC18C;
->>>>>>> hyn
+          a(href=`/main/transaction`)
+            span.route-list &#xC804;&#xB825; &#xAC70;&#xB798;&#xC18C;
         .col.text-center.align-self-center
-          a(href=`/main`)
+          a(href=`/main${routes.checkElec}`)
             span.route-list &#xC804;&#xB825;&#xD655;&#xC778;
