@@ -4,7 +4,7 @@ import { onAuthenticatedId, notAuthenticatedId } from './fakeDB.js';
 
 export const globalMiddleWare = (req, res, next) => {
     res.locals.routes = routes;
-    res.locals.siteName = 'CapstonePJ';
+    res.locals.siteName = 'Greedy';
     res.locals.PKN = 0;
     next();
 };
