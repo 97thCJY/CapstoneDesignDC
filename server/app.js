@@ -48,7 +48,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('*', globalMiddleWare);
-
+app.use(`/main${routes.transAction}`, transActionRouter);
 app.use(routes.main, mainRouter);
 app.use(routes.home, homeRouter);
 

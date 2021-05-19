@@ -10,6 +10,8 @@ transActionRouter.get(routes.write, write); // router.home 접근시, homecontro
 transActionRouter.get(routes.checkTrade, checkTrade);
 transActionRouter.get(routes.trading, trading);
 
-transActionRouter.post(routes.write, onlyPublic, postTransact);
+transActionRouter.post(routes.write, onlyPrivate, postTransact);
+
+transActionRouter.get('*', onlyPrivate, isUnvalidRoutes);
 
 export default transActionRouter;

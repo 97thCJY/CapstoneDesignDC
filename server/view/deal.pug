@@ -2,14 +2,15 @@ extends layout/template_main
 
 
 block content2
-
     br
-        .container.contents
-            .row.contents-header
-                .col-6
-                    h3 전력 판매글 
-                .col-6.text-end
-                    a.btn.btn-secondary(href='') 글 작성하기
-            
-            .list-group#deal-list
+    .container.contents
+        .row.contents-header
+            .col-6
+                h3 전력 판매글 
+            .col-6.text-end
+                a.btn.btn-secondary(href='/main/transaction/write') 글 작성하기
+        .list-group#deal-list
   
+
+
+
