@@ -96,13 +96,15 @@
             "transaction_amount": 550.0,
             "transaction_status": 0,
             "created_date": 1642911202432,
-            "transaction_description": "안녕하세열",
+            "transaction_description": "안녕하세열 description 입니돠~~ 잘부탁 드리구요 쿨거래 부탁드려여~",
             "seller_name": "장현희",
-            "seller_phone": "010-1111-2222"
+            "seller_phone": "010-1111-2222",
+            "is_seller": false
         }
 
         var deal_header_str = "";
         var deal_contents_str = "";
+        var deal_buttons_str = "";
         var date = new Date(deal_contents.created_date);
         var tmp_month = date.getUTCMonth() + 1;
         var tmp_date = date.getUTCDate();
@@ -123,31 +125,43 @@
                 <p class="text-muted">Created</p>\
                 <p class="text-muted">' + date_str + '</p>\
             </div>';
+        
+        if (deal_contents.is_seller) {
+            deal_buttons_str +=
+                '<div class="text-end">\
+                    <button onClick="" class="btn btn-danger" type="submit">수정하기</button>\
+                </div>';
+        } else {
+            deal_buttons_str +=
+                '<div class="text-end">\
+                    <input type="number" placeholder="구매량 입력(kw)">\
+                    <button onClick="" class="btn btn-secondary" type="submit">구매요청</button>\
+                </div>';
+        }
 
         deal_contents_str +=
             '<div class="form-container">\
                 <div class="form-group row">\
-                    <label for="transaction_amount" class="col-sm-2 col-form-label">판매량 (kw)</label>\
-                    <div class="col-sm-10">\
-                        <p class="form-control">' + deal_contents.transaction_amount + '</p>\
+                    <h5 for="transaction_amount" class="col-sm-2">판매량 (kw)</h5>\
+                    <div class="col-sm-10 align-self-center">\
+                        <h5>' + deal_contents.transaction_amount + '</h5>\
                     </div>\
                 </div><br>\
                 <div class="form-group row">\
-                    <label for="transaction_amount" class="col-sm-2 col-form-label">판매 가격</label>\
-                    <div class="col-sm-10">\
-                        <p class="form-control">' + deal_contents.transaction_amount * price_per_kw + '원</p>\
+                    <h5 for="transaction_amount" class="col-sm-2">판매 가격</h5>\
+                    <div class="col-sm-10 align-self-center">\
+                        <h5>' + deal_contents.transaction_amount * price_per_kw + '원</h5>\
                     </div>\
                 </div><br>\
                 <div class="form-group row">\
-                    <label for="transaction_amount" class="col-sm-2 col-form-label">내용</label>\
-                    <div class="col-sm-10">\
-                        <textarea disabled class="form-control">' + deal_contents.transaction_description + '</textarea>\
+                    <h5 for="transaction_amount" class="col-sm-2">내용</h5>\
+                    <div class="col-sm-10 align-self-center">\
+                        <p>' + deal_contents.transaction_description + '</p>\
                     </div>\
-                </div><br>\
-                <div class="text-end">\
-                    <button onClick="" class="btn btn-secondary" type="submit">버튼</button>\
-                </div>\
-            </div>';
+                </div><br>'
+            + deal_buttons_str
+            + '</div>';
+                
 
         document.getElementById("deal-header").innerHTML = deal_header_str;
         document.getElementById("deal-contents").innerHTML = deal_contents_str;

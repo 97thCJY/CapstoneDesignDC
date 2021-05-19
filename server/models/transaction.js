@@ -13,27 +13,31 @@ const TransactionSchema = new mongoose.Schema({
         type: Number,
         required: 'creater Id is required'
     },
-    buyer:{
+    buyer: {
         type: Number
     },
-    amount:{
+    amount: {
         type: Number,
         default: 0,
-        required:'amount value req'
+        required: 'amount value req'
     },
-    status:{
+    status: {
         type: Number,
         default: 0,
         required: 'transaction status setting req'
     },
-    createdAt:{
+    createdAt: {
         type: Date,
         default: Date.now
 
+    },
+    description: {
+        type: String,
+        required: 'description value req'
     }
 });
 
-const model = mongoose.model("Transaction",TransactionSchema);
+const model = mongoose.model("Transaction", TransactionSchema);
 
 
 export default model;
