@@ -87,6 +87,7 @@ header {
     display: inline-block;
     cursor: pointer;
     font-weight: 500;
+    font-size: 1vw;
 }
 
 .route-list-activate {
@@ -99,6 +100,11 @@ header {
 .route-list-padding {
     padding-left: 20px;
     padding-right: 20px;
+}
+
+.route-img {
+    width: 20%;
+    min-width: 20px;
 }
 
 
