@@ -2,7 +2,9 @@ import routes from "../routes";
 import Transaction from '../models/transaction';
 
 export const deal = (req, res) => {
-    res.send('in /deal');
+    res.render('deal', {
+        pageTitle: 'deal',
+    });
 };
 
 export const write = (req, res) => {
