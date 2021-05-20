@@ -138,11 +138,12 @@ header {
     color: black;
     border-radius: 10px;
     border: 0px solid #927da6;
-    padding: 2vw 1.8vw;
+    padding: 1.5vw 1.8vw;
     margin-bottom: 10px;
     display: inline-block;
     cursor: pointer;
     font-weight: 500;
+    white-space:nowrap;
     font-size: 1.5vw;
 }
 
