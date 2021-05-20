@@ -9,13 +9,14 @@ export const userProfile = (req, res) => {
 /**** GET Method ****/
 // 원격 페이지 rendering
 export const home = async (req, res) => {
-	const deviceObjList = [];
+	let deviceObjList = [];
 	try {
-		const deviceData = req.user.deviceList;		// 해당 User의 device pk목록
+		const deviceData = req.user.deviceList; // 해당 User의 device pk목록
 
-		let tmp = await Device.findOne({PK:deviceData[i]});
+		console.log(device);
+		let tmp;
 		for (var i = 0; i < deviceData.length; i++) {
-			let tmp = await Device.findOne({ PK: deviceData[i] });
+			tmp = await Device.findOne({ PK: deviceData[i] });
 			deviceObjList.push(tmp);
 		}
 	} catch (e) {
@@ -59,15 +60,17 @@ export const checkElec = async (req, res) => {
 /**** POST Method ****/
 // 디바이스 추가 함수
 export const addDevice = async (req, res) => {
-	const {name, port} = req.body;
+	const { name, port } = req.body;
 
 	// 입력값 검사
-	if (name === "" || port === undefined) {
+	if (name === '' || port === undefined) {
 		// 오류 반환 & 새로고침
-		res.send('<script type="text/javascript">alert("전자기기 이름 또는 포트를 선택해주세요.");location.href="/";</script>');
+		res.send(
+			'<script type="text/javascript">alert("전자기기 이름 또는 포트를 선택해주세요.");location.href="/";</script>'
+		);
 	}
-	
-	console.log("디바이스 추가\n이름: " + name + " | 포트: " + port);
+
+	console.log('디바이스 추가\n이름: ' + name + ' | 포트: ' + port);
 
 	/////////////////////////////////////////////
 	// 작업 필요 : DB검사 (포트 겹치는게 있는지) //
@@ -105,7 +108,6 @@ export const remoteOnOff = async (req, res) => {
 	//////////////////////////
 
 	res.redirect(routes.home);
-}
-
+};
 
 const getTotalUsage = () => 0;

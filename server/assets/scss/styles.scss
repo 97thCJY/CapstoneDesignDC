@@ -1,8 +1,6 @@
 /* CSS 색감 참고 */
 
-
 /* https://www.w3schools.com/w3css/tryit.asp?filename=tryw3css_templates_social&stacked=h */
-
 
 /* CSS 초기화 */
 
@@ -17,318 +15,341 @@ h6,
 p,
 div,
 span {
-    margin: 0px;
-    padding: 0px;
+	margin: 0px;
+	padding: 0px;
 }
 
 a {
-    color: black;
-    text-decoration: none;
-    outline: none;
+	color: black;
+	text-decoration: none;
+	outline: none;
 }
 
-    a:hover {
-        color: inherit;
-    }
+a:hover {
+	color: inherit;
+}
 
 html {
-    min-height: 100%;
-    margin: 0;
+	min-height: 100vh;
+	margin: 0;
 }
-
 
 main {
-    margin-top: 0.3rem;
+	margin: -0.3rem 0;
 }
 
-    main .col {
-        padding: 1rem;
-    }
+main .col {
+	padding: 1rem;
+}
 
 body {
-    position: relative;
-    padding-bottom: 104.8px;
-    min-height: 100%;
+	min-height: 100vh;
 }
 
 html,
 body {
-    font-family: 'Nanum Gothic', sans-serif;
-    background-color: rgb(240, 240, 240);
+	font-family: 'Nanum Gothic', sans-serif;
+	background-color: rgb(240, 240, 240);
 }
-
 
 /* 화면 Fade-in 효과 */
 
 body {
-    animation: fadeIn 0.2s ease-in;
+	animation: fadeIn 0.2s ease-in;
 }
 
 @keyframes fadeIn {
-    0% {
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 1;
-    }
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
 }
-
 
 /* 푸터 */
 
 footer {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 2rem 0;
-    text-align: center;
-    background-color: #495057;
-    color: #adb5bd;
-    font-size: 12px;
+	position: absolute;
+	width: 100%;
+	padding: 2rem 0;
+	text-align: center;
+	background-color: #495057;
+	color: #adb5bd;
+	font-size: 12px;
+	bottom: 0;
 }
-
 
 /* input-number 화살표 지우기 */
 
 input[type='number']::-webkit-outer-spin-button,
 input[type='number']::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+	-webkit-appearance: none;
+	margin: 0;
 }
 
-
-/* 로고 바*/
-.weather_position {
-    margin-top: 3vw;
-}
-
-#weather {
-    font-size: 1.5vw;
-}
+/* 로고 */
 
 .logo_img {
-    width: 100%;
-    min-width: 180px;
-    margin-top: 1vw;
-    margin-bottom: 2vh;
+	width: 90%;
+	min-width: 150px;
 }
-
-#log_out {
-    margin-bottom: 6.5vh;
-    font-size: 1.8vh;
-    font-weight: 600;
-    padding: 1vh 3vw 0 0.3vw;
-}
-
-#log_out p {
-    color: #888;
-}
-
 
 /* 네비게이션 바 */
 
 header {
-    background-color: #ffeb60;
+	background-color: #ffeb60;
 }
 
 .route-list {
-    /* background-color: lightslategrey; */
-    color: black;
-    border-radius: 10px;
-    border: 0px solid #927da6;
-    padding: 1.5vw 1.8vw;
-    margin-bottom: 10px;
-    display: inline-block;
-    cursor: pointer;
-    font-weight: 500;
-    white-space:nowrap;
-    font-size: 1.5vw;
+	/* background-color: lightslategrey; */
+	color: black;
+	border-radius: 10px;
+	border: 0px solid #927da6;
+	padding: 15px 10px;
+	margin-bottom: 10px;
+	display: inline-block;
+	cursor: pointer;
+	font-weight: 600;
+	font-size: 1vw;
 }
 
 .route-list-activate {
-    /* background-color: lightgreen; */
-    background-color: #7b68ee;
-    color: #eee;
-    font-weight: 700;
+	/* background-color: lightgreen; */
+	background-color: #7b68ee;
+	color: #eee;
+	font-weight: 700;
+}
+
+.route-list-padding {
+	padding-left: 20px;
+	padding-right: 20px;
 }
 
 .route-img {
-    width: 20%;
-    min-width: 20px;
+	width: 20%;
+	min-width: 20px;
 }
-
 
 /* 메인 콘텐츠 */
 
 .contents {
-    background-color: white;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+	background-color: white;
+	padding-top: 1rem;
+	padding-bottom: 1rem;
 }
-
 
 /* 로그인, 회원가입 페이지 */
 
 .login-contents {
-    position: absolute;
-    top: 25%;
-    right: 50%;
-    transform: translate(50%, 0);
-    background-color: white;
-    max-width: 400px;
-    min-width: 330px;
-    margin: auto;
-    padding-bottom: 2.5vh;
-    border-radius: 30px;
-}
+	background-color: white;
+	width: 400px;
 
-.signup-contents {
-    position: absolute;
-    top: 18%;
-    right: 50%;
-    transform: translate(50%, 0);
-    background-color: white;
-    max-width: 400px;
-    min-width: 330px;
-    margin: auto;
-    padding-bottom: 2.5vh;
-    border-radius: 30px;
+	border-radius: 20px;
+
+	position: absolute;
+
+	left: calc(50% - 200px);
+
+	input {
+		margin-bottom: 1px;
+		font-size: 2vh;
+	}
 }
 
 .login-input {
-    padding: 1vh 5px;
-    margin: 0.3vh 0px;
-    width: 85%;
-    max-width: 400px;
-    font-size: 2vh;
-    border: 1px solid black;
-    border-radius: 10px;
+	padding: 12px 5px;
+	margin: 10px 0px;
+	width: 85%;
+	max-width: 400px;
 }
 
 .login-input:focus {
-    outline: none;
-    border: 1px solid black;
-    border-bottom: 3px solid #414345;
-    border-radius: 10px;
+	outline: none;
+	border: 1px solid black;
+	border-bottom: 3px solid #404345;
 }
 
 .login-btn {
-    margin: 0.15rem 0px;
-    width: 85%;
-    max-width: 400px;
-    font-size: 2vh;
-    font-weight: 600;
-    border-radius: 10px;
+	margin: 6px 0px;
+	width: 85%;
+	max-width: 400px;
+	font-size: 18px;
+	font-weight: 600;
 }
-
 
 /* 원격 제어 page*/
 
 .card_round {
-    width: 100%;
-    border-radius: 25%;
-    border: 1px solid green;
+	width: 100%;
+	border-radius: 25%;
+	border: 1px solid green;
 }
 
 .card_name {
-    text-align: center;
-    border: none;
-    background: transparent;
-    margin: 1rem 0;
+	text-align: center;
+	border: none;
+	background: transparent;
+	margin: 1rem 0;
 }
 
 .card-img-remote {
-    width: 60%;
-    margin: 0 auto;
-    margin-top: 2rem;
-    margin-bottom: 1rem;
+	width: 60%;
+	margin: 0 auto;
+	margin-top: 2rem;
+	margin-bottom: 1rem;
 }
 
 .img-pointer {
-    cursor: pointer;
+	cursor: pointer;
 }
 
 .card_setting {
-    position: absolute;
-    top: 8%;
-    right: 8%;
-    cursor: pointer;
+	position: absolute;
+	top: 8%;
+	right: 8%;
+	cursor: pointer;
 }
 
 .card_plus {
-    text-align: center;
-    height: 100%;
-    border: none;
+	text-align: center;
+	height: 100%;
+	border: none;
 }
 
 .card_plus_image {
-    padding: 3rem 2rem;
+	padding: 3rem 2rem;
 }
 
 .card-img-top {
-    width: 70%;
-    margin: 15px auto;
-    margin-bottom: 10px;
+	width: 70%;
+	margin: 15px auto;
+	margin-bottom: 10px;
 }
 
 .img-pointer {
-    cursor: pointer;
+	cursor: pointer;
 }
 
 .card-img-plus {
-    position: absolute;
-    top: 45%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 60%;
+	position: absolute;
+	top: 45%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 60%;
 }
-
 
 /* 전력 확인 page */
 
 .card-check-title {
-    margin-top: 10px;
-    font-weight: bold;
+	margin-top: 10px;
+	font-weight: bold;
 }
 
 .card-check {
-    border-radius: 5%;
-    border: 3px solid gray;
-    height: 100%;
-    margin-bottom: 10px;
+	border-radius: 5%;
+	border: 3px solid gray;
+	height: 100%;
+	margin-bottom: 10px;
 }
-
 
 /* 전력거래소 page */
 
 .contents-header {
-    padding: 10px;
+	padding: 10px;
 }
 
 .content-row {
-    border-bottom: 2px solid gray;
-    padding-bottom: 5px;
-    padding: 0.5rem;
+	border-bottom: 2px solid gray;
+	padding-bottom: 5px;
+	padding: 0.5rem;
 }
-
 
 /* 판매글 작성 page, 내용 page */
 
 .form-container {
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
+	width: 100%;
+	max-width: 800px;
+	margin: 0 auto;
 }
 
+#login_background {
+	box-sizing: border-box;
+	background-color: #2b2c2d;
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 
-/* 실시간 거래 확인 page */
+	input {
+		border-radius: 10px;
+	}
 
-.progress_style {
-    height: 50px;
+	button {
+		border-radius: 10px;
+	}
 }
 
-.time_text {
-    font-size: 20px;
+#sign_up_form {
+	input {
+		padding: 1vh 5px;
+		margin: 0.3vh 0px;
+		width: 85%;
+		max-width: 400px;
+		font-size: 2vh;
+		border: 1px solid black;
+		border-radius: 10px;
+		&:focus {
+			outline: none;
+			border: 1px solid black;
+			border-bottom: 3px solid #404345;
+		}
+	}
+	button {
+		margin-top: 0;
+	}
+	margin-bottom: 0;
+}
+
+#login_form {
+	input {
+		padding: 1vh 5px;
+		margin: 0.3vh 0px;
+		width: 85%;
+		max-width: 400px;
+		font-size: 2vh;
+		border: 1px solid black;
+		border-radius: 10px;
+		&:focus {
+			outline: none;
+			border: 1px solid black;
+			border-bottom: 3px solid #404345;
+		}
+	}
+	button {
+		margin-top: 0;
+	}
+	margin-bottom: 0;
+}
+
+#main_body {
+	background-color: #2b2c2d;
+}
+
+#sign_up_flexBox {
+	display: flex;
+	align-items: center;
+	height: 100vh;
+
+	button {
+		border-radius: 10px;
+
+		&:focus {
+			outline: none;
+			border: 1px solid black;
+			border-bottom: 3px solid #404345;
+		}
+	}
 }

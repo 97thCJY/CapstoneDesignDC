@@ -1,4 +1,4 @@
-html
+html#main_html
     head
         title #{pageTitle} | #{siteName}
 
@@ -18,9 +18,9 @@ html
         link(rel="stylesheet" type="text/css" href="../../static/styles.css")
        
 
-    body
-        main
+    body#main_body
+        main#main_template
             block content
-        include ../partials/footer
+      
 
         script(src="../../static/main.js")
