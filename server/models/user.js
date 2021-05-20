@@ -41,7 +41,7 @@ const UserSchema = new mongoose.Schema({
 	},
 	deviceList: {
 		type: Array,
-		default: [2, 3, 4, 5]
+		default: []
 	}
 });
 UserSchema.plugin(passportLocalMongoose, {
