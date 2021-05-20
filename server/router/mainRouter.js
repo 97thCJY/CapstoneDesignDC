@@ -13,7 +13,7 @@ import express from 'express';
 import routes from '../routes.js';
 import { onlyPublic, onlyPrivate, isUnvalidRoutes } from '../middleware.js';
 
-import { home, userProfile, checkElec, addDevice } from '../controller/mainController.js';
+import { home, userProfile, checkElec, addDevice, remoteOnOff } from '../controller/mainController.js';
 
 const mainRouter = express.Router({
 	mergeParams: true
@@ -21,6 +21,7 @@ const mainRouter = express.Router({
 
 mainRouter.get('/', onlyPrivate, home);
 mainRouter.post('/', onlyPrivate, addDevice);
+mainRouter.post('/remoteonoff', onlyPrivate, remoteOnOff);
 mainRouter.get(routes.user, onlyPrivate, userProfile);
 
 mainRouter.get(routes.checkElec, onlyPrivate, checkElec);

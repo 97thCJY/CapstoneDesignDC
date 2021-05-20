@@ -26,7 +26,6 @@ export const home = async (req, res) => {
 			topNav: 'remote',
 			deviceList: deviceObjList
 		});
-		console.log(deviceObjList);
 	}
 };
 
@@ -70,9 +69,9 @@ export const addDevice = async (req, res) => {
 	
 	console.log("디바이스 추가\n이름: " + name + " | 포트: " + port);
 
-	//////////////////////////////////
+	/////////////////////////////////////////////
 	// 작업 필요 : DB검사 (포트 겹치는게 있는지) //
-	/////////////////////////////////
+	/////////////////////////////////////////////
 
 	// DB저장 및 리턴값 반환
 	try {
@@ -96,6 +95,17 @@ export const addDevice = async (req, res) => {
 		res.send('<script type="text/javascript">alert("오류 발생: ' + e + '");location.href="/";</script>');
 	}
 };
+
+// 원격 기기 제어 함수
+export const remoteOnOff = async (req, res) => {
+	console.log(req.body);
+
+	//////////////////////////
+	// status 변경 및 DB저장 //
+	//////////////////////////
+
+	res.redirect(routes.home);
+}
 
 
 const getTotalUsage = () => 0;
