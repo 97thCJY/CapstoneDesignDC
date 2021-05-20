@@ -2,19 +2,19 @@ extends layout/main
 
 
 block content
-    .text-center.container-sm
+    .text-center.container-sm#login_background
         .login-contents
-            h1 LOGO
+            a(href='')
+                img.logo_img(src='../assets/images/ourlogo.png')
+                
             br
 
-            form(action=routes.login, method="post")
+            form(action=routes.login, method="post")#login_form
                 input.login-input(type ="text" name='email' placeholder="이메일")
                 input.login-input(type ="password" name='password' placeholder="비밀번호")
                 hr
-
-                input.btn.btn-outline-primary.login-btn(type='submit' value='로그인')
-
+                div
+                    input.btn.btn-outline-primary.login-btn(type='submit' value='로그인')
             a(href=routes.join)
                 button.btn.btn-outline-success.login-btn 회원가입 
-            a(href=routes.home)
-                button.btn.btn-outline-secondary.login-btn 뒤로가기
+            

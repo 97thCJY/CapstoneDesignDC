@@ -2,12 +2,14 @@ extends layout/main
 
 
 block content
-    .text-center.container-sm
+    .text-center.container-sm#sign_up_flexBox
         .login-contents
-            h1 LOGO
+            a(href= routes.login)
+                img.logo_img(src='../assets/images/ourlogo.png')
+            
             br
 
-            form(action=routes.join, method="post")
+            form(action=routes.join, method="post")#sign_up_form
                 input.login-input(type="text" name='email' placeholder="이메일")
                 input.login-input(type="password" name='password' placeholder="비밀번호")
                 input.login-input(type="password" name='verifyPassword' placeholder="비밀번호 재입력")

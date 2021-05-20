@@ -5,9 +5,9 @@ mixin device(device = {})
             div(align='right')
                 i.fas.fa-cog.fa-lg.card_setting(onclick='requestRemoteSetting(`선풍기`, `1`, `0`)', data-bs-toggle='modal', data-bs-target='#SettingModal')
             
-            - if (device.status)
+            if (device.status)
                 img#card_btn.card-img-remote.img-pointer(src='/assets/images/on_btn_img.png', onclick='requestRemoteOnOff(0)')
-            - else
+            else
                 img#card_btn.card-img-remote.img-pointer(src='/assets/images/off_btn_img.png', onclick='requestRemoteOnOff(0)')
 
             .card-title.py-0

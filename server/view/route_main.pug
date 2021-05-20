@@ -11,8 +11,10 @@ block content2
             hr
             // Contents List
             #remote-list.row.row-cols-2.row-cols-md-4.g-4
-                for item of deviceList
-                    +device(item)
+                
+                if (deviceList)
+                    for item of deviceList
+                        +device(item)
                 .col
                     .card.card_plus
                         img.card-img-remote.img-pointer(data-bs-toggle='modal', data-bs-target='#PlusModal', src='/assets/images/plus_img.png')
