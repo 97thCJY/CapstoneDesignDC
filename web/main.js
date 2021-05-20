@@ -137,13 +137,18 @@ function requestRemoteFix() {
 // 실시간 거래 확인 페이지
 function progress_change() {
     var current_progress = 0;
+    var progress = document.getElementById("dynamic");
     var interval = setInterval(function() {
         current_progress += 10;
-        $("#dynamic")
+        progress.style.width = current_progress + '%';
+        progress.setAttribute("aria-valuenow", current_progress)
+        progress.textContent = current_progress + '%';
+        /*$("#dynamic")
             .css("width", current_progress + "%")
             .attr("aria-valuenow", current_progress)
-            .text(current_progress + "% Complete");
-        if (current_progress >= 100)
+            .text(current_progress + "% Complete");*/
+        if (current_progress >= 100) {
             clearInterval(interval);
+        }
     }, 1000);
 }

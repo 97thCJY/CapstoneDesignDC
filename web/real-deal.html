@@ -88,9 +88,12 @@
             </div> -->
             <div class="position-relative">
                 <div style="width:700px; margin:auto;">
-                    <div onChange="progress_change()" id="dynamic" class="progress progress-bar bg-success progress-bar-striped progress_style mt-3 mb-3 ml-3" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                        <span id="current-progress" style="height:50px;"></span>
+                    <div id="dynamic" class="progress progress-bar bg-success progress-bar-striped progress_style mt-3 mb-3 ml-3" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%;">
+                        <span id="current-progress">99%</span>
                     </div>
+                    <script>
+                        progress_change();
+                    </script>
                     <div class="text-center time_text mb-3">전송 속도 : 12.3kw</div>
                     <div class="text-center time_text mb-3">예상 소요 시간 : 3분 24초</div>
                 </div>
