@@ -7,11 +7,10 @@ const DeviceSchema = new mongoose.Schema({
 
     PK: {
         type: Number,
-        required: ' PK is required'
+        required: 'PK is required',
     },
-    master: {
+    port: {
         type: Number,
-        required: 'creater Id is required'
     },
     name: {
         type: String
@@ -20,13 +19,10 @@ const DeviceSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
         required: 'device status setting req'
-    },
-    description:{
-        type:String,
     }
 });
 
-const model = mongoose.model("Device",DeviceSchema);
+const model = mongoose.model("Device", DeviceSchema);
 
 
 export default model;

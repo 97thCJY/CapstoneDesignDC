@@ -1,34 +1,63 @@
+import routes from '../routes';
 import Device from '../models/device';
 
 export const userProfile = (req, res) => {
 	res.send('userprofile');
 };
 
-export const addDevice = (req, res) => {
-	console.log('hellow post');
-};
+/**** GET Method ****/
 // 원격 페이지 rendering
 export const home = async (req, res) => {
-	const deviceObj = [];
+	const deviceObjList = [];
 	try {
-		const deviceData = req.user.deviceList;
-
+		// device DB 추가
+		const deviceData = req.user.deviceList;		// 해당 User의 device pk목록
+		console.log(req.user.deviceList);
 		for (let i = 0; i < deviceData.length; i++) {
-			await deviceObj.push(
-				Device.find({
-					PK: deviceData[i]
-				})
+			await deviceObjList.push(
+				Device.find({ PK: deviceData[i] })
 			);
 		}
+		// user의 deviceList 추가
+		
 	} catch (e) {
 		console.log('error: ' + e);
 	} finally {
 		res.render('route_main', {
 			pageTitle: 'Main',
 			topNav: 'remote',
-			deviceList: deviceObj | []
+			deviceList: deviceObjList | []
 		});
 	}
+
+	// const deviceObjList = [];
+	// try {
+	// 	let articleSet = await Transaction.find({});
+
+	// 	for (let i = 0; i < articleSet.length; i++) {
+	// 		if (articleSet[i].status !== 3) {
+	// 			let date;
+
+	// 			targetObjList.push(JSON.stringify(articleSet[i]));
+
+	// 			date = parseDate(JSON.parse(targetObjList[i]).createdAt);
+
+	// 			targetObjList[i] = JSON.parse(targetObjList[i]);
+
+	// 			targetObjList[i].createdAt = date;
+	// 		}
+	// 	}
+
+	// 	targetObjList.reverse();
+	// } catch (e) {
+	// 	console.log(e);
+	// } finally {
+	// 	res.render('deal', {
+	// 		pageTitle: 'TransAction',
+	// 		topNav: 'transAction',
+	// 		articleList: targetObjList
+	// 	});
+	// }
 };
 
 // 전력확인 페이지 rendering
@@ -57,5 +86,49 @@ export const checkElec = async (req, res) => {
 		});
 	}
 };
+
+/**** POST Method ****/
+// 디바이스 추가 함수
+export const addDevice = async (req, res) => {
+	const {name, port} = req.body;
+	
+	// 입력값 검사
+	if (name === "" || port === undefined) {
+		// 오류 반환 & 새로고침
+		res.send('<script type="text/javascript">alert("전자기기 이름 또는 포트를 선택해주세요.");location.href="/";</script>');
+	}
+	
+	console.log("디바이스 추가\n이름: " + name + " | 포트: " + port);
+
+	// DB검사 (포트 겹치는게 있는지)
+	// const deviceObj = [];
+	// try {
+	// 	const deviceData = req.user.deviceList;
+
+	// 	for (let i = 0; i < deviceData.length; i++) {
+	// 		await deviceObj.push(
+	// 			Device.find({ PK: deviceData[i] })
+	// 		);
+	// 	}
+	// } catch (e) {
+	// 	console.log('error: ' + e);
+	// } finally {
+	// 	console.log(deviceObj);
+	// }
+
+	// DB저장 및 리턴값 반환
+	try {
+		const newDevice = await Device.create({
+			name,
+			port,
+			status: false
+		});
+		res.redirect(routes.home);
+	} catch (e) {
+		res.send('<script type="text/javascript">alert("오류 발생: ' + e + '");location.href="/";</script>');
+	}
+};
+
+
 
 const getTotalUsage = () => 0;
