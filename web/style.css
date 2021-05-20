@@ -140,13 +140,8 @@ header {
     margin-bottom: 10px;
     display: inline-block;
     cursor: pointer;
-<<<<<<< HEAD
     font-weight: 500;
     font-size: 1.5vw;
-=======
-    font-weight: 600;
-    font-size: 1vw;
->>>>>>> csw
 }
 
 .route-list-activate {
