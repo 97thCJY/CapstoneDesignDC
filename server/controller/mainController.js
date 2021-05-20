@@ -1,5 +1,6 @@
 import routes from '../routes';
 import Device from '../models/device';
+import User from '../models/user';
 
 export const userProfile = (req, res) => {
 	res.send('userprofile');
@@ -10,54 +11,23 @@ export const userProfile = (req, res) => {
 export const home = async (req, res) => {
 	const deviceObjList = [];
 	try {
-		// device DB 추가
 		const deviceData = req.user.deviceList;		// 해당 User의 device pk목록
-		console.log(req.user.deviceList);
-		for (let i = 0; i < deviceData.length; i++) {
-			await deviceObjList.push(
-				Device.find({ PK: deviceData[i] })
-			);
+
+		let tmp = await Device.findOne({PK:deviceData[i]});
+		for (var i = 0; i < deviceData.length; i++) {
+			let tmp = await Device.findOne({ PK: deviceData[i] });
+			deviceObjList.push(tmp);
 		}
-		// user의 deviceList 추가
-		
 	} catch (e) {
 		console.log('error: ' + e);
 	} finally {
 		res.render('route_main', {
 			pageTitle: 'Main',
 			topNav: 'remote',
-			deviceList: deviceObjList | []
+			deviceList: deviceObjList
 		});
+		console.log(deviceObjList);
 	}
-
-	// const deviceObjList = [];
-	// try {
-	// 	let articleSet = await Transaction.find({});
-
-	// 	for (let i = 0; i < articleSet.length; i++) {
-	// 		if (articleSet[i].status !== 3) {
-	// 			let date;
-
-	// 			targetObjList.push(JSON.stringify(articleSet[i]));
-
-	// 			date = parseDate(JSON.parse(targetObjList[i]).createdAt);
-
-	// 			targetObjList[i] = JSON.parse(targetObjList[i]);
-
-	// 			targetObjList[i].createdAt = date;
-	// 		}
-	// 	}
-
-	// 	targetObjList.reverse();
-	// } catch (e) {
-	// 	console.log(e);
-	// } finally {
-	// 	res.render('deal', {
-	// 		pageTitle: 'TransAction',
-	// 		topNav: 'transAction',
-	// 		articleList: targetObjList
-	// 	});
-	// }
 };
 
 // 전력확인 페이지 rendering
@@ -91,7 +61,7 @@ export const checkElec = async (req, res) => {
 // 디바이스 추가 함수
 export const addDevice = async (req, res) => {
 	const {name, port} = req.body;
-	
+
 	// 입력값 검사
 	if (name === "" || port === undefined) {
 		// 오류 반환 & 새로고침
@@ -100,35 +70,32 @@ export const addDevice = async (req, res) => {
 	
 	console.log("디바이스 추가\n이름: " + name + " | 포트: " + port);
 
-	// DB검사 (포트 겹치는게 있는지)
-	// const deviceObj = [];
-	// try {
-	// 	const deviceData = req.user.deviceList;
-
-	// 	for (let i = 0; i < deviceData.length; i++) {
-	// 		await deviceObj.push(
-	// 			Device.find({ PK: deviceData[i] })
-	// 		);
-	// 	}
-	// } catch (e) {
-	// 	console.log('error: ' + e);
-	// } finally {
-	// 	console.log(deviceObj);
-	// }
+	//////////////////////////////////
+	// 작업 필요 : DB검사 (포트 겹치는게 있는지) //
+	/////////////////////////////////
 
 	// DB저장 및 리턴값 반환
 	try {
+		// device 저장
 		const newDevice = await Device.create({
 			name,
 			port,
 			status: false
 		});
+
+		// user의 deviceList 수정
+		const user = req.user;
+		const deviceDataList = req.user.deviceList;
+
+		deviceDataList.push(newDevice.PK);
+		user.deviceList = deviceDataList;
+		user.save();
+
 		res.redirect(routes.home);
 	} catch (e) {
 		res.send('<script type="text/javascript">alert("오류 발생: ' + e + '");location.href="/";</script>');
 	}
 };
-
 
 
 const getTotalUsage = () => 0;
