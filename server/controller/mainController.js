@@ -25,6 +25,7 @@ export const home = async (req, res) => {
 
 		res.render('route_main', {
 			pageTitle: 'Main',
+			topNav: 'remote',
 			deviceList: deviceObj | []
 		});
 	}
@@ -33,6 +34,7 @@ export const home = async (req, res) => {
 export const checkElec = (req, res) => {
 	console.log('on check elec');
 	res.render('checkElec', {
-		pageTitle: 'Check Elec'
+		pageTitle: 'Check Elec',
+		topNav: 'checkElec'
 	});
 };

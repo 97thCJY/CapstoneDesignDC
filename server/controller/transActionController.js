@@ -3,13 +3,15 @@ import Transaction from '../models/transaction';
 
 export const deal = (req, res) => {
 	res.render('deal', {
-		pageTitle: 'TransAction'
+		pageTitle: 'TransAction',
+		topNav: 'transAction'
 	});
 };
 
 export const write = (req, res) => {
 	res.render('add-deal', {
-		pageTitle: 'add-deal'
+		pageTitle: 'add-deal',
+		topNav: 'transAction'
 	});
 };
 
