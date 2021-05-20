@@ -143,11 +143,7 @@ header {
     display: inline-block;
     cursor: pointer;
     font-weight: 500;
-<<<<<<< HEAD
     white-space: nowrap;
-=======
-    white-space:nowrap;
->>>>>>> 13a2a2b5bd13bc2103252947ea0d2c6877144d34
     font-size: 1.5vw;
 }
 
