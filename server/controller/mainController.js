@@ -10,7 +10,6 @@ export const home = async (req, res) => {
 		const deviceData = req.user.deviceList;
 
 		for (let i = 0; i < deviceData.length; i++) {
-			console.log('on search!!!');
 			await deviceObj.push(
 				Device.find({
 					PK: deviceData[i]
@@ -21,8 +20,6 @@ export const home = async (req, res) => {
 		console.log('hit error!!!!!');
 		console.log(e);
 	} finally {
-		console.dir(deviceObj);
-
 		res.render('route_main', {
 			pageTitle: 'Main',
 			deviceList: deviceObj | []

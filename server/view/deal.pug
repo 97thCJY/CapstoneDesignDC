@@ -1,8 +1,25 @@
 extends layout/template_main
-
+include mixins/transaction
 
 block content2
     main
+        br
         .container.contents
+            // Contents Header
             .row.contents-header
-                h3 전력거래 페이지 작업필요~~
+                .col-6
+                    h3 &#xC804;&#xB825; &#xD310;&#xB9E4;&#xAE00;
+                .col-6.text-end
+                    a.btn.btn-secondary(href=`/main/transaction${routes.write}`) &#xAE00; &#xC791;&#xC131;&#xD558;&#xAE30;
+            hr
+            table.table.table-hover
+                thead
+                    tr
+                        th.text-center(scope='col') &#xC81C;&#xBAA9;
+                        th.text-center(scope='col') &#xAE00;&#xC4F4;&#xC774;
+                        th.text-center(scope='col') &#xC791;&#xC131;&#xC77C;
+                        th.text-center(scope='col') &#xD310;&#xB9E4;&#xB7C9;
+                tbody#deal-list
+                    for item of articleList
+                        +transaction(item)
+            div
