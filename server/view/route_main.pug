@@ -10,11 +10,17 @@ block content2
                 h3 원격제어
             hr
             // Contents List
+<<<<<<< HEAD
             #remote-list.row.row-cols-2.row-cols-md-4.g-4
                 
                 if (deviceList)
                     for item of deviceList
                         +device(item)
+=======
+            #remote-list.row.row-cols-2.row-cols-md-4
+                for item of deviceList
+                    +device(item)
+>>>>>>> 3a68711b7df81021f61e74f020cb601656cc8096
                 .col
                     .card.card_plus
                         img.card-img-remote.img-pointer(data-bs-toggle='modal', data-bs-target='#PlusModal', src='/assets/images/plus_img.png')
@@ -57,6 +63,41 @@ block content2
                                     option(value='4') Port-4
                                     option(value='5') Port-5
                             .modal-footer
-                                button.btn.btn-outline-secondary(type='button', data-bs-dismiss='modal') &#xB2EB;&#xAE30;
-                                button.btn.btn-outline-danger(type='button') &#xC800;&#xC7A5;
+                                button.btn.btn-outline-secondary(type='button', data-bs-dismiss='modal') 닫기
+                                button.btn.btn-outline-danger(type='button', onClick="requestRemoteFix()") 저장
         br
+
+    script.
+        // 원격 기기 on/off 요청
+        function requestRemoteOnOff(product_id) {
+            alert("Product Id값 " + product_id + "번 on/off 요청");
+
+            console.log('1');
+            document.write('<form hidden action="/main/remoteonoff" id="smb_form" method="post"><input type="number" id="productId" name="productId" value="'+ product_id +'"></form>');
+            console.log('2');
+            document.getElementById("smb_form").submit();
+            console.log('3');
+        }
+
+        // 클릭된 device PK
+        var device_pk;
+        
+        // 수정하기 modal창 데이터 넣기
+        function requestRemoteSetting(name, port, id) {
+            device_pk = id;
+            document.getElementById("SettingModalLabel").innerText = name;
+            document.getElementById("now_name").value = name;
+            document.getElementById("now_port").value = port;
+        }
+
+        // device 수정 요청
+        function requestRemoteFix() {
+            var name = document.getElementById("now_name").value;
+            var port = document.getElementById("now_port").value;
+
+            if (name === "" || port === "") {
+                alert("이름과 포트번호를 입력해주세요.")
+            } else {
+                alert("변경 내용 수정 요청\nID: " + portid + "\n이름: " + name + "\n포트: " + port);
+            }
+        }
