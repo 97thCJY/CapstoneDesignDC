@@ -29,15 +29,16 @@
             <!-- Top Nav -->
             <div class="blog-header">
                 <div class="row flex-nowrap justify-content-between align-items-center">
-                    <div class="col pt-1">
+                    <div class="col pt-1 weather_position">
                         <a id="weather" href="https://weather.naver.com/"></a>
                     </div>
                     <div class="col align-items-center">
                         <a href="./remote.html">
-                            <img class="logo_img" src="images/ourlogo.png"></a>
+                            <img class="logo_img" src="images/ourlogo.png">
+                        </a>
                     </div>
-                    <div class="col d-flex justify-content-end align-items-center">
-                        <a href="./login.html">로그인</a>
+                    <div class="col d-flex justify-content-end" id="log_out">
+
                     </div>
                 </div>
             </div>
@@ -48,17 +49,25 @@
             <div class="nav-scroller py-1 mb-2">
                 <nav class="nav d-flex justify-content-between">
                     <div class="col text-center align-self-center" style="border-right: 0px solid #555;">
-                        <a href="./remote.html"><span class="route-list route-list-padding">
-                            <img class = "route-img" src="images/remoter.png">&nbsp&nbsp&nbsp&nbsp원격 제어
-                        </span></a>
+                        <a href="./remote.html">
+                            <span class="route-list">
+                                <img class="route-img" src="images/remoter.png">&nbsp&nbsp&nbsp&nbsp원격 제어
+                            </span>
+                        </a>
                     </div>
                     <div class="col text-center align-self-center" style="border-right: 0px solid #555;">
-                        <a href="./deal.html"><span class="route-list route-list-padding">
-                            <img class = "route-img" src="images/deal.png">&nbsp&nbsp&nbsp&nbsp전력 거래소</span></a>
+                        <a href="./deal.html">
+                            <span class="route-list">
+                                <img class="route-img" src="images/deal.png">&nbsp&nbsp&nbsp&nbsp전력 거래소
+                            </span>
+                        </a>
                     </div>
                     <div class="col text-center align-self-center">
-                        <a href="./check-elec.html"><span class="route-list route-list-activate route-list-padding">
-                            <img class = "route-img" src="images/checkd.png">&nbsp&nbsp&nbsp&nbsp전력 확인</span></a>
+                        <a href="./check-elec.html">
+                            <span class="route-list route-list-activate">
+                                <img class="route-img" src="images/checkd.png">&nbsp&nbsp&nbsp&nbsp전력 확인
+                            </span>
+                        </a>
                     </div>
                 </nav>
             </div>
@@ -92,6 +101,35 @@
     </footer>
 
     <script>
+        var tmp_logOut = "";
+
+        tmp_logOut +=
+            '<!--href="./login.html"-->\
+                <p data-bs-toggle="modal" data-bs-target="#LogOutModal" class="img-pointer">로그아웃</p>';
+
+        tmp_logOut +=
+            '<!--Modal-->\
+                        <div class="modal fade" tabindex="-1" aria-hidden="true" id="LogOutModal" aria-labelledby="LogOutModalLabel">\
+                            <div class="modal-dialog modal-dialog-top modal_state">\
+                                <div class="modal-content">\
+                                    <div class="modal-header" style="background: #505; color:white">\
+                                        <h5 class="modal-title" id="LogOutModalLabel">LogOut</h5>\
+                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>\
+                                    </div>\
+                                    <div class="modal-body">\
+                                        <div class="select_elec mb-3">\
+                                            <p>LogOut 하시겠습니까?</p>\
+                                        </div>\
+                                    </div>\
+                                    <div class="modal-footer">\
+                                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">닫기</button>\
+                                        <a href="./login.html"><button type="button" class="btn btn-outline-danger" onClick="requestRemoteLogout()">로그아웃</button></a>\
+                                    </div>\
+                                </div>\
+                            </div>\
+                        </div>';
+
+
         var check_list = [{
             "id": 1,
             "amount": "100kw",
@@ -115,15 +153,16 @@
             var img_src = ["images/thunder.jpg", "images/thunder.jpg", "images/battery.jpg", "images/lights.jpg"];
             tmp_str +=
                 '<div class="col">\
-                    <div class="card card-check">\
-                        <div class="card-title text-center py-0">\
-                            <h5 class="card-title card-check-title">' + check_list[i].name + '</h5>\
-                            <img class="card-img-top" src="' + img_src[i] + '"/>\
-                            <h5 class="card_name">' + check_list[i].amount + ' </h5>\
+                        <div class="card card-check">\
+                            <div class="card-title text-center py-0">\
+                                <h5 class="card-title card-check-title">' + check_list[i].name + '</h5>\
+                                <img class="card-img-top" src="' + img_src[i] + '"/>\
+                                <h5 class="card_name">' + check_list[i].amount + ' </h5>\
+                            </div>\
                         </div>\
-                    </div>\
-                </div>';
+                    </div>';
         }
+        document.getElementById("log_out").innerHTML = tmp_logOut;
         document.getElementById("check-list").innerHTML = tmp_str;
     </script>
 </body>

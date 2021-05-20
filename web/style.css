@@ -95,12 +95,30 @@ input[type='number']::-webkit-inner-spin-button {
 }
 
 
-/* 로고 */
+/* 로고 바*/
+.weather_position {
+    margin-top: 3vw;
+}
+
+#weather {
+    font-size: 1.5vw;
+}
 
 .logo_img {
-    width: 90%;
-    min-width: 150px;
-    margin-bottom: 1rem;
+    width: 100%;
+    min-width: 180px;
+    margin-top: 1vw;
+}
+
+#log_out {
+    margin-bottom: 6.5vh;
+    font-size: 1.8vh;
+    font-weight: 600;
+    padding: 1vh 3vw 0 0.3vw;
+}
+
+#log_out p {
+    color: #888;
 }
 
 
@@ -115,12 +133,12 @@ header {
     color: black;
     border-radius: 10px;
     border: 0px solid #927da6;
-    padding: 15px 10px;
+    padding: 2vw 1.8vw;
     margin-bottom: 10px;
     display: inline-block;
     cursor: pointer;
     font-weight: 500;
-    font-size: 1rem;
+    font-size: 1.5vw;
 }
 
 .route-list-activate {
@@ -128,11 +146,6 @@ header {
     background-color: #7b68ee;
     color: #eee;
     font-weight: 600;
-}
-
-.route-list-padding {
-    padding-left: 20px;
-    padding-right: 20px;
 }
 
 .route-img {

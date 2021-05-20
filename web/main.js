@@ -54,6 +54,12 @@ function requestCoords() {
 requestCoords();
 
 
+// 로그아웃
+function requestRemoteLogout() {
+    alert("서버에서 User 로그아웃필요.");
+}
+
+
 /* remote 페이지 */
 // 원격 기기 on/off 요청
 function requestRemoteOnOff(product_id) {
@@ -133,3 +139,5 @@ function requestRemoteFix() {
         alert("변경 내용 수정 요청\nID: " + portid + "\n이름: " + name + "\n포트: " + port);
     }
 }
+
+
