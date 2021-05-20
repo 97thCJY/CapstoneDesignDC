@@ -34,7 +34,8 @@
                     </div>
                     <div class="col align-items-center">
                         <a href="./remote.html">
-                            <img class="logo_img" src="images/ourlogo.png"></a>
+                            <img class="logo_img" src="images/ourlogo.png">
+                        </a>
                     </div>
                     <div class="col d-flex justify-content-end align-items-center">
                         <a href="./login.html">로그인</a>
@@ -48,17 +49,25 @@
             <div class="nav-scroller py-1 mb-2">
                 <nav class="nav d-flex justify-content-between">
                     <div class="col text-center align-self-center" style="border-right: 0px solid #555;">
-                        <a href="./remote.html"><span class="route-list route-list-activate route-list-padding">
-                            <img class = "route-img"src="images/remoter.png">&nbsp&nbsp&nbsp&nbsp원격 제어
-                        </span></a>
+                        <a href="./remote.html">
+                            <span class="route-list route-list-activate route-list-padding">
+                                <img class="route-img" src="images/remoter.png">&nbsp&nbsp&nbsp&nbsp원격 제어
+                            </span>
+                        </a>
                     </div>
                     <div class="col text-center align-self-center" style="border-right: 0px solid #555;">
-                        <a href="./deal.html"><span class="route-list route-list-padding">
-                            <img class = "route-img" src="images/deal.png">&nbsp&nbsp&nbsp&nbsp전력 거래소</span></a>
+                        <a href="./deal.html">
+                            <span class="route-list route-list-padding">
+                                <img class="route-img" src="images/deal.png">&nbsp&nbsp&nbsp&nbsp전력 거래소
+                            </span>
+                        </a>
                     </div>
                     <div class="col text-center align-self-center">
-                        <a href="./check-elec.html"><span class="route-list route-list-padding">
-                            <img class = "route-img" src="images/checkd.png">&nbsp&nbsp&nbsp&nbsp전력 확인</span></a>
+                        <a href="./check-elec.html">
+                            <span class="route-list route-list-padding">
+                                <img class="route-img" src="images/checkd.png">&nbsp&nbsp&nbsp&nbsp전력 확인
+                            </span>
+                        </a>
                     </div>
                 </nav>
             </div>
@@ -127,90 +136,90 @@
             }
             tmp_str +=
                 '<div class="col">\
-                    <div class="card card_round">';
+                            <div class="card card_round">';
 
             tmp_str +=
                 '<i class="fas fa-cog card_setting" onClick="requestRemoteSetting(`' + remote_list[i].product_name + '`, `' + remote_list[i].product_port + '`, `' + remote_list[i].product_id + '`)" data-bs-toggle="modal" data-bs-target="#SettingModal"></i>\
-                        <img class="card-img-remote img-pointer" src="' + img_src + '" id="card_btn" onClick="requestRemoteOnOff(' + remote_list[i].product_id + ')" />\
-                        <div class="card-title py-0">\
-                            <p class="card_name">' + remote_list[i].product_name + '</p>\
-                        </div>\
-                    </div>\
-                </div>';
+                                <img class="card-img-remote img-pointer" src="' + img_src + '" id="card_btn" onClick="requestRemoteOnOff(' + remote_list[i].product_id + ')" />\
+                                <div class="card-title py-0">\
+                                    <p class="card_name">' + remote_list[i].product_name + '</p>\
+                                </div>\
+                            </div>\
+                        </div>';
         }
 
         tmp_str +=
             '<!--추가 버튼-->\
-            <div class="col">\
-                <div class="card card_plus">\
-                    <img class="card-img-plus img-pointer" data-bs-toggle="modal" data-bs-target="#PlusModal" src="images/plus_img.png" />\
-                </div>\
-            </div>';
+                    <div class="col">\
+                        <div class="card card_plus">\
+                            <img class="card-img-plus img-pointer" data-bs-toggle="modal" data-bs-target="#PlusModal" src="images/plus_img.png" />\
+                        </div>\
+                    </div>';
 
         tmp_str +=
             '<!--Modal-->\
-            <div class="modal fade" tabindex="-1" aria-hidden="true" id="PlusModal" aria-labelledby="PlusModalLabel">\
-                <div class="modal-dialog modal-dialog-centered modal_state">\
-                    <div class="modal-content">\
-                        <div class="modal-header" style="background: #505; color:white">\
-                            <h5 class="modal-title" id="PlusModalLabel">전자기기 추가</h5>\
-                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>\
-                        </div>\
-                        <div class="modal-body">\
-                            <div class="select_elec mb-3">\
-                                <input class="form-control" id="new_name" placeholder="전자기기 이름"/>\
+                    <div class="modal fade" tabindex="-1" aria-hidden="true" id="PlusModal" aria-labelledby="PlusModalLabel">\
+                        <div class="modal-dialog modal-dialog-centered modal_state">\
+                            <div class="modal-content">\
+                                <div class="modal-header" style="background: #505; color:white">\
+                                    <h5 class="modal-title" id="PlusModalLabel">전자기기 추가</h5>\
+                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>\
+                                </div>\
+                                <div class="modal-body">\
+                                    <div class="select_elec mb-3">\
+                                        <input class="form-control" id="new_name" placeholder="전자기기 이름"/>\
+                                    </div>\
+                                    <select class="form-select select_port" id="new_port">\
+                                        <option value="" selected disabled hidden>포트 선택</option>\
+                                        <option value="1">port-1</option>\
+                                        <option value="2">Port-2</option>\
+                                        <option value="3">Port-3</option>\
+                                        <option value="4">Port-4</option>\
+                                        <option value="5">Port-5</option>\
+                                    </select>\
+                                </div>\
+                                <div class="modal-footer">\
+                                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">닫기</button>\
+                                    <button type="button" class="btn btn-outline-danger" onClick="requestRemoteSave()">저장</button>\
+                                </div>\
                             </div>\
-                            <select class="form-select select_port" id="new_port">\
-                                <option value="" selected disabled hidden>포트 선택</option>\
-                                <option value="1">port-1</option>\
-                                <option value="2">Port-2</option>\
-                                <option value="3">Port-3</option>\
-                                <option value="4">Port-4</option>\
-                                <option value="5">Port-5</option>\
-                            </select>\
                         </div>\
-                        <div class="modal-footer">\
-                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">닫기</button>\
-                            <button type="button" class="btn btn-outline-danger" onClick="requestRemoteSave()">저장</button>\
-                        </div>\
-                    </div>\
-                </div>\
-            </div>';
+                    </div>';
 
         // setting button
         tmp_str +=
             '<div class="modal fade" tabindex="-1" aria-hidden="true" id="SettingModal" aria-labelledby="SettingModalLabel">\
-                <div class="modal-dialog modal-dialog-centered modal_state">\
-                    <div class="modal-content">\
-                        <div class="modal-header" style="background: #505; color:white">\
-                           <h5 class="modal-title" id="SettingModalLabel"></h5>\
-                           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>\
-                        </div>\
-                        <div class="modal-body">\
-                            <div class="select_elec mb-3">\
-                                <input class="form-control" id="now_name">\
+                        <div class="modal-dialog modal-dialog-centered modal_state">\
+                            <div class="modal-content">\
+                                <div class="modal-header" style="background: #505; color:white">\
+                                   <h5 class="modal-title" id="SettingModalLabel"></h5>\
+                                   <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>\
+                                </div>\
+                                <div class="modal-body">\
+                                    <div class="select_elec mb-3">\
+                                        <input class="form-control" id="now_name">\
+                                    </div>\
+                                    <select class="form-select select_port" id="now_port">\
+                                        <option value="" selected disabled hidden></option>\
+                                        <option value="1">port-1</option>\
+                                        <option value="2">Port-2</option>\
+                                        <option value="3">Port-3</option>\
+                                        <option value="4">Port-4</option>\
+                                        <option value="5">Port-5</option>\
+                                    </select>\
+                                </div>\
+                                <div class="modal-footer">\
+                                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">닫기</button>\
+                                    <button type="button" class="btn btn-outline-danger" onClick="requestRemoteFix()">저장</button>\
+                                </div>\
                             </div>\
-                            <select class="form-select select_port" id="now_port">\
-                                <option value="" selected disabled hidden></option>\
-                                <option value="1">port-1</option>\
-                                <option value="2">Port-2</option>\
-                                <option value="3">Port-3</option>\
-                                <option value="4">Port-4</option>\
-                                <option value="5">Port-5</option>\
-                            </select>\
                         </div>\
-                        <div class="modal-footer">\
-                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">닫기</button>\
-                            <button type="button" class="btn btn-outline-danger" onClick="requestRemoteFix()">저장</button>\
-                        </div>\
-                    </div>\
-                </div>\
-            <div>';
+                    <div>';
 
         document.getElementById("remote-list").innerHTML = tmp_str;
     </script>
 
 </body>
-
+</html>
 
 <!--디자인-->
