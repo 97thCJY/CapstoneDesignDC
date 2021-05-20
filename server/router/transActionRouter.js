@@ -8,7 +8,9 @@ import {
 	postTransact,
 	trading,
 	purchaseRequest,
-	validationTesting
+	validationTesting,
+	purchaseAccept,
+	purchaseReject
 } from '../controller/transActionController.js';
 
 const transActionRouter = express.Router();
@@ -16,6 +18,9 @@ const transActionRouter = express.Router();
 transActionRouter.get('/', deal);
 transActionRouter.get(routes.write, write);
 transActionRouter.post(routes.write, onlyPrivate, postTransact);
+
+transActionRouter.get('/accept/:pk/:buyerId/:amount', purchaseAccept);
+transActionRouter.get('/reject/:pk', purchaseReject);
 
 //transActionRouter.get(routes.trading, trading);
 
