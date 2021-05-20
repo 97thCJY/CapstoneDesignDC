@@ -6,10 +6,11 @@ header
         .col.pt-1.weather_position
           a#weather(href='https://weather.naver.com/')
         .col.align-items-center
-          a(href=`/main`)
+          a(href=routes.main)
             img.logo_img(src='/assets/images/ourlogo.png')
         #log_out.col.d-flex.justify-content-end
-          p.img-pointer(data-bs-toggle='modal', data-bs-target='#LogOutModal') 로그아웃
+          a(href=routes.logOut)
+            p.img-pointer(data-bs-toggle='modal', data-bs-target='#LogOutModal') 로그아웃
 
     div(style='border-top: 2px solid #555; padding-top:5px; margin-top: 10px;')
 

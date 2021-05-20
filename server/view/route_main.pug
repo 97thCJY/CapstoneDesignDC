@@ -10,17 +10,9 @@ block content2
                 h3 원격제어
             hr
             // Contents List
-<<<<<<< HEAD
-            #remote-list.row.row-cols-2.row-cols-md-4.g-4
-                
-                if (deviceList)
-                    for item of deviceList
-                        +device(item)
-=======
             #remote-list.row.row-cols-2.row-cols-md-4
                 for item of deviceList
                     +device(item)
->>>>>>> 3a68711b7df81021f61e74f020cb601656cc8096
                 .col
                     .card.card_plus
                         img.card-img-remote.img-pointer(data-bs-toggle='modal', data-bs-target='#PlusModal', src='/assets/images/plus_img.png')
