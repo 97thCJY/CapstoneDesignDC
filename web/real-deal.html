@@ -1,0 +1,158 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>LOGO</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
+
+    <!-- Google Fonts-->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap">
+
+    <!-- Custom -->
+    <link href="style.css" rel="stylesheet">
+    <script src="main.js"></script>
+
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <header>
+        <div class="container">
+            <!-- Top Nav -->
+            <div class="blog-header">
+                <div class="row flex-nowrap justify-content-between align-items-center">
+                    <div class="col pt-1">
+                        <a id="weather" href="https://weather.naver.com/"></a>
+                    </div>
+                    <div class="col align-items-center">
+                        <a href="./remote.html">
+                            <img class="logo_img" src="images/ourlogo.png"></a>
+                    </div>
+                    <div class="col d-flex justify-content-end align-items-center">
+                        <a href="./login.html">로그인</a>
+                    </div>
+                </div>
+            </div>
+
+            <div style="border-top: 2px solid #555; padding-top:5px; margin-top: 10px;"></div>
+
+            <!-- Route List -->
+            <div class="nav-scroller py-1 mb-2">
+                <nav class="nav d-flex justify-content-between">
+                    <div class="col text-center align-self-center" style="border-right: 0px solid #555;">
+                        <a href="./remote.html"><span class="route-list route-list-activate route-list-padding">
+                            <img class = "route-img"src="images/remoter.png">&nbsp&nbsp&nbsp&nbsp원격 제어
+                        </span></a>
+                    </div>
+                    <div class="col text-center align-self-center" style="border-right: 0px solid #555;">
+                        <a href="./deal.html"><span class="route-list route-list-padding">
+                            <img class = "route-img" src="images/deal.png">&nbsp&nbsp&nbsp전력 거래소</span></a>
+                    </div>
+                    <div class="col text-center align-self-center">
+                        <a href="./check-elec.html"><span class="route-list route-list-padding">
+                            <img class = "route-img" src="images/checkd.png">&nbsp&nbsp&nbsp&nbsp전력 확인</span></a>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Contents -->
+    <main>
+        <br>
+        <div class="container contents">
+            <!-- Contents Header -->
+            <div class="row contents-header">
+                <h3>실시간 거래 확인</h3>
+            </div>
+            <hr>
+            <div class="row row-cols-2 row-cols-md-3 g-2 justify-content-center" id="check-list"></div>
+
+
+            <!-- <div class="position-relative" style="height:auto; margin-top : 50px;">
+                <div class="position-absolute start-50 translate-middle" style="width:500px;">
+                    <div onChange="progress_change()" id="dynamic" class="progress progress-bar bg-success progress-bar-striped progress_style mt-3 mb-3 ml-3" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                        <span id="current-progress"></span>
+                    </div>
+                    <div class="text-center time_text">전송 속도 : 12.3kw</div>
+                    <div class="text-center time_text">예상 소요 시간 : 3분 24초</div>
+                </div>
+            </div> -->
+            <div class="position-relative">
+                <div style="width:700px; margin:auto;">
+                    <div id="dynamic" class="progress progress-bar bg-success progress-bar-striped progress_style mt-3 mb-3 ml-3" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%;">
+                        <span id="current-progress">99%</span>
+                    </div>
+                    <script>
+                        progress_change();
+                    </script>
+                    <div class="text-center time_text mb-3">전송 속도 : 12.3kw</div>
+                    <div class="text-center time_text mb-3">예상 소요 시간 : 3분 24초</div>
+                </div>
+            </div>
+
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="text-center align-self-center">
+            <div>Copyrightⓒ 지하보다지상. All rights reserved.</div>
+            <div>서울특별시 광진구 능동로 209, 세종대학교</div>
+        </div>
+    </footer>
+    <script>
+        var check_list = [{
+            "id": 1,
+            "amount_send": "223kw",
+            "amount_rest": "100kw",
+            "name": "판매자"
+        }, {
+            "id": 2,
+            "amount_send": "100kw",
+            "amount_rest": "223kw",
+            "name": "구매자"
+        }];
+
+        var tmp_str = "";
+        for (var i = 0; i < check_list.length; i++) {
+            var img_src = ["images/thunder.jpg", "images/thunder.jpg"];
+            if (i == 0) {
+                tmp_str +=
+                    '<div class="col">\
+                    <div class="card card-check">\
+                        <div class="card-title text-center py-0">\
+                            <img class="card-img-top" src="' + img_src[i] + '"/>\
+                            <h5 class="card-title card-check-title">' + check_list[i].name + '</h5>\
+                            <h5 class="card_name">보낸 양 : ' + check_list[i].amount_send + ' </h5>\
+                            <h5 class="card_name">남은 양 : ' + check_list[i].amount_rest + ' </h5>\
+                        </div>\
+                    </div>\
+                </div>';
+            } else {
+                tmp_str +=
+                    '<div class="col">\
+                    <div class="card card-check">\
+                        <div class="card-title text-center py-0">\
+                            <img class="card-img-top" src="' + img_src[i] + '"/>\
+                            <h5 class="card-title card-check-title">' + check_list[i].name + '</h5>\
+                            <h5 class="card_name">받은 양 : ' + check_list[i].amount_send + ' </h5>\
+                            <h5 class="card_name">남은 양 : ' + check_list[i].amount_rest + ' </h5>\
+                        </div>\
+                    </div>\
+                </div>';
+            }
+        }
+        document.getElementById("check-list").innerHTML = tmp_str;
+    </script>
+</body>
+
+</html>

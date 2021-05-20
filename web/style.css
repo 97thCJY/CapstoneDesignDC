@@ -57,7 +57,9 @@ body {
     background-color: rgb(240, 240, 240);
 }
 
+
 /* 화면 Fade-in 효과 */
+
 body {
     animation: fadeIn 0.2s ease-in;
 }
@@ -66,13 +68,14 @@ body {
     0% {
         opacity: 0;
     }
-
     100% {
         opacity: 1;
     }
 }
 
+
 /* 푸터 */
+
 footer {
     position: absolute;
     bottom: 0;
@@ -137,15 +140,20 @@ header {
     margin-bottom: 10px;
     display: inline-block;
     cursor: pointer;
+<<<<<<< HEAD
     font-weight: 500;
     font-size: 1.5vw;
+=======
+    font-weight: 600;
+    font-size: 1vw;
+>>>>>>> csw
 }
 
 .route-list-activate {
     /* background-color: lightgreen; */
     background-color: #7b68ee;
     color: #eee;
-    font-weight: 600;
+    font-weight: 700;
 }
 
 .route-img {
@@ -295,4 +303,15 @@ header {
     width: 100%;
     max-width: 800px;
     margin: 0 auto;
+}
+
+
+/* 실시간 거래 확인 page */
+
+.progress_style {
+    height: 50px;
+}
+
+.time_text {
+    font-size: 20px;
 }
