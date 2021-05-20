@@ -9,9 +9,8 @@ transActionRouter.get('/', deal);
 transActionRouter.get(routes.write, write);
 transActionRouter.post(routes.write, onlyPrivate, postTransact);
 
-transActionRouter.get(routes.checkTrade, checkTrade);
+//transActionRouter.get(routes.trading, trading);
 transActionRouter.get(routes.trading, trading);
-
 transActionRouter.get('*', onlyPrivate, isUnvalidRoutes);
 
 export default transActionRouter;

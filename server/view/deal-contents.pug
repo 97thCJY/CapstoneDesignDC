@@ -1,0 +1,41 @@
+
+extends ./layout/template_main
+
+block content2
+
+    br
+    .container.contents.mb-3
+        .row.contents-header.align-self-center#deal-header
+            .col.align-self-center
+                h4  님의 판매글
+            .col.text-end.align-self-center
+                p.text-muted Created
+                p.text-muted ??
+        hr
+        .row#deal-contents
+            .form-container
+                .form-group.row
+                    h5(for = 'transaction_amount').col-sm-2 판매량 (kw)
+
+                    .col-sm-10.align-self-center
+                        h5 eal_contents.transaction_amount
+                
+                br
+
+                .row.form-group
+                    h5(for='transaction_amount').col-sm-2 판매 가격
+
+                    .col-sm-10.align-self-center
+                        h5 deal_contents.transaction_amount * price_per_kw + '원
+
+                br
+
+
+                .form-group.row
+                    h5(for='transaction_amount').col-sm-2 내용
+
+                    .col-sm-10.align-self-center
+                        p description
+
+                br
+          

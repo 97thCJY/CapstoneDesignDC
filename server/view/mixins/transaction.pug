@@ -2,7 +2,7 @@ mixin transaction(data={})
     table.text-center
         tr
             td(style = "width:60%").p-3
-                a(href = "") #{data.description}
+                a(href = `/main/transaction${routes.trading}`) #{data.description}
             
             td.text-center.p-3(style = 'width:10%') #{data.seller}
 

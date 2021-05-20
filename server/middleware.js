@@ -46,3 +46,66 @@ export const isUnvalidRoutes = (req, res, next) => {
 		}
 	}
 };
+
+export const testSetDevice = [
+	{
+		PK: 0,
+		name: 'port-1',
+		status: true
+	},
+	{
+		PK: 1,
+		name: 'port-1',
+		status: true
+	},
+	{
+		PK: 2,
+		name: 'port-1',
+		status: true
+	},
+	{
+		PK: 3,
+		name: 'port-1',
+		status: true
+	},
+	{
+		PK: 4,
+		name: 'port-1',
+		status: true
+	},
+	{
+		PK: 5,
+		name: 'port-1',
+		status: true
+	},
+	{
+		PK: 6,
+		name: 'port-1',
+		status: true
+	},
+	{
+		PK: 7,
+		name: 'port-1',
+		status: true
+	},
+	{
+		PK: 8,
+		name: 'port-1',
+		status: true
+	},
+	{
+		PK: 9,
+		name: 'port-1',
+		status: true
+	},
+	{
+		PK: 10,
+		name: 'port-1',
+		status: true
+	},
+	{
+		PK: 11,
+		name: 'port-1',
+		status: true
+	}
+];

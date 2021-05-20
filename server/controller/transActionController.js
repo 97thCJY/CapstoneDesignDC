@@ -31,7 +31,7 @@ export const deal = async (req, res) => {
 			articleList: targetObjList
 		});
 	}
-}
+};
 
 export const write = (req, res) => {
 	res.render('add-deal', {
@@ -45,10 +45,13 @@ export const postTransact = async (req, res) => {
 	const { PK, email, IP } = req.user;
 
 	try {
+		const transactionList = await Transaction.find({});
+
+		console.log(transactionList);
 		const transaction = await Transaction.create({
 			amount,
 			description,
-			PK: 0, //관련 수정 요구
+			PK: transactionList.length + 1, //관련 수정 요구
 			seller: PK,
 			createdAt: Date.now()
 		});
@@ -62,11 +65,17 @@ export const postTransact = async (req, res) => {
 };
 
 export const checkTrade = (req, res) => {
-	res.send('in /deal/deal_num');
+	const {
+		params: { id }
+	} = req;
+
+	console.log(id);
 };
 
 export const trading = (req, res) => {
-	res.send('in /deal/now');
+	res.render('deal-contents', {
+		pageTitle: 'Trading'
+	});
 };
 
 const parseDate = (date) => {
