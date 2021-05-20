@@ -45,25 +45,6 @@ function requestCoords() {
 }
 requestCoords();
 
-/* remote 페이지 */
-// 원격 기기 on/off 요청
-function requestRemoteOnOff(product_id) {
-	alert("Product Id값 " + product_id + "번 on/off 요청");
-}
-
-// 원격 기기 추가 요청
-function requestRemoteSave() {
-    var name = document.getElementById("new_name").value;
-    var port = document.getElementById("new_port").value;
-
-    if (name === "" || port === "") {
-        alert("이름과 포트번호를 입력해주세요.")
-    } else {
-        alert("새 기기 추가 요청\n이름: " + name + "\n포트: " + port);
-    }
-}
-
-
 /* deal 페이지 */
 // 전력 판매글 추가 요청
 function addDeal() {
@@ -91,32 +72,6 @@ function calculatePrice() {
     var amount = document.getElementById("transaction_amount").value;
     document.getElementById("transaction_price").value = amount * price_per_kw + "원";
 }
-
-
-/* Setting Modal 창*/
-var portid;
-
-function requestRemoteSetting(name, port, id) {
-    portid = id;
-    document.getElementById("SettingModalLabel").innerText = name;
-    document.getElementById("now_name").value = name;
-    document.getElementById("now_port").value = port;
-
-}
-
-// 수정 요청
-function requestRemoteFix() {
-    var name = document.getElementById("now_name").value;
-    var port = document.getElementById("now_port").value;
-
-
-    if (name === "" || port === "") {
-        alert("이름과 포트번호를 입력해주세요.")
-    } else {
-        alert("변경 내용 수정 요청\nID: " + portid + "\n이름: " + name + "\n포트: " + port);
-    }
-}
-
 
 // 실시간 거래 확인 페이지
 function progress_change() {
