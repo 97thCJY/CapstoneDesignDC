@@ -1,17 +1,14 @@
-import mongoose from "mongoose";
+var mongoose = require('mongoose');
+var autoIncrement = require('mongoose-auto-increment');
 
-/// must Make Model (data)  Schema ( shape, format)
-
+autoIncrement.initialize(mongoose.connection);
 
 const DeviceSchema = new mongoose.Schema({
-
     PK: {
-        type: Number,
-        required: ' PK is required'
+        type: Number
     },
-    master: {
+    port: {
         type: Number,
-        required: 'creater Id is required'
     },
     name: {
         type: String
@@ -20,13 +17,16 @@ const DeviceSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
         required: 'device status setting req'
-    },
-    description:{
-        type:String,
     }
 });
 
-const model = mongoose.model("Device",DeviceSchema);
+DeviceSchema.plugin(autoIncrement.plugin, {
+    model: 'Device',
+    field: 'PK',
+    startAt: 1, //시작
+    increment : 1 // 증가
+});
 
+const model = mongoose.model("Device", DeviceSchema);
 
 export default model;

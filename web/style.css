@@ -27,24 +27,27 @@ a {
     outline: none;
 }
 
-a:hover {
-    color: inherit;
-}
+    a:hover {
+        color: inherit;
+    }
 
 html {
     min-height: 100%;
     margin: 0;
 }
 
+
 main {
-    margin: -0.3rem 0;
+    margin-top: 0.3rem;
 }
 
-main .col {
-    padding: 1rem;
-}
+    main .col {
+        padding: 1rem;
+    }
 
 body {
+    position: relative;
+    padding-bottom: 104.8px;
     min-height: 100%;
 }
 
@@ -65,6 +68,7 @@ body {
     0% {
         opacity: 0;
     }
+
     100% {
         opacity: 1;
     }
@@ -74,7 +78,10 @@ body {
 /* 푸터 */
 
 footer {
-    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
     padding: 2rem 0;
     text-align: center;
     background-color: #495057;
@@ -92,11 +99,31 @@ input[type='number']::-webkit-inner-spin-button {
 }
 
 
-/* 로고 */
+/* 로고 바*/
+.weather_position {
+    margin-top: 3vw;
+}
+
+#weather {
+    font-size: 1.5vw;
+}
 
 .logo_img {
-    width: 90%;
-    min-width: 150px;
+    width: 100%;
+    min-width: 180px;
+    margin-top: 1vw;
+    margin-bottom: 2vh;
+}
+
+#log_out {
+    margin-bottom: 6.5vh;
+    font-size: 1.8vh;
+    font-weight: 600;
+    padding: 1vh 3vw 0 0.3vw;
+}
+
+#log_out p {
+    color: #888;
 }
 
 
@@ -111,12 +138,13 @@ header {
     color: black;
     border-radius: 10px;
     border: 0px solid #927da6;
-    padding: 15px 10px;
+    padding: 1.5vw 1.8vw;
     margin-bottom: 10px;
     display: inline-block;
     cursor: pointer;
-    font-weight: 600;
-    font-size: 1vw;
+    font-weight: 500;
+    white-space:nowrap;
+    font-size: 1.5vw;
 }
 
 .route-list-activate {
@@ -124,11 +152,6 @@ header {
     background-color: #7b68ee;
     color: #eee;
     font-weight: 700;
-}
-
-.route-list-padding {
-    padding-left: 20px;
-    padding-right: 20px;
 }
 
 .route-img {
@@ -149,33 +172,55 @@ header {
 /* 로그인, 회원가입 페이지 */
 
 .login-contents {
+    position: absolute;
+    top: 25%;
+    right: 50%;
+    transform: translate(50%, 0);
     background-color: white;
-    max-width: 600px;
+    max-width: 400px;
+    min-width: 330px;
     margin: auto;
-    margin-top: 30px;
-    padding: 30px 0px;
-    border-radius: 20px;
+    padding-bottom: 2.5vh;
+    border-radius: 30px;
+}
+
+.signup-contents {
+    position: absolute;
+    top: 18%;
+    right: 50%;
+    transform: translate(50%, 0);
+    background-color: white;
+    max-width: 400px;
+    min-width: 330px;
+    margin: auto;
+    padding-bottom: 2.5vh;
+    border-radius: 30px;
 }
 
 .login-input {
-    padding: 12px 5px;
-    margin: 10px 0px;
+    padding: 1vh 5px;
+    margin: 0.3vh 0px;
     width: 85%;
     max-width: 400px;
+    font-size: 2vh;
+    border: 1px solid black;
+    border-radius: 10px;
 }
 
 .login-input:focus {
     outline: none;
     border: 1px solid black;
-    border-bottom: 3px solid #009900;
+    border-bottom: 3px solid #414345;
+    border-radius: 10px;
 }
 
 .login-btn {
-    margin: 6px 0px;
+    margin: 0.15rem 0px;
     width: 85%;
     max-width: 400px;
-    font-size: 18px;
+    font-size: 2vh;
     font-weight: 600;
+    border-radius: 10px;
 }
 
 
@@ -275,4 +320,15 @@ header {
     width: 100%;
     max-width: 800px;
     margin: 0 auto;
+}
+
+
+/* 실시간 거래 확인 page */
+
+.progress_style {
+    height: 50px;
+}
+
+.time_text {
+    font-size: 20px;
 }
