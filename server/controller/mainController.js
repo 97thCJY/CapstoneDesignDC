@@ -4,6 +4,7 @@ export const userProfile = (req, res) => {
 	res.send('userprofile');
 };
 
+// 원격 페이지 rendering
 export const home = async (req, res) => {
 	const deviceObj = [];
 	try {
@@ -17,19 +18,31 @@ export const home = async (req, res) => {
 			);
 		}
 	} catch (e) {
-		console.log('hit error!!!!!');
-		console.log(e);
+		console.log("error: " + e);
 	} finally {
 		res.render('route_main', {
 			pageTitle: 'Main',
+			topNav: 'remote',
 			deviceList: deviceObj | []
 		});
 	}
 };
 
-export const checkElec = (req, res) => {
-	console.log('on check elec');
-	res.render('checkElec', {
-		pageTitle: 'Check Elec'
-	});
+// 전력확인 페이지 rendering
+export const checkElec = async (req, res) => {
+	const checkObj = [];
+
+	try {
+		console.log("searching");
+	} catch (e) {
+		console.log("error: " + e);
+	} finally {
+		console.dir(checkObj);
+
+		res.render('checkElec', {
+			pageTitle: 'Check Elec',
+			topNav: 'checkElec',
+			checkList: checkObj | []
+		});
+	}
 };

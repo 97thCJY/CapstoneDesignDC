@@ -3,25 +3,48 @@ extends layout/template_main
 
 block content2
     main
+        br
         .container.contents
+            // Contents Header
             .row.contents-header
                 h3 전력 확인
-            
-            .list-group
-                a.list-group-item.list-group-item-action(href="")
-                    .d-flex.w-100.justify-content-between
-                        h5
-                            img(src="/assets/images/elec.jpg" width="200px")
-                        p 전기 충전량
-                
-                a.list-group-item.list-group-item-action()
-                    .d-flex.w-100.justify-content-between
-                        h5
-                            img(src="/assets//images/elec.jpg" width="200px")
-                        p 총 전력 사용량
-                
-                a.list-group-item.list-group-item-action()
-                    .d-flex.w-100.justify-content-between
-                        h5
-                            img(src="/assets//images/elec.jpg" width="200px")
-                        p 배터리 전력량
+            hr
+            // Contents List
+            #check-list.row.row-cols-2.row-cols-md-4.g-4(style='background-color: white;')
+        br
+
+    script.
+        var check_list = [{
+            "id": 1,
+            "amount": "100kw",
+            "name": "총 전력 사용량"
+            }, {
+            "id": 2,
+            "amount": "200kw",
+            "name": "전기 충전량?"
+            }, {
+            "id": 3,
+            "amount": "300kw",
+            "name": "배터리 전력량"
+            }, {
+            "id": 4,
+            "amount": "500kw",
+            "name": "태양광 발전량"
+        }];
+
+        var tmp_str = "";
+        for (var i = 0; i < check_list.length; i++) {
+            var img_src = ["/assets/images/thunder.jpg", "/assets/images/thunder.jpg", "/assets/images/battery.jpg", "/assets/images/lights.jpg"];
+            tmp_str +=
+            '<div class="col">\
+                <div class="card card-check">\
+                    <div class="card-title text-center py-0">\
+                        <h5 class="card-title card-check-title">' + check_list[i].name + '</h5>\
+                        <img class="card-img-top" src="' + img_src[i] + '"/>\
+                        <h5 class="card_name">' + check_list[i].amount + ' </h5>\
+                    </div>\
+                </div>\
+            </div>';
+        }
+
+        document.getElementById("check-list").innerHTML = tmp_str;
