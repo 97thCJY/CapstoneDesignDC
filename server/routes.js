@@ -32,10 +32,15 @@ const routes = {
 	user: USER,
 	deal: DEAL,
 	checkElec: CHECKELEC,
-
 	transAction: TRANSACTION,
 	write: WRITE,
-	checkTrade: CHECKTRADE,
+	checkTrade: (id) => {
+		if (id) {
+			return `/${id}`;
+		} else {
+			return CHECKTRADE;
+		}
+	},
 	trading: TRADING
 };
 

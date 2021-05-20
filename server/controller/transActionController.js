@@ -1,5 +1,6 @@
 import routes from '../routes';
 import Transaction from '../models/transaction';
+import User from '../models/user';
 
 export const deal = async (req, res) => {
 	const targetObjList = [];
@@ -10,17 +11,15 @@ export const deal = async (req, res) => {
 		for (let i = 0; i < articleSet.length; i++) {
 			if (articleSet[i].status !== 3) {
 				let date;
+				const user = await User.find({ PK: articleSet[i].seller });
 
 				targetObjList.push(JSON.stringify(articleSet[i]));
-
 				date = parseDate(JSON.parse(targetObjList[i]).createdAt);
-
 				targetObjList[i] = JSON.parse(targetObjList[i]);
-
 				targetObjList[i].createdAt = date;
+				targetObjList[i].sellerName = user[0].name;
 			}
 		}
-
 		targetObjList.reverse();
 	} catch (e) {
 		console.log(e);
@@ -64,18 +63,33 @@ export const postTransact = async (req, res) => {
 	}
 };
 
-export const checkTrade = (req, res) => {
+export const checkTrade = async (req, res) => {
 	const {
 		params: { id }
 	} = req;
+	let data;
+	let seller;
+	try {
+		data = await Transaction.find({ PK: id });
 
-	console.log(id);
+		data = JSON.parse(JSON.stringify(data));
+
+		data[0].createdAt = data[0].createdAt.substring(0, 10);
+
+		seller = await User.find({ PK: data[0].seller });
+	} catch (e) {
+		console.log(e);
+	}
+	res.render('deal-contents', {
+		pageTitle: 'Trading',
+		data: data[0],
+		seller: seller[0],
+		user: req.user
+	});
 };
 
 export const trading = (req, res) => {
-	res.render('deal-contents', {
-		pageTitle: 'Trading'
-	});
+	console.log(req);
 };
 
 const parseDate = (date) => {
@@ -84,4 +98,18 @@ const parseDate = (date) => {
 	let parsed = date.substring(0, 10);
 
 	return parsed;
+};
+
+export const purchaseRequest = (req, res) => {
+	res.send('end');
+
+	///여띠기 만들면댐
+};
+
+export const validationTesting = (req, res, next) => {
+	const { purchase } = req.body;
+
+	//validation testing 만들기
+
+	next();
 };

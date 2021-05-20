@@ -38,12 +38,13 @@ export const postJoin = async (req, res) => {
 		res.render('signUp', { pageTitle: 'Sign Up' });
 	} else {
 		try {
+			const ulist = await User.find({});
 			const user = await User({
 				name,
 				email,
 				password,
 				contact,
-				PK: 0,
+				PK: ulist.length + 1,
 				batteryMax: 0,
 				IP: req.ip
 				//	deviceList: []
