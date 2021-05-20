@@ -140,6 +140,10 @@ function requestRemoteFix() {
     }
 }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 13a2a2b5bd13bc2103252947ea0d2c6877144d34
 // 실시간 거래 확인 페이지
 function progress_change() {
     var current_progress = 0;
@@ -157,4 +161,8 @@ function progress_change() {
             clearInterval(interval);
         }
     }, 1000);
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 13a2a2b5bd13bc2103252947ea0d2c6877144d34

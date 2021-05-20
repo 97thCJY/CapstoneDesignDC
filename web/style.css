@@ -27,9 +27,9 @@ a {
     outline: none;
 }
 
-a:hover {
-    color: inherit;
-}
+    a:hover {
+        color: inherit;
+    }
 
 html {
     min-height: 100%;
@@ -40,9 +40,9 @@ main {
     margin-top: 0.3rem;
 }
 
-main .col {
-    padding: 1rem;
-}
+    main .col {
+        padding: 1rem;
+    }
 
 body {
     position: relative;
@@ -67,6 +67,7 @@ body {
     0% {
         opacity: 0;
     }
+
     100% {
         opacity: 1;
     }
@@ -111,6 +112,7 @@ input[type='number']::-webkit-inner-spin-button {
     width: 100%;
     min-width: 180px;
     margin-top: 1vw;
+    margin-bottom: 2vh;
 }
 
 #log_out {
@@ -136,12 +138,16 @@ header {
     color: black;
     border-radius: 10px;
     border: 0px solid #927da6;
-    padding: 2vw 1.8vw;
+    padding: 1.5vw 1.8vw;
     margin-bottom: 10px;
     display: inline-block;
     cursor: pointer;
     font-weight: 500;
+<<<<<<< HEAD
     white-space: nowrap;
+=======
+    white-space:nowrap;
+>>>>>>> 13a2a2b5bd13bc2103252947ea0d2c6877144d34
     font-size: 1.5vw;
 }
 
@@ -171,36 +177,54 @@ header {
 
 .login-contents {
     position: absolute;
-    top: 20%;
+    top: 25%;
     right: 50%;
     transform: translate(50%, 0);
     background-color: white;
-    max-width: 600px;
+    max-width: 400px;
     min-width: 330px;
     margin: auto;
-    padding: 30px 0px;
-    border-radius: 20px;
+    padding-bottom: 2.5vh;
+    border-radius: 30px;
+}
+
+.signup-contents {
+    position: absolute;
+    top: 18%;
+    right: 50%;
+    transform: translate(50%, 0);
+    background-color: white;
+    max-width: 400px;
+    min-width: 330px;
+    margin: auto;
+    padding-bottom: 2.5vh;
+    border-radius: 30px;
 }
 
 .login-input {
-    padding: 12px 5px;
-    margin: 0.3rem 0px;
+    padding: 1vh 5px;
+    margin: 0.3vh 0px;
     width: 85%;
     max-width: 400px;
+    font-size: 2vh;
+    border: 1px solid black;
+    border-radius: 10px;
 }
 
 .login-input:focus {
     outline: none;
     border: 1px solid black;
-    border-bottom: 3px solid #009900;
+    border-bottom: 3px solid #414345;
+    border-radius: 10px;
 }
 
 .login-btn {
-    margin: 0.1rem 0px;
+    margin: 0.15rem 0px;
     width: 85%;
     max-width: 400px;
-    font-size: 1.5vw;
+    font-size: 2vh;
     font-weight: 600;
+    border-radius: 10px;
 }
 
 
