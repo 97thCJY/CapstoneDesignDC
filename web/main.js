@@ -2,11 +2,11 @@
 var price_per_kw = 100;
 
 // 원격 제어
-window.onload = function() {
+window.onload = function () {
     var myModal = document.getElementById('plus_btn');
     var myInput = document.getElementById('PlusModal');
 
-    myModal.addEventListener('shown.bs.modal', function() {
+    myModal.addEventListener('shown.bs.modal', function () {
         myInput.focus();
     });
 }
@@ -144,7 +144,7 @@ function requestRemoteFix() {
 function progress_change() {
     var current_progress = 0;
     var progress = document.getElementById("dynamic");
-    var interval = setInterval(function() {
+    var interval = setInterval(function () {
         current_progress += 10;
         progress.style.width = current_progress + '%';
         progress.setAttribute("aria-valuenow", current_progress)
@@ -157,4 +157,8 @@ function progress_change() {
             clearInterval(interval);
         }
     }, 1000);
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> a67a676f491b85767fd23a841b2ae67c8da58765
