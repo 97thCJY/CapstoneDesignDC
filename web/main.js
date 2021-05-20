@@ -157,8 +157,4 @@ function progress_change() {
             clearInterval(interval);
         }
     }, 1000);
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> a67a676f491b85767fd23a841b2ae67c8da58765
