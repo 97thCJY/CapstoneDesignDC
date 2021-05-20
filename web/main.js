@@ -140,9 +140,6 @@ function requestRemoteFix() {
     }
 }
 
-<<<<<<< HEAD
-
-=======
 // 실시간 거래 확인 페이지
 function progress_change() {
     var current_progress = 0;
@@ -161,4 +158,3 @@ function progress_change() {
         }
     }, 1000);
 }
->>>>>>> csw

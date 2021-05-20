@@ -36,9 +36,8 @@ html {
     margin: 0;
 }
 
-
 main {
-    margin-top:0.3rem;
+    margin-top: 0.3rem;
 }
 
 main .col {
@@ -99,6 +98,7 @@ input[type='number']::-webkit-inner-spin-button {
 
 
 /* 로고 바*/
+
 .weather_position {
     margin-top: 3vw;
 }
@@ -140,13 +140,9 @@ header {
     margin-bottom: 10px;
     display: inline-block;
     cursor: pointer;
-<<<<<<< HEAD
     font-weight: 500;
+    white-space: nowrap;
     font-size: 1.5vw;
-=======
-    font-weight: 600;
-    font-size: 1vw;
->>>>>>> csw
 }
 
 .route-list-activate {
