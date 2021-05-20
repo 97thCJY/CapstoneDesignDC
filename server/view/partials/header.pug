@@ -16,12 +16,6 @@ header
     // Route List
     .nav-scroller.py-1.mb-2
       nav.nav.d-flex.justify-content-between
-<<<<<<< HEAD
-        .col.text-center.align-self-center(style='border-right: 2px solid #555;')
-          a(href='./remote.html')
-            span.route-list.route-list-activate#remotePortal &#xC6D0;&#xACA9;&#xC81C;&#xC5B4;
-        .col.text-center.align-self-center(style='border-right: 2px solid #555;')
-=======
         .col.text-center.align-self-center(style='border-right: 0px solid #555;')
           a(href=`/main`)
             if (topNav === 'remote')
@@ -32,17 +26,9 @@ header
               span.route-list.route-list-padding
                 img.route-img(src='/assets/images/remoter.png')
                 | &nbsp&nbsp&nbsp&nbsp원격 제어
->>>>>>> 7eadc86a135d9a98f29bbb7897f436c5ecc9e81e
 
         .col.text-center.align-self-center(style='border-right: 0px solid #555;')
           a(href=`/main${routes.transAction}`)
-<<<<<<< HEAD
-            span.route-list.route-list-activate#transPortal &#xC804;&#xB825; &#xAC70;&#xB798;&#xC18C;
-
-        .col.text-center.align-self-center
-          a(href=`/main${routes.checkElec}`)
-            span.route-list#checkEPortal &#xC804;&#xB825;&#xD655;&#xC778;
-=======
             if (topNav === 'transAction')
               span.route-list.route-list-padding.route-list-activate
                 img.route-img(src='/assets/images/deal.png')
@@ -62,4 +48,3 @@ header
               span.route-list.route-list-padding
                 img.route-img(src='/assets/images/checkd.png')
                 | &nbsp&nbsp&nbsp&nbsp전력 확인
->>>>>>> 7eadc86a135d9a98f29bbb7897f436c5ecc9e81e
