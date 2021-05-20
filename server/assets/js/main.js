@@ -3,9 +3,6 @@ import '../scss/styles.scss';
 // kw당 가격 (원)
 var price_per_kw = 100;
 
-const transPortal = document.getElementById('transPortal');
-const checkEPortal = document.getElementById('checkEPortal');
-const remotePortal = document.getElementById('remotePortal');
 // 날씨 함수
 function getWeather(lat, lon) {
 	let weatherIcon = {
@@ -117,15 +114,3 @@ function requestRemoteFix() {
 		alert('변경 내용 수정 요청\nID: ' + portid + '\n이름: ' + name + '\n포트: ' + port);
 	}
 }
-
-const handlePortal = (e) => {
-	console.dir(e.target);
-};
-const navigationHandler = () => {
-	console.log(transPortal);
-	transPortal.addEventListener('click', handlePortal);
-	checkEPortal.addEventListener('click', handlePortal);
-	remotePortal.addEventListener('click', handlePortal);
-};
-
-navigationHandler();
