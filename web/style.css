@@ -31,19 +31,27 @@ a:hover {
     color: inherit;
 }
 
+html {
+    min-height: 100%;
+    margin: 0;
+}
+
+main {
+    margin: -0.3rem 0;
+}
+
+main .col {
+    padding: 1rem;
+}
+
+body {
+    min-height: 100%;
+}
+
 html,
 body {
     font-family: 'Nanum Gothic', sans-serif;
-    background-color: rgb(248, 249, 250);
-}
-
-
-/* input-number 화살표 지우기 */
-
-input[type='number']::-webkit-outer-spin-button,
-input[type='number']::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+    background-color: rgb(240, 240, 240);
 }
 
 
@@ -63,6 +71,35 @@ body {
 }
 
 
+/* 푸터 */
+
+footer {
+    width: 100%;
+    padding: 2rem 0;
+    text-align: center;
+    background-color: #495057;
+    color: #adb5bd;
+    font-size: 12px;
+}
+
+
+/* input-number 화살표 지우기 */
+
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+
+/* 로고 */
+
+.logo_img {
+    width: 90%;
+    min-width: 150px;
+}
+
+
 /* 네비게이션 바 */
 
 header {
@@ -71,21 +108,32 @@ header {
 
 .route-list {
     /* background-color: lightslategrey; */
-    color: #505;
-    border-radius: 100px;
-    border: 2px solid #505;
+    color: black;
+    border-radius: 10px;
+    border: 0px solid #927da6;
     padding: 15px 10px;
     margin-bottom: 10px;
     display: inline-block;
     cursor: pointer;
-    font-weight: 500;
+    font-weight: 600;
+    font-size: 1vw;
 }
 
 .route-list-activate {
     /* background-color: lightgreen; */
-    background-color: #505;
+    background-color: #7b68ee;
     color: #eee;
-    font-weight: 600;
+    font-weight: 700;
+}
+
+.route-list-padding {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.route-img {
+    width: 20%;
+    min-width: 20px;
 }
 
 
@@ -93,17 +141,8 @@ header {
 
 .contents {
     background-color: white;
-    margin-bottom: 20px;
-    padding-bottom: 20px;
-}
-
-
-/* 푸터 */
-
-footer {
-    background-color: #495057;
-    color: #adb5bd;
-    font-size: 12px;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
 }
 
 
@@ -143,9 +182,9 @@ footer {
 /* 원격 제어 page*/
 
 .card_round {
-    height: 100%;
+    width: 100%;
     border-radius: 25%;
-	border: 1px solid green;
+    border: 1px solid green;
 }
 
 .card_name {
@@ -155,9 +194,21 @@ footer {
     margin: 1rem 0;
 }
 
+.card-img-remote {
+    width: 60%;
+    margin: 0 auto;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+.img-pointer {
+    cursor: pointer;
+}
+
 .card_setting {
-    margin-right: 15%;
-    margin-top: 10%;
+    position: absolute;
+    top: 8%;
+    right: 8%;
     cursor: pointer;
 }
 
@@ -168,13 +219,7 @@ footer {
 }
 
 .card_plus_image {
-	padding: 3rem 2rem;
-}
-
-.card-img-remote {
-    width: 60%;
-    margin: 15px auto;
-    margin-bottom: 10px;
+    padding: 3rem 2rem;
 }
 
 .card-img-top {
@@ -187,6 +232,14 @@ footer {
     cursor: pointer;
 }
 
+.card-img-plus {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60%;
+}
+
 
 /* 전력 확인 page */
 
@@ -196,13 +249,10 @@ footer {
 }
 
 .card-check {
-    border: 3px solid black;
+    border-radius: 5%;
+    border: 3px solid gray;
     height: 100%;
     margin-bottom: 10px;
-}
-
-.card-check:hover {
-    background-color: mediumpurple;
 }
 
 
@@ -215,6 +265,7 @@ footer {
 .content-row {
     border-bottom: 2px solid gray;
     padding-bottom: 5px;
+    padding: 0.5rem;
 }
 
 
@@ -224,31 +275,4 @@ footer {
     width: 100%;
     max-width: 800px;
     margin: 0 auto;
-}
-
-
-/* Footer 아래 고정 */
-
-html {
-    position: relative;
-    min-height: 100%;
-    margin: 0;
-}
-
-body {
-    min-height: 100%;
-}
-
-footer {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    padding: 15px 0;
-    text-align: center;
-    color: white;
-}
-
-main {
-    margin-bottom: 50px;
 }
