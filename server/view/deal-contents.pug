@@ -37,7 +37,7 @@ block content2
                                 p #{data.description}
                         br
 
-                        if (user.PK == data.seller)
+                        if (user.PK != data.seller)
                             .text-end
                                 button.btn.btn-danger(type = "submit") 수정하기
                         else
