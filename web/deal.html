@@ -177,13 +177,16 @@
                 (tmp_hours < 10 ? '0' + tmp_hours : tmp_hours) + ":" +
                 (tmp_minutes < 10 ? '0' + tmp_minutes : tmp_minutes);
 
-            tmp_str += '<table calss = "text-center">\
-                                <tr>\
-                                    <td style = "width: 60%" class = "p-3">\
-                                    <a class = "text-reset" href = "' + 'deal-contents.html' + '">' + deal_list[i].transaction_description + '</a> </td>\
-                                    <td style="width: 15%" class="text-center p-3">' + deal_list[i].seller_name + '</td>\
-                                    <td style="width: 15%" class="text-center p-3">' + date_str + '</td>\
-                                    <td style="width: 10%" class="text-center p-3">' + deal_list[i].transaction_amount + 'kw</td></tr>'
+            tmp_str +=
+                '<table class = "text-center">\
+                    <tr>\
+                        <td style = "width: 60%" class = "p-3">\
+                            <a class = "text-reset" href = "' + 'deal-contents.html' + '">' + deal_list[i].transaction_description + '</a>\
+                        </td>\
+                        <td style="width: 15%" class="text-center p-3">' + deal_list[i].seller_name + '</td>\
+                        <td style="width: 15%" class="text-center p-3">' + date_str + '</td>\
+                        <td style="width: 10%" class="text-center p-3">' + deal_list[i].transaction_amount + 'kw</td>\
+                    </tr>'
         }
 
         document.getElementById("log_out").innerHTML = tmp_logOut;
