@@ -7,19 +7,18 @@ export const deal = async (req, res) => {
 	try {
 		let articleSet = await Transaction.find({});
 
-		console.log(articleSet);
-
 		for (let i = 0; i < articleSet.length; i++) {
 			if (articleSet[i].status !== 3) {
-				//createdAtList.push(parseDate(articleSet[i].createdAt));
+				let date;
 
-				// articleSet[i].createdAt = parseDate(articleSet[i].createdAt);
+				targetObjList.push(JSON.stringify(articleSet[i]));
 
-				targetObjList.push(articleSet[i]);
-				targetObjList[0]['created_str'] = parseDate(articleSet[i].createdAt);
+				date = parseDate(JSON.parse(targetObjList[i]).createdAt);
+
+				targetObjList[i] = JSON.parse(targetObjList[i]);
+
+				targetObjList[i].createdAt = date;
 			}
-
-			console.log(targetObjList);
 		}
 	} catch (e) {
 		console.log(e);
@@ -67,20 +66,9 @@ export const trading = (req, res) => {
 };
 
 const parseDate = (date) => {
-	var tmp_month = date.getUTCMonth() + 1;
-	var tmp_date = date.getUTCDate();
-	var tmp_hours = date.getUTCHours();
-	var tmp_minutes = date.getUTCMinutes();
-	let date_str =
-		date.getFullYear() +
-		'/' +
-		(tmp_month < 10 ? '0' + tmp_month : tmp_month) +
-		'/' +
-		(tmp_date < 10 ? '0' + tmp_date : tmp_date) +
-		' ' +
-		(tmp_hours < 10 ? '0' + tmp_hours : tmp_hours) +
-		':' +
-		(tmp_minutes < 10 ? '0' + tmp_minutes : tmp_minutes);
+	const sDate = JSON.stringify(date);
 
-	return date_str;
+	let parsed = date.substring(0, 10);
+
+	return parsed;
 };
