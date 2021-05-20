@@ -20,6 +20,8 @@ export const deal = async (req, res) => {
 				targetObjList[i].createdAt = date;
 			}
 		}
+
+		targetObjList.reverse();
 	} catch (e) {
 		console.log(e);
 	} finally {
