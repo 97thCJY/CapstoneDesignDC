@@ -35,7 +35,8 @@
                     </div>
                     <div class="col align-items-center">
                         <a href="./remote.html">
-                            <img class="logo_img" src="images/ourlogo.png"></a>
+                            <img class="logo_img" src="images/ourlogo.png">
+                        </a>
                     </div>
                     <div class="col d-flex justify-content-end align-items-center">
                         <a href="./login.html">로그인</a>
@@ -49,17 +50,25 @@
             <div class="nav-scroller py-1 mb-2">
                 <nav class="nav d-flex justify-content-between">
                     <div class="col text-center align-self-center" style="border-right: 0px solid #555;">
-                        <a href="./remote.html"><span class="route-list route-list-padding">
-                            <img class = "route-img" src="images/remoter.png">&nbsp&nbsp&nbsp&nbsp원격 제어
-                        </span></a>
+                        <a href="./remote.html">
+                            <span class="route-list route-list-padding">
+                                <img class="route-img" src="images/remoter.png">&nbsp&nbsp&nbsp&nbsp원격 제어
+                            </span>
+                        </a>
                     </div>
                     <div class="col text-center align-self-center" style="border-right: 0px solid #555;">
-                        <a href="./deal.html"><span class="route-list route-list-activate route-list-padding">
-                            <img class = "route-img" src="images/deal.png">&nbsp&nbsp&nbsp&nbsp전력 거래소</span></a>
+                        <a href="./deal.html">
+                            <span class="route-list route-list-activate route-list-padding">
+                                <img class="route-img" src="images/deal.png">&nbsp&nbsp&nbsp&nbsp전력 거래소
+                            </span>
+                        </a>
                     </div>
                     <div class="col text-center align-self-center">
-                        <a href="./check-elec.html"><span class="route-list route-list-padding">
-                            <img class = "route-img" src="images/checkd.png">&nbsp&nbsp&nbsp&nbsp전력 확인</span></a>
+                        <a href="./check-elec.html">
+                            <span class="route-list route-list-padding">
+                                <img class="route-img" src="images/checkd.png">&nbsp&nbsp&nbsp&nbsp전력 확인
+                            </span>
+                        </a>
                     </div>
                 </nav>
             </div>
@@ -80,7 +89,8 @@
             <div class="row" id="deal-contents">
 
             </div>
-            <div>
+        </div>
+        <br>
     </main>
 
     <!-- Footer -->
@@ -120,46 +130,46 @@
 
         deal_header_str +=
             '<div class="col align-self-center">\
-                <h4>' + deal_contents.seller_name + '님의 판매글</h4>\
-            </div>\
-            <div class="col text-end align-self-center">\
-                <p class="text-muted">Created</p>\
-                <p class="text-muted">' + date_str + '</p>\
-            </div>';
+                    <h4>' + deal_contents.seller_name + '님의 판매글</h4>\
+                </div>\
+                <div class="col text-end align-self-center">\
+                    <p class="text-muted">Created</p>\
+                    <p class="text-muted">' + date_str + '</p>\
+                </div>';
 
         if (deal_contents.is_seller) {
             deal_buttons_str +=
                 '<div class="text-end">\
-                    <button onClick="" class="btn btn-danger" type="submit">수정하기</button>\
-                </div>';
+                        <button onClick="" class="btn btn-danger" type="submit">수정하기</button>\
+                    </div>';
         } else {
             deal_buttons_str +=
                 '<div class="text-end">\
-                    <input type="number" placeholder="구매량 입력(kw)">\
-                    <button onClick="" class="btn btn-secondary" type="submit">구매요청</button>\
-                </div>';
+                        <input type="number" placeholder="구매량 입력(kw)">\
+                        <button onClick="" class="btn btn-secondary" type="submit">구매요청</button>\
+                    </div>';
         }
 
         deal_contents_str +=
             '<div class="form-container">\
-                <div class="form-group row">\
-                    <h5 for="transaction_amount" class="col-sm-2">판매량 (kw)</h5>\
-                    <div class="col-sm-10 align-self-center">\
-                        <h5>' + deal_contents.transaction_amount + '</h5>\
-                    </div>\
-                </div><br>\
-                <div class="form-group row">\
-                    <h5 for="transaction_amount" class="col-sm-2">판매 가격</h5>\
-                    <div class="col-sm-10 align-self-center">\
-                        <h5>' + deal_contents.transaction_amount * price_per_kw + '원</h5>\
-                    </div>\
-                </div><br>\
-                <div class="form-group row">\
-                    <h5 for="transaction_amount" class="col-sm-2">내용</h5>\
-                    <div class="col-sm-10 align-self-center">\
-                        <p>' + deal_contents.transaction_description + '</p>\
-                    </div>\
-                </div><br>' +
+                    <div class="form-group row">\
+                        <h5 for="transaction_amount" class="col-sm-2">판매량 (kw)</h5>\
+                        <div class="col-sm-10 align-self-center">\
+                            <h5>' + deal_contents.transaction_amount + '</h5>\
+                        </div>\
+                    </div><br>\
+                    <div class="form-group row">\
+                        <h5 for="transaction_amount" class="col-sm-2">판매 가격</h5>\
+                        <div class="col-sm-10 align-self-center">\
+                            <h5>' + deal_contents.transaction_amount * price_per_kw + '원</h5>\
+                        </div>\
+                    </div><br>\
+                    <div class="form-group row">\
+                        <h5 for="transaction_amount" class="col-sm-2">내용</h5>\
+                        <div class="col-sm-10 align-self-center">\
+                            <p>' + deal_contents.transaction_description + '</p>\
+                        </div>\
+                    </div><br>' +
             deal_buttons_str +
             '</div>';
 
