@@ -48,7 +48,6 @@ requestCoords();
 /* remote 페이지 */
 // 원격 기기 on/off 요청
 function requestRemoteOnOff(product_id) {
-    console.log("requestRemoteOnOff");
     alert("Product Id값 " + product_id + "번 on/off 요청");
 }
 

@@ -25,14 +25,16 @@ export const deal = async (req, res) => {
 	} finally {
 		res.render('deal', {
 			pageTitle: 'TransAction',
+			topNav: 'transAction',
 			articleList: targetObjList
 		});
 	}
-};
+}
 
 export const write = (req, res) => {
 	res.render('add-deal', {
-		pageTitle: 'add-deal'
+		pageTitle: 'add-deal',
+		topNav: 'transAction'
 	});
 };
 
