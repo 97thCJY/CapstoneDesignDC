@@ -46,6 +46,8 @@ main .col {
 }
 
 body {
+    position: relative;
+    padding-bottom: 104.8px;
     min-height: 100%;
 }
 
@@ -72,7 +74,10 @@ body {
 
 /* 푸터 */
 footer {
-    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
     padding: 2rem 0;
     text-align: center;
     background-color: #495057;
@@ -95,6 +100,7 @@ input[type='number']::-webkit-inner-spin-button {
 .logo_img {
     width: 90%;
     min-width: 150px;
+    margin-bottom: 1rem;
 }
 
 
@@ -147,17 +153,21 @@ header {
 /* 로그인, 회원가입 페이지 */
 
 .login-contents {
+    position: absolute;
+    top: 20%;
+    right: 50%;
+    transform: translate(50%, 0);
     background-color: white;
     max-width: 600px;
+    min-width: 330px;
     margin: auto;
-    margin-top: 30px;
     padding: 30px 0px;
     border-radius: 20px;
 }
 
 .login-input {
     padding: 12px 5px;
-    margin: 10px 0px;
+    margin: 0.3rem 0px;
     width: 85%;
     max-width: 400px;
 }
@@ -169,10 +179,10 @@ header {
 }
 
 .login-btn {
-    margin: 6px 0px;
+    margin: 0.1rem 0px;
     width: 85%;
     max-width: 400px;
-    font-size: 18px;
+    font-size: 1.5vw;
     font-weight: 600;
 }
 
