@@ -1,5 +1,5 @@
 extends layout/template_main
-
+include mixins/transaction
 
 block content2
     main
@@ -10,7 +10,7 @@ block content2
                 .col-6
                     h3 &#xC804;&#xB825; &#xD310;&#xB9E4;&#xAE00;
                 .col-6.text-end
-                    a.btn.btn-secondary(href='add-deal.html') &#xAE00; &#xC791;&#xC131;&#xD558;&#xAE30;
+                    a.btn.btn-secondary(href=`/main/transaction${routes.write}`) &#xAE00; &#xC791;&#xC131;&#xD558;&#xAE30;
             hr
             table.table.table-hover
                 thead
@@ -20,6 +20,9 @@ block content2
                         th.text-center(scope='col') &#xC791;&#xC131;&#xC77C;
                         th.text-center(scope='col') &#xD310;&#xB9E4;&#xB7C9;
                 tbody#deal-list
+                    for item of articleList
+                        +transaction(item)
+                    
 
 
     script.

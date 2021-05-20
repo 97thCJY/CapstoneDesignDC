@@ -6,6 +6,7 @@ export const globalMiddleWare = (req, res, next) => {
 	res.locals.routes = routes;
 	res.locals.siteName = 'Greedy';
 	res.locals.PKN = 0;
+	res.locals.transactionList = [];
 	next();
 };
 

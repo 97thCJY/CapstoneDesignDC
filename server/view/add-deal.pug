@@ -1,0 +1,35 @@
+extends ./layout/template_main
+
+
+block content2
+
+    br
+    .container.contents
+        // Contents Header
+        .row.contents-header
+            h3 &#xD310;&#xB9E4;&#xAE00; &#xC791;&#xC131;&#xD558;&#xAE30;
+        hr
+        // Contents List
+        .row
+            .form-container
+                form(action=`/main/transaction${routes.write}`, method="post")
+                    .form-group.row
+                    label.col-sm-2.col-form-label(for='transaction_amount') &#xD310;&#xB9E4;&#xB7C9; (kw)
+                    .col-sm-10
+                        input#transaction_amount.form-control(onchange='calculatePrice()' type='number' min='1' name = 'amount')
+                    br
+                    .form-group.row
+                    label.col-sm-2.col-form-label(for='transaction_amount') &#xC608;&#xC0C1; &#xAC00;&#xACA9;
+                    .col-sm-10
+                        input#transaction_price.form-control(disabled='' name='price')
+                    br
+                    .form-group.row
+                    label.col-sm-2.col-form-label(for='transaction_description') &#xB0B4;&#xC6A9;
+                    .col-sm-10
+                        textarea#transaction_description.form-control(rows='10' name='description')
+                    br
+                    .text-center
+                    button.btn.btn-secondary(onclick='addDeal()' type='submit') &#xC791;&#xC131;&#xD558;&#xAE30;
+
+        
+

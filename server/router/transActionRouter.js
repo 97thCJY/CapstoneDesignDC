@@ -6,11 +6,11 @@ import { deal, checkTrade, write, postTransact, trading } from '../controller/tr
 const transActionRouter = express.Router();
 
 transActionRouter.get('/', deal);
-transActionRouter.get(routes.write, write); // router.home 접근시, homecontroller -> home 실행
+transActionRouter.get(routes.write, write);
+transActionRouter.post(routes.write, onlyPrivate, postTransact);
+
 transActionRouter.get(routes.checkTrade, checkTrade);
 transActionRouter.get(routes.trading, trading);
-
-transActionRouter.post(routes.write, onlyPrivate, postTransact);
 
 transActionRouter.get('*', onlyPrivate, isUnvalidRoutes);
 
