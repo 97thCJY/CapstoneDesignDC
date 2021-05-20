@@ -275,3 +275,15 @@ header {
     max-width: 800px;
     margin: 0 auto;
 }
+
+
+/* 실시간 거래 확인 page */
+
+.progress_style {
+    height: 50px;
+    width: 100%;
+}
+
+.time_text {
+    font-size: 20px;
+}
