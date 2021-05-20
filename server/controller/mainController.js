@@ -4,6 +4,9 @@ export const userProfile = (req, res) => {
 	res.send('userprofile');
 };
 
+export const addDevice = (req, res) => {
+	console.log('hellow post');
+};
 // 원격 페이지 rendering
 export const home = async (req, res) => {
 	const deviceObj = [];
@@ -18,7 +21,7 @@ export const home = async (req, res) => {
 			);
 		}
 	} catch (e) {
-		console.log("error: " + e);
+		console.log('error: ' + e);
 	} finally {
 		res.render('route_main', {
 			pageTitle: 'Main',
@@ -30,19 +33,29 @@ export const home = async (req, res) => {
 
 // 전력확인 페이지 rendering
 export const checkElec = async (req, res) => {
-	const checkObj = [];
+	const { PK, name, eUsage, eCharge, eSupply, batteryMax, IP, deviceList } = req.user;
+
+	let resultObj = {
+		totalEuseage: 0,
+		eSupply: 0,
+		batteryLeft: 0,
+		solarEsupply: 0
+	};
 
 	try {
-		console.log("searching");
+		resultObj.eSupply += eSupply;
+		resultObj.eCharge += eCharge;
+		resultObj.eUsage += eUsage;
+		resultObj.totalEuseage += getTotalUsage(); // impl
 	} catch (e) {
-		console.log("error: " + e);
+		console.log('error: ' + e);
 	} finally {
-		console.dir(checkObj);
-
 		res.render('checkElec', {
 			pageTitle: 'Check Elec',
 			topNav: 'checkElec',
-			checkList: checkObj | []
+			resultObj
 		});
 	}
 };
+
+const getTotalUsage = () => 0;
