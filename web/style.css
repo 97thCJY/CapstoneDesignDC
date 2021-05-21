@@ -111,7 +111,7 @@ input[type='number']::-webkit-inner-spin-button {
     width: 100%;
     min-width: 180px;
     margin-top: 1vw;
-    margin-bottom: 2vh;
+    margin-bottom: 0.5vw;
 }
 
 #log_out {
@@ -300,25 +300,6 @@ header {
 
 
 /* 전력거래소 page */
-
-.contents-header {
-    padding: 10px;
-}
-
-.content-row {
-    border-bottom: 2px solid gray;
-    padding-bottom: 5px;
-    padding: 0.5rem;
-}
-
-
-/* 판매글 작성 page, 내용 page */
-
-.form-container {
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
-}
 
 
 /* 실시간 거래 확인 page */

@@ -78,15 +78,15 @@
     <!-- Main Contents -->
     <main>
         <br>
-        <div class="container contents mb-3">
+        <div class="container contents">
             <!-- Contents Header -->
-            <div class="row contents-header align-self-center" id="deal-header">
+            <div class="row" id="deal-header">
 
             </div>
             <hr>
 
             <!-- Contents List -->
-            <div class="row" id="deal-contents">
+            <div id="deal-contents">
 
             </div>
         </div>
@@ -106,29 +106,29 @@
 
         tmp_logOut +=
             '<!--href="./login.html"-->\
-                        <p data-bs-toggle="modal" data-bs-target="#LogOutModal" class="img-pointer">로그아웃</p>';
+                <p data-bs-toggle="modal" data-bs-target="#LogOutModal" class="img-pointer">로그아웃</p>';
 
         tmp_logOut +=
             '<!--Modal-->\
-                                <div class="modal fade" tabindex="-1" aria-hidden="true" id="LogOutModal" aria-labelledby="LogOutModalLabel">\
-                                    <div class="modal-dialog modal-dialog-top modal_state">\
-                                        <div class="modal-content">\
-                                            <div class="modal-header" style="background: #505; color:white">\
-                                                <h5 class="modal-title" id="LogOutModalLabel">LogOut</h5>\
-                                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>\
-                                            </div>\
-                                            <div class="modal-body">\
-                                                <div class="select_elec mb-3">\
-                                                    <p>LogOut 하시겠습니까?</p>\
-                                                </div>\
-                                            </div>\
-                                            <div class="modal-footer">\
-                                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">닫기</button>\
-                                                <a href="./login.html"><button type="button" class="btn btn-outline-danger" onClick="requestRemoteLogout()">로그아웃</button></a>\
-                                            </div>\
-                                        </div>\
-                                    </div>\
-                                </div>';
+                <div class="modal fade" tabindex="-1" aria-hidden="true" id="LogOutModal" aria-labelledby="LogOutModalLabel">\
+                    <div class="modal-dialog modal-dialog-top modal_state">\
+                        <div class="modal-content">\
+                            <div class="modal-header" style="background: #505; color:white">\
+                                <h5 class="modal-title" id="LogOutModalLabel">LogOut</h5>\
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>\
+                            </div>\
+                            <div class="modal-body">\
+                                <div class="select_elec mb-3">\
+                                    <p>LogOut 하시겠습니까?</p>\
+                                </div>\
+                            </div>\
+                            <div class="modal-footer">\
+                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">닫기</button>\
+                                <a href="./login.html"><button type="button" class="btn btn-outline-danger" onClick="requestRemoteLogout()">로그아웃</button></a>\
+                            </div>\
+                        </div>\
+                    </div>\
+                </div>';
 
 
         var deal_contents = {
@@ -157,47 +157,45 @@
             (tmp_hours < 10 ? '0' + tmp_hours : tmp_hours) + ":" +
             (tmp_minutes < 10 ? '0' + tmp_minutes : tmp_minutes);
 
-        deal_header_str +=
-            '<div class="col align-self-center">\
-                                <h4>' + deal_contents.seller_name + '님의 판매글</h4>\
-                            </div>\
-                            <div class="col text-end align-self-center">\
-                                <p class="text-muted">Created</p>\
-                                <p class="text-muted">' + date_str + '</p>\
-                            </div>';
-
         if (deal_contents.is_seller) {
             deal_buttons_str +=
                 '<div class="text-end">\
-                                    <button onClick="" class="btn btn-danger" type="submit">수정하기</button>\
-                                </div>';
+                    <button onClick="" class="btn btn-danger" type="submit">수정하기</button>\
+                </div>';
         } else {
             deal_buttons_str +=
                 '<div class="text-end">\
-                                    <input type="number" placeholder="구매량 입력(kw)">\
-                                    <button onClick="" class="btn btn-secondary" type="submit">구매요청</button>\
-                                </div>';
+                    <input type="number" placeholder="구매량 입력(kw)">\
+                    <button onClick="" class="btn btn-secondary" type="submit">구매요청</button>\
+                </div>';
         }
 
+        deal_header_str +=
+            '<div class="col align-self-center">\
+                <p>' + deal_contents.seller_name + '님의 판매글</p>\
+            </div>\
+            <div class="col text-end align-self-center">\
+                <p class="text-muted">Created</p>\
+                <p class="text-muted">' + date_str + '</p>\
+            </div>';
+
         deal_contents_str +=
-            '<div class="form-container">\
-                <div class = "form-group row">\
-                    <div class="form-group col col-sm-7">\
-                                    <h5 for="transaction_amount" class="col-sm-2 mb-3">내용</h5>\
-                                    <div class="p-2 col-sm-12 align-self-center" style = "border : 1px solid black; height : 80%; border-radius:5px">\
-                                        <p>' + deal_contents.transaction_description + '</p>\
-                                    </div>\
+            '<div class = "row row-cols-1 row-cols-md-2">\
+                <div class="col form-group">\
+                    <label for="ContentLabel">내용</label>\
+                    <div class="form-control align-self-center" id="ContentLabel">\
+                        ' + deal_contents.transaction_description + '\
                     </div>\
-                    <div class="form-group col col-sm-4" style = "border: 1px solid black; border-radius:5px; margin:10px">\
+                </div>\
+                <div class="col form-group">\
+                    <label for="DealContentLabel">판매 내용</h5>\
+                    <div class = "form-control text-start" id="DealContentLabel">\
+                        판매량(kw) : ' + deal_contents.transaction_amount + '\
                         <br>\
-                        <div class="align-self-center col-sm-12">\
-                            <h5>판매량(kw) : ' + deal_contents.transaction_amount + '</h5>\
-                        </div><br>\
-                        <div class="col-sm-12 align-self-center">\
-                                <h5>판매 가격 : ' + deal_contents.transaction_amount * price_per_kw + '원</h5>\
-                        </div>\
+                        판매 가격 : ' + deal_contents.transaction_amount * price_per_kw + '원\
                     </div>\
-                </div><br>';
+                </div>\
+            </div>' + deal_buttons_str + '\<br>';
 
 
         document.getElementById("log_out").innerHTML = tmp_logOut;

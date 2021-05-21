@@ -2,11 +2,11 @@
 var price_per_kw = 100;
 
 // 원격 제어
-window.onload = function () {
+window.onload = function() {
     var myModal = document.getElementById('plus_btn');
     var myInput = document.getElementById('PlusModal');
 
-    myModal.addEventListener('shown.bs.modal', function () {
+    myModal.addEventListener('shown.bs.modal', function() {
         myInput.focus();
     });
 }
@@ -138,12 +138,11 @@ function requestRemoteFix() {
         alert("변경 내용 수정 요청\nID: " + portid + "\n이름: " + name + "\n포트: " + port);
     }
 }
-
 // 실시간 거래 확인 페이지
 function progress_change() {
     var current_progress = 0;
     var progress = document.getElementById("dynamic");
-    var interval = setInterval(function () {
+    var interval = setInterval(function() {
         current_progress += 10;
         progress.style.width = current_progress + '%';
         progress.setAttribute("aria-valuenow", current_progress)
