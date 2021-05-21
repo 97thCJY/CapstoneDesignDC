@@ -65,7 +65,6 @@ function requestRemoteLogout() {
 // 원격 기기 on/off 요청
 function requestRemoteOnOff(product_id) {
     alert("Product Id값 " + product_id + "번 on/off 요청");
-    document.getElementsByClassName("card_round").style.border = '5px solid red';
 }
 
 // 원격 기기 추가 요청
