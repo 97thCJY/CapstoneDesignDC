@@ -300,10 +300,28 @@ header {
 
 
 /* 전력거래소 page */
+#ContentLabel {
+    max-width: 500px;
+    min-height: 150px;
+    max-height: 300px;
+    padding: 2vw;
+}
 
+#DealContentLabel {
+    max-width: 300px;
+    min-width: 200px;
+    min-height: 150px;
+}
+
+#DealContentLabel p {
+    position: relative;
+    min-width: 200px;
+    padding: 2vw;
+    line-height: 300%;
+    white-space: nowrap;
+}
 
 /* 실시간 거래 확인 page */
-
 .progress_style {
     height: 50px;
 }
