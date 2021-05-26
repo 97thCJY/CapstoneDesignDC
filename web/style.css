@@ -27,23 +27,22 @@ a {
     outline: none;
 }
 
-    a:hover {
-        color: inherit;
-    }
+a:hover {
+    color: inherit;
+}
 
 html {
     min-height: 100%;
     margin: 0;
 }
 
-
 main {
     margin-top: 0.3rem;
 }
 
-    main .col {
-        padding: 1rem;
-    }
+main .col {
+    padding: 1rem;
+}
 
 body {
     position: relative;
@@ -68,7 +67,6 @@ body {
     0% {
         opacity: 0;
     }
-
     100% {
         opacity: 1;
     }
@@ -100,6 +98,7 @@ input[type='number']::-webkit-inner-spin-button {
 
 
 /* 로고 바*/
+
 .weather_position {
     margin-top: 3vw;
 }
@@ -112,7 +111,7 @@ input[type='number']::-webkit-inner-spin-button {
     width: 100%;
     min-width: 180px;
     margin-top: 1vw;
-    margin-bottom: 2vh;
+    margin-bottom: 0.5vw;
 }
 
 #log_out {
@@ -143,7 +142,7 @@ header {
     display: inline-block;
     cursor: pointer;
     font-weight: 500;
-    white-space:nowrap;
+    white-space: nowrap;
     font-size: 1.5vw;
 }
 
@@ -229,7 +228,7 @@ header {
 .card_round {
     width: 100%;
     border-radius: 25%;
-    border: 1px solid green;
+    border: 1px solid black;
 }
 
 .card_name {
@@ -302,29 +301,28 @@ header {
 
 
 /* 전력거래소 page */
-
-.contents-header {
-    padding: 10px;
+#ContentLabel {
+    max-width: 500px;
+    min-height: 150px;
+    max-height: 300px;
+    padding: 2vw;
 }
 
-.content-row {
-    border-bottom: 2px solid gray;
-    padding-bottom: 5px;
-    padding: 0.5rem;
+#DealContentLabel {
+    max-width: 300px;
+    min-width: 200px;
+    min-height: 150px;
 }
 
-
-/* 판매글 작성 page, 내용 page */
-
-.form-container {
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
+#DealContentLabel p {
+    position: relative;
+    min-width: 200px;
+    padding: 2vw;
+    line-height: 300%;
+    white-space: nowrap;
 }
-
 
 /* 실시간 거래 확인 page */
-
 .progress_style {
     height: 50px;
 }

@@ -89,6 +89,13 @@
                 <div class="form-container">
                     <form>
                         <div class="form-group row">
+                            <label for="transaction_head" class="col-sm-2 col-form-label">제목</label>
+                            <div class="col-sm-10">
+                                <input id="transaction_head" class="form-control">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="form-group row">
                             <label for="transaction_amount" class="col-sm-2 col-form-label">판매량 (kw)</label>
                             <div class="col-sm-10">
                                 <input onChange="calculatePrice()" id="transaction_amount" type="number" min=1 class="form-control">
