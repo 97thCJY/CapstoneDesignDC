@@ -1,6 +1,5 @@
 import routes from './routes.js';
 import multer from 'multer';
-import { onAuthenticatedId, notAuthenticatedId } from './fakeDB.js';
 
 export const globalMiddleWare = (req, res, next) => {
 	res.locals.routes = routes;
@@ -8,11 +7,6 @@ export const globalMiddleWare = (req, res, next) => {
 	res.locals.PKN = 0;
 	res.locals.transactionList = [];
 	next();
-};
-
-export const fakeSeries = {
-	User1: onAuthenticatedId,
-	User2: notAuthenticatedId
 };
 
 export const breakSecurityPolicy = (req, res, next) => {
