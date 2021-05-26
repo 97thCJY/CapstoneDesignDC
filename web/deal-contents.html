@@ -167,6 +167,7 @@
                 '<div class="text-end">\
                     <input type="number" placeholder="구매량 입력(kw)">\
                     <button onClick="" class="btn btn-secondary" type="submit">구매요청</button>\
+                    <input type="number" value="placeholder * price_per_kw">\
                 </div>';
         }
 
@@ -180,24 +181,27 @@
             </div>';
 
         deal_contents_str +=
-            '<div class = "row row-cols-1 row-cols-md-2">\
-                <div class="col form-group">\
-                    <label for="ContentLabel">내용</label>\
-                    <div class="form-control align-self-center" id="ContentLabel">\
+            '<div>\
+                <div class="col">\
+                    <div class="align-self-center" id="ContentLabel">\
                         ' + deal_contents.transaction_description + '\
                     </div>\
                 </div>\
-                <div class="col form-group">\
-                    <label for="DealContentLabel">판매 내용</h5>\
-                    <div class = "form-control text-start" id="DealContentLabel">\
+                <hr>\
+                <div class="col">\
+                    <div class = "text-start" id="DealContentLabel">\
                         <p>\
-                            판매량(kw) : ' + deal_contents.transaction_amount + ' ssssssssssssssssssssssssssssss\
+                            판매량(kw) : ' + deal_contents.transaction_amount + '\
                             <br>\
                             판매 가격 : ' + deal_contents.transaction_amount * price_per_kw + '원\
                         </p>\
                     </div>\
                 </div>\
-            </div>' + deal_buttons_str + '\<br>';
+            </div>\
+            <hr>\
+            <div>\
+                ' + deal_buttons_str + '\
+            </div>';
 
 
         document.getElementById("log_out").innerHTML = tmp_logOut;
