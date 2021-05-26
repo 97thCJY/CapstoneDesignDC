@@ -132,8 +132,6 @@ function requestRemoteFix() {
         alert("변경 내용 수정 요청\nID: " + portid + "\n이름: " + name + "\n포트: " + port);
     }
 }
-
-
 // 실시간 거래 확인 페이지
 function progress_change() {
     var current_progress = 0;
