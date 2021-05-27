@@ -9,19 +9,19 @@ export const userProfile = (req, res) => {
 /**** GET Method ****/
 // 원격 페이지 rendering
 export const home = async (req, res) => {
-	let deviceObjList = [];
+	let deviceObjList = []; // 이 데이터를 front에 넘길것
 	try {
-		const deviceData = req.user.deviceList; // 해당 User의 device pk목록
+		const { deviceList } = req.user;
 
-		console.log(device);
-		let tmp;
-		for (var i = 0; i < deviceData.length; i++) {
-			tmp = await Device.findOne({ PK: deviceData[i] });
-			deviceObjList.push(tmp);
+		for (let i = 0; i < deviceList.length; i++) {
+			let device = await Device.find({ PK: deviceList[i] });
+
+			deviceObjList.push(JSON.parse(JSON.stringify(device)));
 		}
 	} catch (e) {
 		console.log('error: ' + e);
 	} finally {
+		console.log(deviceObjList);
 		res.render('route_main', {
 			pageTitle: 'Main',
 			topNav: 'remote',
@@ -70,28 +70,41 @@ export const addDevice = async (req, res) => {
 		);
 	}
 
-	console.log('디바이스 추가\n이름: ' + name + ' | 포트: ' + port);
-
-	/////////////////////////////////////////////
-	// 작업 필요 : DB검사 (포트 겹치는게 있는지) //
-	/////////////////////////////////////////////
-
-	// DB저장 및 리턴값 반환
 	try {
-		// device 저장
+		let deviceList = await Device.find({});
+
+		let PK = deviceList.length == 0 ? 0 : 1;
+
+		// 추가할 device의 PK 지정
+		if (PK) {
+			PK = 0;
+
+			for (let i = 0; i < deviceList.length; i++) {
+				if (PK < deviceList[i].PK) {
+					PK = deviceList[i].PK;
+				}
+			}
+		}
+
+		// device 생성
 		const newDevice = await Device.create({
 			name,
 			port,
-			status: false
+			status: false,
+			PK: PK + 1
 		});
 
 		// user의 deviceList 수정
 		const user = req.user;
-		const deviceDataList = req.user.deviceList;
+		const newList = user.deviceList;
 
-		deviceDataList.push(newDevice.PK);
-		user.deviceList = deviceDataList;
-		user.save();
+		newList.push(newDevice.PK);
+
+		await User.findByIdAndUpdate(user.id, {
+			$set: {
+				deviceList: newList
+			}
+		});
 
 		res.redirect(routes.home);
 	} catch (e) {

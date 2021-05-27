@@ -1,14 +1,16 @@
 
-mixin device(device = {})
+mixin device(dv = {})
     .col
         .card.card_round
             div(align='right')
-                i.fas.fa-cog.fa-lg.card_setting(onclick='requestRemoteSetting(`선풍기`, `1`, `0`)', data-bs-toggle='modal', data-bs-target='#SettingModal')
+                i.fas.fa-cog.fa-lg.card_setting(onclick='requestRemoteSetting(#{dv.name}, #{dv.PK}, `0`)', data-bs-toggle='modal', data-bs-target='#SettingModal')
+
+        
             
-            if (device.status)
-                img#card_btn.card-img-remote.img-pointer(src='/assets/images/on_btn_img.png', onclick='requestRemoteOnOff(' + device.PK + ')')
+            if (dv.status)
+                img#card_btn.card-img-remote.img-pointer(src='/assets/images/on_btn_img.png', onclick='requestRemoteOnOff(' + dv.PK + ')')
             else
-                img#card_btn.card-img-remote.img-pointer(src='/assets/images/off_btn_img.png', onclick='requestRemoteOnOff(' + device.PK + ')')
+                img#card_btn.card-img-remote.img-pointer(src='/assets/images/off_btn_img.png', onclick='requestRemoteOnOff(' + dv.PK + ')')
 
             .card-title.py-0
-                h5.card-title.card_name #{device.name}
+                h5.card-title.card_name #{dv.name}

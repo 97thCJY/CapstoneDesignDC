@@ -1,7 +1,4 @@
 var mongoose = require('mongoose');
-var autoIncrement = require('mongoose-auto-increment');
-
-autoIncrement.initialize(mongoose.connection);
 
 const DeviceSchema = new mongoose.Schema({
 	PK: {

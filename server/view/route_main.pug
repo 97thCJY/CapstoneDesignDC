@@ -7,12 +7,18 @@ block content2
         .container.contents
             // Contents Header
             .row.contents-header(onClick="tmpFunc()")
-                h3 원격제어
+                
             hr
+        
             // Contents List
             #remote-list.row.row-cols-2.row-cols-md-4
                 for item of deviceList
-                    +device(item)
+                    
+                    +device({
+                        name: item[0].name,
+                        status: item[0].status,
+                        PK: item[0].PK
+                    })
                 .col
                     .card.card_plus
                         img.card-img-remote.img-pointer(data-bs-toggle='modal', data-bs-target='#PlusModal', src='/assets/images/plus_img.png')
