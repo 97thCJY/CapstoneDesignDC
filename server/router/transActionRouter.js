@@ -7,7 +7,6 @@ import {
 	write,
 	postTransact,
 	purchaseRequest,
-	validationTesting,
 	purchaseAccept,
 	purchaseReject
 } from '../controller/transActionController.js';
@@ -23,7 +22,7 @@ transActionRouter.get('/reject/:pk/:hash', purchaseReject);
 
 
 transActionRouter.get(routes.checkTrade(), checkTrade);
-transActionRouter.post(routes.checkTrade(), validationTesting, purchaseRequest);
+transActionRouter.post(routes.checkTrade(), purchaseRequest);
 transActionRouter.get('*', onlyPrivate, isUnvalidRoutes);
 
 export default transActionRouter;
