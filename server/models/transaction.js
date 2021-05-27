@@ -19,6 +19,10 @@ const TransactionSchema = new mongoose.Schema({
 		default: 0,
 		required: 'amount value req'
 	},
+	reqAmount: {
+		type: Number,
+		default: 0
+	},
 	status: {
 		type: Number,
 		default: 0,
@@ -30,6 +34,10 @@ const TransactionSchema = new mongoose.Schema({
 	description: {
 		type: String,
 		required: 'description value req'
+	},
+	hash: {
+		type: String,
+		default: ''
 	}
 });
 

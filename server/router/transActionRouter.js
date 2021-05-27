@@ -6,7 +6,6 @@ import {
 	checkTrade,
 	write,
 	postTransact,
-	trading,
 	purchaseRequest,
 	validationTesting,
 	purchaseAccept,
@@ -19,10 +18,9 @@ transActionRouter.get('/', deal);
 transActionRouter.get(routes.write, write);
 transActionRouter.post(routes.write, onlyPrivate, postTransact);
 
-transActionRouter.get('/accept/:pk/:buyerId/:amount', purchaseAccept);
-transActionRouter.get('/reject/:pk', purchaseReject);
+transActionRouter.get('/accept/:pk/:buyerId/:amount/:hash', purchaseAccept);
+transActionRouter.get('/reject/:pk/:hash', purchaseReject);
 
-//transActionRouter.get(routes.trading, trading);
 
 transActionRouter.get(routes.checkTrade(), checkTrade);
 transActionRouter.post(routes.checkTrade(), validationTesting, purchaseRequest);

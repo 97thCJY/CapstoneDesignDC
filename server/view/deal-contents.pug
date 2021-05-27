@@ -37,9 +37,10 @@ block content2
                                 p #{data.description}
                         br
 
-                        if (user.PK != data.seller)
+                        //- 판매자일 경우
+                        if (user.PK == data.seller)
                             .text-end
-                                button.btn.btn-danger(type = "submit") 수정하기
+                                button.btn.btn-danger(type='button') 수정하기
                         else
                             .text-end
                                 input(type="number" name='purchase' placeholder ='구매량 입력(kw)')
