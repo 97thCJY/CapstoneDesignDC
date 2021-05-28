@@ -81,14 +81,14 @@ export const checkTrade = async (req, res) => {
 /*** 이메일 응답용 GET Method ***/
 // 판매자 승인
 export const purchaseAccept = async (req, res) => {
-	const {params: { pk, buyerId, amount, hash }} = req;
+	const {params: { pk, hash }} = req;
 	let transaction;		// 판매글
 	let buyer;				// 판매자
 	let seller;				// 구매자
 
 	try {	// DB 불러오기
 		transaction = await Transaction.findOne({ PK: pk });
-		buyer = await User.findOne({ PK: buyerId });
+		buyer = await User.findOne({ PK: transaction.buyer });
 		seller = await User.findOne({ PK: transaction.seller });
 	} catch (e) {
 		console.log(e);
@@ -102,7 +102,7 @@ export const purchaseAccept = async (req, res) => {
 	/**** 작업 필요 : 유효성 검사? ****/
 
 	// new hash값 생성
-	const tmp = buyerId + Date.now().toString() + amount + pk;
+	const tmp = transaction.buyer + Date.now().toString() + transaction.reqAmount + pk;
 	const new_hash = crypto.createHash('md5').update(tmp).digest('hex');
 
 	try {	// transaction table 변경
@@ -117,7 +117,7 @@ export const purchaseAccept = async (req, res) => {
 	
 	/**** 작업 필요 : 구매자한테 최종 승인 이메일 보내기 ****/
 	// 이메일 보내기
-	const email_body = emailTemplete(seller.name, buyer.name, transaction.description, amount, 
+	const email_body = emailTemplete(seller.name, buyer.name, transaction.description, transaction.reqAmount, 
 		`http://localhost:3000/main/transaction/final/accept/${pk}/${new_hash}`,
 		`http://localhost:3000/main/transaction/reject/${pk}/${new_hash}`,
 		"전력 구매 최종 승인 안내", `${buyer.name}님이 요청하신 구매에 대해 승인하였습니다.`);
@@ -141,7 +141,7 @@ export const purchaseAccept = async (req, res) => {
   	console.log("Message sent: %s", info.messageId);
 	
 	/**** 작업 필요 : 메시지 템플릿 rendering ****/
-	res.send("승인하쎴쎼여~? " + pk + " " + buyerId + " " + amount + " " + hash);
+	res.send("승인하쎴쎼여~? " + pk + " " + hash);
 }
 
 // 구매자 또는 판매자 거절
@@ -258,7 +258,7 @@ export const purchaseRequest = async (req, res) => {
   	
 	// 이메일 보내기
 	const email_body = emailTemplete(buyer.name, seller.name, transaction.description, reqAmount, 
-		`http://localhost:3000/main/transaction/accept/${id}/${buyer.PK}/${reqAmount}/${hash}`,
+		`http://localhost:3000/main/transaction/accept/${id}/${hash}`,
 		`http://localhost:3000/main/transaction/reject/${id}/${hash}`,
 		"전력 구매 요청 안내", "회원님의 판매글에 아래과 같이 구매가 요청되었습니다.");
 	let info;

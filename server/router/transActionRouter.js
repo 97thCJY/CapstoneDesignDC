@@ -19,9 +19,9 @@ transActionRouter.post(routes.write, onlyPrivate, postTransact);	// 판매글 �
 transActionRouter.post(routes.checkTrade(), purchaseRequest);		// 구매 요청
 
 // Response for Email
-transActionRouter.get('/accept/:pk/:buyerId/:amount/:hash', purchaseAccept);	// 판매자 승인
-transActionRouter.get('/reject/:pk/:hash', purchaseReject);						// 구매자 또는 판매자 거절
-transActionRouter.get('/final/accept/:pk/:hash', finalAccept);					// 구매자 최종 승인
+transActionRouter.get('/accept/:pk/:hash', purchaseAccept);			// 판매자 승인
+transActionRouter.get('/reject/:pk/:hash', purchaseReject);			// 구매자 또는 판매자 거절
+transActionRouter.get('/final/accept/:pk/:hash', finalAccept);		// 구매자 최종 승인
 
 // for auth
 transActionRouter.get('*', onlyPrivate, isUnvalidRoutes);
