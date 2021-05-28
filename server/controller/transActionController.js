@@ -119,7 +119,7 @@ export const purchaseAccept = async (req, res) => {
 	// 이메일 보내기
 	const email_body = emailTemplete(seller.name, buyer.name, transaction.description, transaction.reqAmount, 
 		`http://localhost:3000/main/transaction/final/accept/${pk}/${new_hash}`,
-		`http://localhost:3000/main/transaction/reject/${pk}/${new_hash}`,
+		`http://localhost:3000/main/transaction/reject/${pk}/1/${new_hash}`,
 		"전력 구매 최종 승인 안내", `${buyer.name}님이 요청하신 구매에 대해 승인하였습니다.`);
 	let info;
 	try {
@@ -146,11 +146,13 @@ export const purchaseAccept = async (req, res) => {
 
 // 구매자 또는 판매자 거절
 export const purchaseReject = async (req, res) => {
-	const {params: { pk, hash }} = req;
-	let transaction;		// 판매글
+	const {params: { pk, isBuyer, hash }} = req;
+	let transaction, buyer, seller;
 
 	try {	// DB 불러오기
 		transaction = await Transaction.findOne({ PK: pk });
+		buyer = await User.findOne({ PK: transaction.buyer });
+		seller = await User.findOne({ PK: transaction.seller });
 	} catch (e) {
 		console.log(e);
 		return res.send("데이터베이스 로딩 오류: " + e);
@@ -171,19 +173,49 @@ export const purchaseReject = async (req, res) => {
 		console.log(e);
 		return res.send("데이터베이스 수정 오류: " + e);
 	}
-	
-	/**** 작업 필요 : 구매자한테 거절됐다고 이메일 보내기 ****/
-	
-	/**** 작업 필요 : 메시지 템플릿 rendering ****/
-	res.send("거절이라니.. 너무행~! " + pk + " " + hash);
+
+	if (isBuyer === "1") {	// 구매자 최종 거절
+		// 판매자에게 거절 이메일 보내기
+
+		/**** 작업 필요 : 메시지 템플릿 rendering ****/
+		res.send("구매자 최종 거절이라니.. 너무행~!\n" + pk + " " + hash);
+	} else {		// 판매자 판매 거절
+		// 구매자에게 거절 이메일 보내기
+		
+		/**** 작업 필요 : 메시지 템플릿 rendering ****/
+		res.send("판매자 거절이라니.. 너무행~!\n" + pk + " " + hash);
+	}
 }
 
 // 구매자 최종 승인
 export const finalAccept = async (req, res) => {
 	const {params: { pk, hash }} = req;
-	let transaction;		// 판매글
+	let transaction, buyer, seller;
 
-	// 유효성 검사
+	try {	// DB 불러오기
+		transaction = await Transaction.findOne({ PK: pk });
+		buyer = await User.findOne({ PK: transaction.buyer });
+		seller = await User.findOne({ PK: transaction.seller });
+	} catch (e) {
+		console.log(e);
+		return res.send("데이터베이스 로딩 오류: " + e);
+	}
+
+	if (hash !== transaction.hash)	// hash값 비교
+		return res.send("해시값 다름\n" + hash + "\n" + transaction.hash);
+
+	/**** 작업 필요 유효성 검사 ****/
+		
+	try {	// transaction table 변경
+		const changed = await transaction.update({ status: 3, hash: "" });
+	} catch (e) {
+		console.log(e);
+		return res.send("데이터베이스 수정 오류: " + e);
+	}
+
+	
+	/**** 작업 필요 : 구매자, 판매자 최종 안내 이메일 보내기 ****/
+
 	res.send("최종승인 안내~ " + pk + " " + hash);
 }
 
@@ -259,7 +291,7 @@ export const purchaseRequest = async (req, res) => {
 	// 이메일 보내기
 	const email_body = emailTemplete(buyer.name, seller.name, transaction.description, reqAmount, 
 		`http://localhost:3000/main/transaction/accept/${id}/${hash}`,
-		`http://localhost:3000/main/transaction/reject/${id}/${hash}`,
+		`http://localhost:3000/main/transaction/reject/${id}/0/${hash}`,
 		"전력 구매 요청 안내", "회원님의 판매글에 아래과 같이 구매가 요청되었습니다.");
 	let info;
 	try {
@@ -295,7 +327,7 @@ const parseDate = (date) => {
 };
 
 // 이메일 템플릿
-function emailTemplete(from, to, desc, amount, approve_link, reject_link, title, contents) {
+function emailTemplete(from, to, desc, amount, approve_link, reject_link, title, contents/*, is_reject*/) {
 	const a =  `
 	<html><head></head><body><table width="580" border="0" cellpadding="0" cellspacing="0" style="margin:0 auto;"><tbody><tr><td height="40"></td></tr><tr><td>
 		<table width="580" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff" style="margin:0 auto;">
