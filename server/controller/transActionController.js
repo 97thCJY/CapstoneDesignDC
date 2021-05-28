@@ -1,9 +1,6 @@
 import routes from '../routes';
 import Transaction from '../models/transaction';
 import User from '../models/user';
-<<<<<<< HEAD
-import nodemailer from 'nodemailer';
-=======
 
 const crypto = require('crypto');	// hash 라이브러리
 
@@ -18,7 +15,6 @@ const transporter = nodemailer.createTransport({
 		pass: "wlgkqhekwltkd"
 	}
 });
->>>>>>> hyn
 
 /*** GET Method ***/
 // 판매글 목록 페이지 출력
@@ -112,43 +108,6 @@ export const checkTrade = async (req, res) => {
 	});
 };
 
-<<<<<<< HEAD
-export const trading = (req, res) => {
-	console.log(req);
-};
-
-const parseDate = (date) => {
-	const sDate = JSON.stringify(date);
-
-	let parsed = date.substring(0, 10);
-
-	return parsed;
-};
-
-let transporter = nodemailer.createTransport({
-	service: 'gmail',
-	host: 'smtp.gmail.com',
-	port: 587,
-	secure: false, // true for 465, false for other ports
-	auth: {
-		user: 'hyncompany0@gmail.com',
-		pass: 'wlgkqhekwltkd'
-	}
-});
-
-// 구매 요청
-export const purchaseRequest = async (req, res) => {
-	/*const {
-		params: { id }
-	} = req;
-	let data;
-	let seller;
-
-	console.log('1111');
-	try {
-		data = await Transaction.findOne({ PK: id });
-		seller = await User.findOne({ PK: data.seller });
-=======
 /*** 이메일 응답용 GET Method ***/
 // 판매자 승인
 export const purchaseAccept = async (req, res) => {
@@ -181,86 +140,9 @@ export const purchaseAccept = async (req, res) => {
 			status: 2,
 			hash: new_hash,
 		});
->>>>>>> hyn
 	} catch (e) {
 		console.log(e);
 	}
-<<<<<<< HEAD
-	// return res.send("브레이크!");
-
-	// 이메일 보내기
-	let info = await transporter.sendMail({
-		from: '"Greedy" <hyncompany0@gmail.com>', // sender address
-		to: seller.email, // list of receivers
-		subject: '[구매알림] ' + seller.name + '님 구매요청 내역을 확인해주세요.', // Subject line
-		html:
-			'<h1>' +
-			req.user.name +
-			'님의 구매 요청</h1><h3>구매량: ' +
-			req.body.purchase +
-			"kw</h3><hr>\
-		<a href='http://localhost:3000/main/transaction/accept/" +
-			id +
-			'/' +
-			req.user.PK +
-			'/' +
-			req.body.purchase +
-			"' style='margin-right:`15px`;'><button style='background-color:#4CAF50; color:`white`; width:`65px`; height:`30px`; border-radius:`10px`;'>수락하기</button></a>\
-		<a href='http://localhost:3000/main/transaction/reject/" +
-			id +
-			"'><button style='background-color:`#555555`; color:`white`; width:`65px`; height:`30px`; border-radius:`10px`;'>거절하기</button></a>"
-	});
-
-
-	console.log('Message sent: %s', info.messageId);
-	*/
-	res.redirect('/main' + routes.transAction);
-};
-
-export const validationTesting = (req, res, next) => {
-	/*
-	const { purchase } = req.body;
-*/
-	console.log('01');
-	//validation testing 만들기
-
-	next();
-};
-
-// 구매 요청 승인
-export const purchaseAccept = async (req, res) => {
-	/*
-	const {
-		params: { pk, buyerId, amount }
-	} = req;
-
-	console.log('' + pk + ' ' + buyerId + ' ' + amount);
-	*/
-	console.log('purchase accept');
-	// transaction.buyer_id = buyerId
-	// transaction.status = 2
-	// transaction.amount = amount
-	// transaction.createdAt = date.now()	????
-	// DB저장
-
-	res.send('승인하쎴쎼여~?');
-};
-
-// 구매 요청 거절
-export const purchaseReject = async (req, res) => {
-	console.log('purchase reject');
-	/*
-	const {
-		params: { pk }
-	} = req;
-
-	console.log('' + pk);*/
-	// transaction.status = 0
-	// DB저장
-
-	res.send('거절이라니.. 너무행~!');
-};
-=======
 	
 	/**** 작업 필요 : 구매자한테 최종 승인 이메일 보내기 ****/
 	// 이메일 보내기
@@ -504,4 +386,3 @@ function emailTemplete(from, to, desc, amount, approve_link, reject_link, title,
 	</td></tr><tr><td height="40"></td></tr></tbody></table></body></html>`;
 	return a;
 };
->>>>>>> hyn
