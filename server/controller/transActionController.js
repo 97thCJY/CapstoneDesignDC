@@ -2,11 +2,9 @@ import routes from '../routes';
 import Transaction from '../models/transaction';
 import User from '../models/user';
 
-// hash 라이브러리
-const crypto = require('crypto');
+const crypto = require('crypto');	// hash 라이브러리
 
-// 이메일 모듈 설정 (Gmail)
-const nodemailer = require("nodemailer");
+const nodemailer = require("nodemailer");	// 이메일 모듈 설정 (Gmail)
 const transporter = nodemailer.createTransport({
 	service: 'gmail',
 	host: "smtp.gmail.com",
@@ -81,85 +79,17 @@ export const checkTrade = async (req, res) => {
 };
 
 /*** 이메일 응답용 GET Method ***/
-// 1. 구매 요청 & 판매자에게 승인 이메일 전송
-export const purchaseRequest = async (req, res) => {
-	const {params: { id }} = req;	// transaction_id
-	let transaction;		// 판매글
-	let seller;				// 판매자
-	const buyer = req.user;	// 구매자
-	const reqAmount = req.body.purchase;
-
-	// 입력된 구매량 유효성검사
-	if (reqAmount < 1) 
-		return res.send(`<script type="text/javascript">alert("구매량은 1보다 커야합니다.");location.href="./${id}";</script>`);
-
-	try {	// DB 불러오기
-		transaction = await Transaction.findOne({ PK: id });
-		seller = await User.findOne({ PK: transaction.seller });
-	} catch (e) {
-		console.log(e);
-		return res.send("데이터베이스 로딩 오류: " + e);
-	}
-	// console.log(req.body); console.log(buyer); console.log(transaction); console.log(seller);
-
-	/**** 작업 필요? : 유효성 검사 ****/
-	////////////////////////////////////////////////////////
-
-	// 해시값 생성
-	const tmp = id + buyer.PK + Date.now().toString() + reqAmount;
-	const hash = crypto.createHash('md5').update(tmp).digest('hex');
-
-	try {	// transaction table 변경
-		const changed = await transaction.update({
-			status: 1,
-			hash: hash,
-			reqAmount: reqAmount,
-			buyer: buyer.PK
-		});
-	} catch (e) {
-		console.log(e);
-		return res.send("데이터베이스 수정 오류: " + e);
-	}
-  	
-	// 이메일 보내기
-	// 수락: accept/{transaction.pk}/{buyer.pk}/{transaction.req_amount}/{transaction.hash}
-	// 거부: reject/{transaction.pk}/{transaction.hash}
-	const email_body = emailTemplete(buyer.name, seller.name, transaction.description, reqAmount, 
-		`http://localhost:3000/main/transaction/accept/${id}/${buyer.PK}/${reqAmount}/${hash}`,
-		`http://localhost:3000/main/transaction/reject/${id}/${hash}`);
-	let info;
-	try {
-		info = await transporter.sendMail({
-			from: '"Greedy" <hyncompany0@gmail.com>',
-			to: seller.email,
-			subject: "[구매알림] " + seller.name + "님 구매요청 내역을 확인해주세요.",
-			html: email_body,
-			attachments: [{
-				filename: 'ourlogo.png',
-				path: './assets/images/ourlogo.png',
-				cid: 'ourlogo'
-			}]
-		});
-	} catch(e) {
-		console.log(e);
-		return res.send("이메일 전송 오류: " + e);
-	}
-  	console.log("Message sent: %s", info.messageId);
-	
-	/**** 작업 필요 : 메시지 템플릿 rendering ****/
-	////////////////////////////////////////////////////////
-	res.redirect('/main' + routes.transAction);
-};
-
-// 판매자 승인 이메일: 구매 요청 승인
+// 판매자 승인
 export const purchaseAccept = async (req, res) => {
 	const {params: { pk, buyerId, amount, hash }} = req;
 	let transaction;		// 판매글
 	let buyer;				// 판매자
+	let seller;				// 구매자
 
 	try {	// DB 불러오기
 		transaction = await Transaction.findOne({ PK: pk });
 		buyer = await User.findOne({ PK: buyerId });
+		seller = await User.findOne({ PK: transaction.seller });
 	} catch (e) {
 		console.log(e);
 		return res.send("데이터베이스 로딩 오류: " + e);
@@ -168,6 +98,8 @@ export const purchaseAccept = async (req, res) => {
 	// hash값 비교
 	if (hash !== transaction.hash)
 		return res.send("해시값 다름\n" + hash + "\n" + transaction.hash);
+
+	/**** 작업 필요 : 유효성 검사? ****/
 
 	// new hash값 생성
 	const tmp = buyerId + Date.now().toString() + amount + pk;
@@ -184,39 +116,35 @@ export const purchaseAccept = async (req, res) => {
 	}
 	
 	/**** 작업 필요 : 구매자한테 최종 승인 이메일 보내기 ****/
-	////////////////////////////////////////////////////////
-
 	// 이메일 보내기
-	// 수락: accept/{transaction.pk}/{buyer.pk}/{transaction.req_amount}/{transaction.hash}
-	// 거부: reject/{transaction.pk}/{transaction.hash}
-	// const email_body = emailTemplete(buyer.name, seller.name, transaction.description, reqAmount, 
-	// 	`http://localhost:3000/main/transaction/accept/${id}/${buyer.PK}/${reqAmount}/${hash}`,
-	// 	`http://localhost:3000/main/transaction/reject/${id}/${hash}`);
-	// let info;
-	// try {
-	// 	info = await transporter.sendMail({
-	// 		from: '"Greedy" <hyncompany0@gmail.com>',
-	// 		to: seller.email,
-	// 		subject: "[구매알림] " + seller.name + "님 구매요청 내역을 확인해주세요.",
-	// 		html: email_body,
-	// 		attachments: [{
-	// 			filename: 'ourlogo.png',
-	// 			path: './assets/images/ourlogo.png',
-	// 			cid: 'ourlogo'
-	// 		}]
-	// 	});
-	// } catch(e) {
-	// 	console.log(e);
-	// 	return res.send("이메일 전송 오류: " + e);
-	// }
-  	// console.log("Message sent: %s", info.messageId);
+	const email_body = emailTemplete(seller.name, buyer.name, transaction.description, amount, 
+		`http://localhost:3000/main/transaction/final/accept/${pk}/${new_hash}`,
+		`http://localhost:3000/main/transaction/reject/${pk}/${new_hash}`,
+		"전력 구매 최종 승인 안내", `${buyer.name}님이 요청하신 구매에 대해 승인하였습니다.`);
+	let info;
+	try {
+		info = await transporter.sendMail({
+			from: '"Greedy" <hyncompany0@gmail.com>',
+			to: buyer.email,
+			subject: "[구매알림] " + buyer.name + "님의 구매요청에 대한 최종 승인을 해주세요.",
+			html: email_body,
+			attachments: [{
+				filename: 'ourlogo.png',
+				path: './assets/images/ourlogo.png',
+				cid: 'ourlogo'
+			}]
+		});
+	} catch(e) {
+		console.log(e);
+		return res.send("이메일 전송 오류: " + e);
+	}
+  	console.log("Message sent: %s", info.messageId);
 	
 	/**** 작업 필요 : 메시지 템플릿 rendering ****/
-	////////////////////////////////////////////////////////
 	res.send("승인하쎴쎼여~? " + pk + " " + buyerId + " " + amount + " " + hash);
 }
 
-// 판매자 승인 이메일: 구매 요청 거절
+// 구매자 또는 판매자 거절
 export const purchaseReject = async (req, res) => {
 	const {params: { pk, hash }} = req;
 	let transaction;		// 판매글
@@ -244,12 +172,19 @@ export const purchaseReject = async (req, res) => {
 		return res.send("데이터베이스 수정 오류: " + e);
 	}
 	
-	/**** 작업 필요 : 구매자한테 최종 승인 이메일 보내기 ****/
-	////////////////////////////////////////////////////////
+	/**** 작업 필요 : 구매자한테 거절됐다고 이메일 보내기 ****/
 	
 	/**** 작업 필요 : 메시지 템플릿 rendering ****/
-	////////////////////////////////////////////////////////
 	res.send("거절이라니.. 너무행~! " + pk + " " + hash);
+}
+
+// 구매자 최종 승인
+export const finalAccept = async (req, res) => {
+	const {params: { pk, hash }} = req;
+	let transaction;		// 판매글
+
+	// 유효성 검사
+	res.send("최종승인 안내~ " + pk + " " + hash);
 }
 
 /*** POST Method ***/
@@ -265,7 +200,7 @@ export const postTransact = async (req, res) => {
 		const transaction = await Transaction.create({
 			amount,
 			description,
-			PK: transactionList.length + 1, //관련 수정 요구
+			PK: transactionList.length + 1,		//관련 수정 요구
 			seller: PK,
 			createdAt: Date.now()
 		});
@@ -276,6 +211,79 @@ export const postTransact = async (req, res) => {
 	}
 };
 
+// 구매 요청 & 판매자에게 승인 이메일 전송
+export const purchaseRequest = async (req, res) => {
+	const {params: { id }} = req;	// transaction_id
+	let transaction;		// 판매글
+	let seller;				// 판매자
+	const buyer = req.user;	// 구매자
+	const reqAmount = req.body.purchase;
+
+	// 입력된 구매량 유효성검사
+	if (reqAmount < 1) 
+		return res.send(`<script type="text/javascript">alert("구매량은 1보다 커야합니다.");location.href="./${id}";</script>`);
+
+	try {	// DB 불러오기
+		transaction = await Transaction.findOne({ PK: id });
+		seller = await User.findOne({ PK: transaction.seller });
+	} catch (e) {
+		console.log(e);
+		return res.send("데이터베이스 로딩 오류: " + e);
+	}
+	// console.log(req.body); console.log(buyer); console.log(transaction); console.log(seller);
+
+	/**** 작업 필요? : DB 유효성 검사 ****/
+	/* 구매하고자 하는 전력량이 구매자의 배터리에 충전 가능한 용량에 수용할 수 있는지 확인
+		if (user_battery_max – user_elec_charge > transaction_req_amount)
+			pass
+		else
+			return error
+	*/
+
+	// 해시값 생성
+	const tmp = id + buyer.PK + Date.now().toString() + reqAmount;
+	const hash = crypto.createHash('md5').update(tmp).digest('hex');
+
+	try {	// transaction table 변경
+		const changed = await transaction.update({
+			status: 1,
+			hash: hash,
+			reqAmount: reqAmount,
+			buyer: buyer.PK
+		});
+	} catch (e) {
+		console.log(e);
+		return res.send("데이터베이스 수정 오류: " + e);
+	}
+  	
+	// 이메일 보내기
+	const email_body = emailTemplete(buyer.name, seller.name, transaction.description, reqAmount, 
+		`http://localhost:3000/main/transaction/accept/${id}/${buyer.PK}/${reqAmount}/${hash}`,
+		`http://localhost:3000/main/transaction/reject/${id}/${hash}`,
+		"전력 구매 요청 안내", "회원님의 판매글에 아래과 같이 구매가 요청되었습니다.");
+	let info;
+	try {
+		info = await transporter.sendMail({
+			from: '"Greedy" <hyncompany0@gmail.com>',
+			to: seller.email,
+			subject: "[구매알림] " + seller.name + "님 구매요청 내역을 확인해주세요.",
+			html: email_body,
+			attachments: [{
+				filename: 'ourlogo.png',
+				path: './assets/images/ourlogo.png',
+				cid: 'ourlogo'
+			}]
+		});
+	} catch(e) {
+		console.log(e);
+		return res.send("이메일 전송 오류: " + e);
+	}
+  	console.log("Message sent: %s", info.messageId);
+	
+	/**** 작업 필요 : 메시지 템플릿 rendering ****/
+	////////////////////////////////////////////////////////
+	res.redirect('/main' + routes.transAction);
+};
 
 
 /*** 추가 사용 함수 ***/
@@ -287,7 +295,7 @@ const parseDate = (date) => {
 };
 
 // 이메일 템플릿
-function emailTemplete(from, to, desc, amount, approve_link, reject_link) {
+function emailTemplete(from, to, desc, amount, approve_link, reject_link, title, contents) {
 	const a =  `
 	<html><head></head><body><table width="580" border="0" cellpadding="0" cellspacing="0" style="margin:0 auto;"><tbody><tr><td height="40"></td></tr><tr><td>
 		<table width="580" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff" style="margin:0 auto;">
@@ -299,14 +307,14 @@ function emailTemplete(from, to, desc, amount, approve_link, reject_link) {
 					</table>
 					</td><td></td></tr><!-- E: HEADER --><!-- S: BODY --><tr><td></td><td>
 					<table width="500" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td height="32" style="font-size:24px;text-align: center">
-						전력 구매 요청 안내
+						${title}
 						</td></tr><tr><td height="40"></td></tr><tr><td height="40" style="line-height: 1.5;font-size: 16px; word-break: keep-all;">
 						<strong style="font-weight: bold">안녕하세요, ${to}님</strong><br>
-							회원님의 판매글에 아래과 같이 구매가 요청되었습니다.<br><br>
-							게시글 : ${desc}<br>
-							구매자 : ${from}님<br>
-							구매 요청량 : ${amount}kw
-						<br><br>해당 거래를 아래 버튼을 통해 승인 또는 거절을 해 주시기 바랍니다.<br>
+							${contents}<br><br>
+							게시글 : <strong style="font-weight: bold">${desc}</strong><br>
+							구매자 : <strong style="font-weight: bold">${from}님</strong><br>
+							구매 요청량 : <strong style="font-weight: bold">${amount}kw</strong><br><br>
+							해당 거래를 아래 버튼을 통해 승인 또는 거절을 해 주시기 바랍니다.<br>
 						</td></tr><tr><td height="8"></td></tr><tr><td bgcolor="#f3f5f7" style="padding: 16px;text-align: center">
 							<a href='${approve_link}' style='margin-right:15px;'><button style='background-color:"#4CAF50"; color:"white"; border-radius:10px; font-size:15px; font-weight:bold;'>수락하기</button></a>
 							<a href='${reject_link}'><button style='background-color:"#555555"; color:"white"; border-radius:10px; font-size:15px; font-weight:bold;'>거절하기</button></a>
