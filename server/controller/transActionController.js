@@ -18,7 +18,6 @@ const transporter = nodemailer.createTransport({
 
 /*** GET Method ***/
 // 판매글 목록 페이지 출력
-
 export const deal = async (req, res) => {
 	const targetObjList = [];
 
@@ -49,6 +48,7 @@ export const deal = async (req, res) => {
 	}
 };
 
+// 판매글 작성 페이지 출력
 export const write = (req, res) => {
 	res.render('add-deal', {
 		pageTitle: 'add-deal',
@@ -56,39 +56,9 @@ export const write = (req, res) => {
 	});
 };
 
-export const postTransact = async (req, res) => {
-	const { amount, description } = req.body;
-	const { PK, email, IP } = req.user;
-
-	try {
-		const transactionList = await Transaction.find({});
-		let PK = transactionList[0].PK | 0;
-
-		for (let i = 0; i < transactionList.length; i++) {
-			if (PK < transactionList[i].PK) {
-				PK = transactionList[i].PK;
-			}
-		}
-		const transaction = await Transaction.create({
-			amount,
-			description,
-			PK: PK + 1, //관련 수정 요구
-			seller: PK,
-			createdAt: Date.now()
-		});
-
-		res.redirect('/main' + routes.transAction);
-	} catch (e) {
-		console.log(e);
-
-		res.redirect(routes.write);
-	}
-};
-
+// 판매글 내용 페이지 출력
 export const checkTrade = async (req, res) => {
-	const {
-		params: { id }
-	} = req;
+	const {params: { id }}= req;
 	let data;
 	let seller;
 	try {
@@ -142,6 +112,7 @@ export const purchaseAccept = async (req, res) => {
 		});
 	} catch (e) {
 		console.log(e);
+		return res.send("데이터베이스 수정 오류: " + e);
 	}
 	
 	/**** 작업 필요 : 구매자한테 최종 승인 이메일 보내기 ****/
@@ -253,15 +224,19 @@ export const finalAccept = async (req, res) => {
 export const postTransact = async (req, res) => {
 	const { amount, description } = req.body;
 	const { PK, email, IP } = req.user;
-
 	try {
 		const transactionList = await Transaction.find({});
+		let PK = transactionList[0].PK | 0;
 
-		console.log(transactionList);
+		for (let i = 0; i < transactionList.length; i++) {
+			if (PK < transactionList[i].PK) {
+				PK = transactionList[i].PK;
+			}
+		}
 		const transaction = await Transaction.create({
 			amount,
 			description,
-			PK: transactionList.length + 1,		//관련 수정 요구
+			PK: PK + 1, //관련 수정 요구
 			seller: PK,
 			createdAt: Date.now()
 		});
