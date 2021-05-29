@@ -161,17 +161,17 @@ export const purchaseReject = async (req, res) => {
 	if (hash !== transaction.hash)
 		return res.send("해시값 다름\n" + hash + "\n" + transaction.hash);
 
-	// try {	// transaction table 변경
-	// 	const changed = await transaction.update({
-	// 		status: 0,
-	// 		hash: "",
-	// 		buyer: 0,
-	// 		reqAmount: 0
-	// 	});
-	// } catch (e) {
-	// 	console.log(e);
-	// 	return res.send("데이터베이스 수정 오류: " + e);
-	// }
+	try {	// transaction table 변경
+		const changed = await transaction.update({
+			status: 0,
+			hash: "",
+			buyer: 0,
+			reqAmount: 0
+		});
+	} catch (e) {
+		console.log(e);
+		return res.send("데이터베이스 수정 오류: " + e);
+	}
 
 	if (isBuyer === "1") {	// 구매자 최종 거절 -> 판매자에게 이메일 알림
 		const email_body = emailTempleteNotification(seller.name, `http://localhost:3000/main/transaction/${pk}`, "전력 구매 거절 안내",
@@ -196,7 +196,7 @@ export const purchaseReject = async (req, res) => {
 		console.log("Message sent: %s", info.messageId);
 
 		/**** 작업 필요 : 메시지 템플릿 rendering ****/
-		res.send("구매자 최종 거절이라니.. 너무행~!\n" + pk + " " + hash);
+		res.send("판매자 거절이라니.. 너무행~!\n" + pk + " " + hash);
 	} else {		// 판매자 판매 거절 -> 구매자에게 이메일 알림
 		const email_body = emailTempleteNotification(buyer.name, `http://localhost:3000/main/transaction/${pk}`, "전력 구매 거절 안내",
 			"회원님이 요청하신 <strong style='font-weight: bold'>[" + transaction.description + "]</strong>에 대한 구매 요청이 판매자에 의해 거절되었습니다.");
@@ -220,7 +220,7 @@ export const purchaseReject = async (req, res) => {
 		console.log("Message sent: %s", info.messageId);
 		
 		/**** 작업 필요 : 메시지 템플릿 rendering ****/
-		res.send("판매자 거절이라니.. 너무행~!\n" + pk + " " + hash);
+		res.send("구매자 최종 거절이라니.. 너무행~!\n" + pk + " " + hash);
 	}
 }
 
@@ -250,8 +250,38 @@ export const finalAccept = async (req, res) => {
 		return res.send("데이터베이스 수정 오류: " + e);
 	}
 
-	
-	/**** 작업 필요 : 구매자, 판매자 최종 안내 이메일 보내기 ****/
+	for (let i=0; i<2; i++) {	// 구매자, 판매자 최종 안내 이메일 보내기
+		let email_body, tmp_email, tmp_name, info;
+		if (i === 0) {	// 구매자에게
+			email_body = emailTempleteNotification(buyer.name, `http://localhost:3000/main/transaction/${pk}`, "전력 거래 진행 안내",
+				"회원님이 요청하신 <strong style='font-weight: bold'>[" + transaction.description + "]</strong>에 대한 거래가 시작되었습니다.<br><br>아래 버튼을 통해 거래 진행상황을 확인하세요.");
+			tmp_email = buyer.email;
+			tmp_name = buyer.name;
+		} else {	// 판매자에게
+			email_body = emailTempleteNotification(seller.name, `http://localhost:3000/main/transaction/${pk}`, "전력 거래 진행 안내",
+				"회원님의 <strong style='font-weight: bold'>[" + transaction.description + "]</strong>에 대한 거래가 시작되었습니다.<br><br>아래 버튼을 통해 거래 진행상황을 확인하세요.");
+			tmp_email = seller.email;
+			tmp_name = seller.name;
+		}
+
+		try {
+			info = await transporter.sendMail({
+				from: '"Greedy" <hyncompany0@gmail.com>',
+				to: tmp_email,
+				subject: "[거래알림] " + tmp_name + "님이 요청하신 거래가 시작되었습니다.",
+				html: email_body,
+				attachments: [{
+					filename: 'ourlogo.png',
+					path: './assets/images/ourlogo.png',
+					cid: 'ourlogo'
+				}]
+			});
+		} catch (e) {
+			console.log(e);
+			return res.send("이메일 전송 오류: " + e);
+		}
+		console.log("Message sent: %s", info.messageId);
+	}
 
 	res.send("최종승인 안내~ " + pk + " " + hash);
 }
@@ -263,7 +293,7 @@ export const postTransact = async (req, res) => {
 	const { PK, email, IP } = req.user;
 	try {
 		const transactionList = await Transaction.find({});
-		let PK = transactionList.length === 0 ? 0 : transactionList[0].PK;
+		let PK = transactionList[0].PK | 0;
 
 		for (let i = 0; i < transactionList.length; i++) {
 			if (PK < transactionList[i].PK) {
