@@ -115,9 +115,8 @@ export const purchaseAccept = async (req, res) => {
 		return res.send("데이터베이스 수정 오류: " + e);
 	}
 	
-	/**** 작업 필요 : 구매자한테 최종 승인 이메일 보내기 ****/
 	// 이메일 보내기
-	const email_body = emailTemplete(seller.name, buyer.name, transaction.description, transaction.reqAmount, 
+	const email_body = emailTempleteConfirm(seller.name, buyer.name, transaction.description, transaction.reqAmount, 
 		`http://localhost:3000/main/transaction/final/accept/${pk}/${new_hash}`,
 		`http://localhost:3000/main/transaction/reject/${pk}/1/${new_hash}`,
 		"전력 구매 최종 승인 안내", `${buyer.name}님이 요청하신 구매에 대해 승인하였습니다.`);
@@ -162,25 +161,63 @@ export const purchaseReject = async (req, res) => {
 	if (hash !== transaction.hash)
 		return res.send("해시값 다름\n" + hash + "\n" + transaction.hash);
 
-	try {	// transaction table 변경
-		const changed = await transaction.update({
-			status: 0,
-			hash: "",
-			buyer: 0,
-			reqAmount: 0
-		});
-	} catch (e) {
-		console.log(e);
-		return res.send("데이터베이스 수정 오류: " + e);
-	}
+	// try {	// transaction table 변경
+	// 	const changed = await transaction.update({
+	// 		status: 0,
+	// 		hash: "",
+	// 		buyer: 0,
+	// 		reqAmount: 0
+	// 	});
+	// } catch (e) {
+	// 	console.log(e);
+	// 	return res.send("데이터베이스 수정 오류: " + e);
+	// }
 
-	if (isBuyer === "1") {	// 구매자 최종 거절
-		// 판매자에게 거절 이메일 보내기
+	if (isBuyer === "1") {	// 구매자 최종 거절 -> 판매자에게 이메일 알림
+		const email_body = emailTempleteNotification(seller.name, `http://localhost:3000/main/transaction/${pk}`, "전력 구매 거절 안내",
+			"회원님이 요청하신 <strong style='font-weight: bold'>[" + transaction.description + "]</strong>에 대한 구매 요청이 구매자에 의해 거절되었습니다.");
+		let info;
+		try {
+			info = await transporter.sendMail({
+				from: '"Greedy" <hyncompany0@gmail.com>',
+				to: seller.email,
+				subject: "[구매알림] " + seller.name + "님이 요청하신 거래가 성사되지 않았습니다.",
+				html: email_body,
+				attachments: [{
+					filename: 'ourlogo.png',
+					path: './assets/images/ourlogo.png',
+					cid: 'ourlogo'
+				}]
+			});
+		} catch(e) {
+			console.log(e);
+			return res.send("이메일 전송 오류: " + e);
+		}
+		console.log("Message sent: %s", info.messageId);
 
 		/**** 작업 필요 : 메시지 템플릿 rendering ****/
 		res.send("구매자 최종 거절이라니.. 너무행~!\n" + pk + " " + hash);
-	} else {		// 판매자 판매 거절
-		// 구매자에게 거절 이메일 보내기
+	} else {		// 판매자 판매 거절 -> 구매자에게 이메일 알림
+		const email_body = emailTempleteNotification(buyer.name, `http://localhost:3000/main/transaction/${pk}`, "전력 구매 거절 안내",
+			"회원님이 요청하신 <strong style='font-weight: bold'>[" + transaction.description + "]</strong>에 대한 구매 요청이 판매자에 의해 거절되었습니다.");
+		let info;
+		try {
+			info = await transporter.sendMail({
+				from: '"Greedy" <hyncompany0@gmail.com>',
+				to: buyer.email,
+				subject: "[구매알림] " + buyer.name + "님이 요청하신 거래가 성사되지 않았습니다.",
+				html: email_body,
+				attachments: [{
+					filename: 'ourlogo.png',
+					path: './assets/images/ourlogo.png',
+					cid: 'ourlogo'
+				}]
+			});
+		} catch(e) {
+			console.log(e);
+			return res.send("이메일 전송 오류: " + e);
+		}
+		console.log("Message sent: %s", info.messageId);
 		
 		/**** 작업 필요 : 메시지 템플릿 rendering ****/
 		res.send("판매자 거절이라니.. 너무행~!\n" + pk + " " + hash);
@@ -226,7 +263,7 @@ export const postTransact = async (req, res) => {
 	const { PK, email, IP } = req.user;
 	try {
 		const transactionList = await Transaction.find({});
-		let PK = transactionList[0].PK | 0;
+		let PK = transactionList.length === 0 ? 0 : transactionList[0].PK;
 
 		for (let i = 0; i < transactionList.length; i++) {
 			if (PK < transactionList[i].PK) {
@@ -293,7 +330,7 @@ export const purchaseRequest = async (req, res) => {
 	}
   	
 	// 이메일 보내기
-	const email_body = emailTemplete(buyer.name, seller.name, transaction.description, reqAmount, 
+	const email_body = emailTempleteConfirm(buyer.name, seller.name, transaction.description, reqAmount, 
 		`http://localhost:3000/main/transaction/accept/${id}/${hash}`,
 		`http://localhost:3000/main/transaction/reject/${id}/0/${hash}`,
 		"전력 구매 요청 안내", "회원님의 판매글에 아래과 같이 구매가 요청되었습니다.");
@@ -330,8 +367,8 @@ const parseDate = (date) => {
 	return parsed;
 };
 
-// 이메일 템플릿
-function emailTemplete(from, to, desc, amount, approve_link, reject_link, title, contents/*, is_reject*/) {
+// 이메일 템플릿 (수락/거절)
+function emailTempleteConfirm(from, to, desc, amount, approve_link, reject_link, title, contents) {
 	const a =  `
 	<html><head></head><body><table width="580" border="0" cellpadding="0" cellspacing="0" style="margin:0 auto;"><tbody><tr><td height="40"></td></tr><tr><td>
 		<table width="580" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff" style="margin:0 auto;">
@@ -354,6 +391,33 @@ function emailTemplete(from, to, desc, amount, approve_link, reject_link, title,
 						</td></tr><tr><td height="8"></td></tr><tr><td bgcolor="#f3f5f7" style="padding: 16px;text-align: center">
 							<a href='${approve_link}' style='margin-right:15px;'><button style='background-color:"#4CAF50"; color:"white"; border-radius:10px; font-size:15px; font-weight:bold;'>수락하기</button></a>
 							<a href='${reject_link}'><button style='background-color:"#555555"; color:"white"; border-radius:10px; font-size:15px; font-weight:bold;'>거절하기</button></a>
+						</td></tr>
+					</td></tr></tbody></table>
+			</td><td></td></tr><!-- E: BODY --></tbody>
+		</table>
+	</td></tr><tr><td height="40"></td></tr></tbody></table></body></html>`;
+	return a;
+};
+
+// 이메일 템플릿 (안내)
+function emailTempleteNotification(to, checkLink, title, contents) {
+	const a =  `
+	<html><head></head><body><table width="580" border="0" cellpadding="0" cellspacing="0" style="margin:0 auto;"><tbody><tr><td height="40"></td></tr><tr><td>
+		<table width="580" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff" style="margin:0 auto;">
+			<tbody><tr><td height="3" width="40" bgcolor="#1ea1f7"></td><td height="3" width="500" bgcolor="#1ea1f7"></td><td height="3" width="40" bgcolor="#1ea1f7"></td></tr><tr><td></td><td>
+					<table width="500" border="0" cellpadding="0" cellspacing="0">
+						<tbody><tr><td height="20"></td></tr><tr><td align="center" height="32">
+							<img src="cid:ourlogo" style="width: 90%;min-width: 150px;" />
+						</td></tr></tbody>
+					</table>
+					</td><td></td></tr><!-- E: HEADER --><!-- S: BODY --><tr><td></td><td>
+					<table width="500" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td height="32" style="font-size:24px;text-align: center">
+						${title}
+						</td></tr><tr><td height="40"></td></tr><tr><td height="40" style="line-height: 1.5;font-size: 16px; word-break: keep-all;">
+						<strong style="font-weight: bold">안녕하세요, ${to}님</strong><br>
+							${contents}<br><br>
+						</td></tr><tr><td height="8"></td></tr><tr><td bgcolor="#f3f5f7" style="padding: 16px;text-align: center">
+							<a href='${checkLink}'><button style='background-color:"#4CAF50"; color:"white"; border-radius:10px; font-size:15px; font-weight:bold;'>확인하기</button></a>
 						</td></tr>
 					</td></tr></tbody></table>
 			</td><td></td></tr><!-- E: BODY --></tbody>
