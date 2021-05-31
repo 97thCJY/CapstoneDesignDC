@@ -169,3 +169,10 @@ export const deviceModification = async (req, res) => {
 		res.redirect(routes.main);
 	}
 };
+
+export const status = (req, res) => {
+	console.log('on status');
+	res.render('transactionStatus', {
+		pageTitle: 'Progress'
+	});
+};

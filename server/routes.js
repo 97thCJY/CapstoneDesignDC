@@ -22,6 +22,7 @@ const TRANSACTION = '/transaction';
 const WRITE = '/write_transaction';
 const CHECKTRADE = '/:id';
 const TRADING = '/trading';
+const STATUS = '/transactionStatus';
 const routes = {
 	home: HOME,
 	login: LOGIN,
@@ -43,7 +44,8 @@ const routes = {
 	},
 	trading: TRADING,
 	delete: DELETE,
-	saveDevice: SAVEDEVICE
+	saveDevice: SAVEDEVICE,
+	status: STATUS
 };
 
 export default routes;

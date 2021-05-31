@@ -377,3 +377,81 @@ header {
 .p-3 {
 	overflow: hidden;
 }
+
+.menuList {
+	position: relative;
+	font-weight: bold;
+	box-sizing: border-box;
+	z-index: 20;
+	text-align: center;
+}
+
+.menu {
+	width: 150px;
+	height: 30px;
+	position: relative;
+	background-color: rgba(233, 212, 96, 1);
+	margin: 0;
+	box-sizing: border-box;
+	display: flex;
+	justify-content: center;
+	border: 1px solid;
+	border-radius: 5%;
+	text-align: center;
+	align-items: center;
+}
+.logOut {
+	opacity: 0;
+	width: 150px;
+	position: absolute;
+	transition: all 0.3s ease;
+	background-color: rgba(233, 212, 96, 1);
+	border-radius: 5%;
+	border: 1px solid;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	margin: 0;
+	align-items: center;
+	box-sizing: border-box;
+	z-index: 19;
+	&:hover {
+		box-shadow: 1px 2px 3px grey;
+		background-color: #7b69ee;
+		color: #f9f9f9;
+		border-color: black;
+	}
+}
+.loading {
+	opacity: 0;
+	box-sizing: border-box;
+	width: 150px;
+	position: absolute;
+	margin: 0;
+	transition: all 0.3s ease;
+	border-radius: 5%;
+	border: 1px solid;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 18;
+
+	&:hover {
+		box-shadow: 1px 2px 3px grey;
+		background-color: #7b69ee;
+		color: #f9f9f9;
+		border-color: black;
+	}
+	background-color: rgba(233, 212, 96, 1);
+}
+
+@keyframes moveLogOut {
+	0% {
+		opacity: 0;
+		top: 0;
+	}
+	100% {
+		opacity: 1;
+		top: 30px;
+	}
+}

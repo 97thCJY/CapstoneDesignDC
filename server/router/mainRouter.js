@@ -20,7 +20,8 @@ import {
 	addDevice,
 	remoteOnOff,
 	deleteDevice,
-	deviceModification
+	deviceModification,
+	status
 } from '../controller/mainController.js';
 
 const mainRouter = express.Router({
@@ -33,6 +34,7 @@ mainRouter.post('/remoteonoff', onlyPrivate, remoteOnOff);
 mainRouter.get(routes.user, onlyPrivate, userProfile);
 mainRouter.post(routes.delete, onlyPrivate, deleteDevice);
 mainRouter.post(routes.saveDevice, onlyPrivate, deviceModification);
+mainRouter.get(routes.status, onlyPrivate, status);
 
 mainRouter.get(routes.checkElec, onlyPrivate, checkElec);
 
