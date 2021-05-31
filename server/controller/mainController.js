@@ -148,3 +148,24 @@ export const remoteOnOff = async (req, res) => {
 };
 
 const getTotalUsage = () => 0;
+
+export const deviceModification = async (req, res) => {
+	const { modName, name } = req.body;
+
+	try {
+		await Device.findOneAndUpdate(
+			{
+				name: name
+			},
+			{
+				name: modName
+			}
+		);
+
+		console.log(await Device.find({}));
+	} catch (e) {
+		console.log(e);
+	} finally {
+		res.redirect(routes.main);
+	}
+};
