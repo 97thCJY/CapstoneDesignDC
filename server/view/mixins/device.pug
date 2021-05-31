@@ -14,3 +14,25 @@ mixin device(dv = {})
 
             .card-title.py-0
                 h5.card-title.card_name #{dv.name}
+            #SettingModal.modal.fade(tabindex='-1', aria-hidden='true', aria-labelledby='SettingModalLabel')
+                        .modal-dialog.modal-dialog-centered.modal_state
+                            .modal-content
+                                .modal-header(style='background: #505; color:white')
+                                    h5#SettingModalLabel.modal-title
+                                    button.btn-close.btn-close-white(type='button', data-bs-dismiss='modal', aria-label='Close')
+                                    form(method = 'post' , action = '/main'+ routes.delete)
+                                        input(style = 'display: none' , name = 'deleteTarget' value= dv.name)
+                                        input.deviceDelete(type = 'submit' ,value = '삭제')
+                                  
+                                .modal-body
+                                    .select_elec.mb-3
+                                    select#now_port.form-select.select_port(name = 'port')
+                                        option(value='', selected='', disabled='', hidden='')
+                                        option(value='1') port-1
+                                        option(value='2') Port-2
+                                        option(value='3') Port-3
+                                        option(value='4') Port-4
+                                        option(value='5') Port-5
+                                .modal-footer
+                                    button.btn.btn-outline-secondary(type='button', data-bs-dismiss='modal') 닫기
+                                    button.btn.btn-outline-danger(type='button', onClick="requestRemoteFix()") 저장

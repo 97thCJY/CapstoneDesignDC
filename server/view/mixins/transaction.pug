@@ -1,7 +1,8 @@
 mixin transaction(data={})
     tr
-        td.p-3(style='width: 60%')
-            a(href = `/main/transaction${routes.checkTrade(data.PK)}`) #{data.description}
+        td.p-3.description(style='width: 60%')
+            a(href = `/main/transaction${routes.checkTrade(data.PK)}`)
+                span #{data.description}
         td.text-center.p-3(style='width: 15%') #{data.sellerName}
         td.text-center.p-3(style='width: 15%') #{data.createdAt}
         td.text-center.p-3(style='width: 10%') #{data.amount + `kw`}

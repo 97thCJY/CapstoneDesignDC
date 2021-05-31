@@ -353,3 +353,27 @@ header {
 		}
 	}
 }
+
+.deviceDelete {
+	border: none;
+	background: none;
+	color: white;
+	opacity: 0.5;
+	font-weight: 600;
+	position: absolute;
+	top: 27%;
+	right: 7%;
+	&:hover {
+		opacity: 0.7;
+	}
+}
+
+.modal-header {
+	display: flex;
+	align-items: center;
+	position: relative;
+}
+
+.p-3 {
+	overflow: hidden;
+}

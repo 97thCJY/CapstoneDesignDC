@@ -14,7 +14,7 @@ const MAIN = '/main';
 const USER = '/user';
 const DEAL = '/deal';
 const CHECKELEC = '/check-elec';
-
+const DELETE = '/delete';
 // deal Router
 
 const TRANSACTION = '/transaction';
@@ -41,7 +41,8 @@ const routes = {
 			return CHECKTRADE;
 		}
 	},
-	trading: TRADING
+	trading: TRADING,
+	delete: DELETE
 };
 
 export default routes;

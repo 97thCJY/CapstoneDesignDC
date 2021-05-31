@@ -21,27 +21,43 @@ block content2
                         .form-group.row
                             h5(for = 'transaction_amount').col-sm-2 판매량 (kw)
                             .col-sm-10.align-self-center
-                                h5 #{data.amount}
-                                input(type='number' default = data.amount name ='amount' style='display : none')
+                                
+                                input.modAmount(type='number' name ='amount' placeholder = data.amount)
                         br
 
                         .row.form-group
                             h5(for='transaction_amount').col-sm-2 판매 가격
                             .col-sm-10.align-self-center
-                                h5 #{data.amount * 103}원
+                                h5.price #{data.amount * 103}원
                         br
 
                         .form-group.row
                             h5(for='transaction_amount').col-sm-2 내용
                             .col-sm-10.align-self-center
-                                p #{data.description}
+                                textarea(name ='description') #{description}
+                                
                         br
 
                         //- 판매자일 경우
                         if (user.PK == data.seller)
                             .text-end
-                                button.btn.btn-danger(type='button') 수정하기
+                                input.btn.btn-danger(type='submit' value = '수정하기')
                         else
                             .text-end
                                 input(type="number" name='purchase' placeholder ='구매량 입력(kw)')
                                 button.btn.btn-secondary(type='submit') 구매요청
+
+
+    script.
+        const mod = document.getElementsByClassName('modAmount')[0];
+        console.log(mod)
+
+        const handleModification = e =>{
+            const price = document.getElementsByClassName('price')[0];
+
+            const reqAmount = e.target.value;
+
+            price.innerText =`${reqAmount * 108}`+'원';
+
+        }
+        mod.addEventListener('input' , handleModification);
