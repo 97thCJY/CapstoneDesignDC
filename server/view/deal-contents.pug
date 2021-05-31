@@ -17,7 +17,7 @@ block content2
 
             .row#deal-contents
                 form(method='post' action ='/main/transaction'+routes.checkTrade(data.PK)).form-container
-                    .form-container
+                    .form-container.deal-contents-container
                         .form-group.row
                             h5(for = 'transaction_amount').col-sm-2 판매량 (kw)
                             .col-sm-10.align-self-center
@@ -40,10 +40,10 @@ block content2
 
                         //- 판매자일 경우
                         if (user.PK == data.seller)
-                            .text-end
+                            .request_containerM
                                 input.btn.btn-danger(type='submit' value = '수정하기')
                         else
-                            .text-end
+                            .request_container
                                 input(type="number" name='purchase' placeholder ='구매량 입력(kw)')
                                 button.btn.btn-secondary(type='submit') 구매요청
 
