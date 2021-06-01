@@ -25,7 +25,7 @@ export const deal = async (req, res) => {
 		let articleSet = await Transaction.find({});
 
 		for (let i = 0; i < articleSet.length; i++) {
-			if (articleSet[i].status !== 3) {
+			if (articleSet[i].status < 3) {
 				let date;
 				const user = await User.findOne({ PK: articleSet[i].seller });
 

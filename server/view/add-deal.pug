@@ -39,9 +39,22 @@ block content2
         const priceUpdate = e =>{
             const current = e.target.value;
 
-            console.log(current);
-            console.log(target);
-            target.value = `${current *108}` + '원';
+            let currentString = `${current*108}`;
+            
+            let cnt =0
+            let length = currentString.length;
+            for(let i = currentString.length-1 ; i>= 0 ; i--){
+                if(i== 0){
+                    break;
+                }
+                cnt ++;
+                if(cnt == 3){
+                    currentString = currentString.slice(0,i) + ',' + currentString.slice(i,length);
+                    length++;
+                    cnt = 0;
+                }
+            }
+            target.value = currentString + '원';
         }
         amount.addEventListener('input' , priceUpdate)
 
