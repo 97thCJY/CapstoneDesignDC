@@ -102,12 +102,14 @@ export const purchaseAccept = async (req, res) => {
 		seller = await User.findOne({ PK: transaction.seller });
 	} catch (e) {
 		console.log(e);
-		return res.send('데이터베이스 로딩 오류: ' + e);
+		return res.redirect('/message/' + "Error: 데이터베이스 로딩 오류");
 	}
 
 	// hash값 비교
-	if (hash !== transaction.hash) return res.send('해시값 다름\n' + hash + '\n' + transaction.hash);
-
+	if (hash !== transaction.hash) {
+		console.log("해시값 다름\n" + hash + "\n" + transaction.hash);
+		return res.redirect('/message/' + "이미 완료된 요청이거나 잘못된 요청입니다.");
+	}
 	/**** 작업 필요 : 유효성 검사? ****/
 
 	// new hash값 생성
@@ -121,17 +123,12 @@ export const purchaseAccept = async (req, res) => {
 			hash: new_hash
 		});
 	} catch (e) {
-		console.log(e);
-		return res.send('데이터베이스 수정 오류: ' + e);
+		console.log("데이터베이스 수정 오류: " + e);
+		return res.redirect('/message/' + "Error: 데이터베이스 로딩 오류");
 	}
-
-	/**** 작업 필요 : 구매자한테 최종 승인 이메일 보내기 ****/
+	
 	// 이메일 보내기
-	const email_body = emailTemplete(
-		seller.name,
-		buyer.name,
-		transaction.description,
-		transaction.reqAmount,
+	const email_body = emailTempleteConfirm(seller.name, buyer.name, transaction.description, transaction.reqAmount, 
 		`http://localhost:3000/main/transaction/final/accept/${pk}/${new_hash}`,
 		`http://localhost:3000/main/transaction/reject/${pk}/1/${new_hash}`,
 		'전력 구매 최종 승인 안내',
@@ -152,15 +149,14 @@ export const purchaseAccept = async (req, res) => {
 				}
 			]
 		});
-	} catch (e) {
-		console.log(e);
-		return res.send('이메일 전송 오류: ' + e);
+	} catch(e) {
+		console.log("이메일 전송 오류: " + e);
+		return res.redirect('/message/' + "Error: 이메일 전송 오류");
 	}
-	console.log('Message sent: %s', info.messageId);
-
-	/**** 작업 필요 : 메시지 템플릿 rendering ****/
-	res.send('승인하쎴쎼여~? ' + pk + ' ' + hash);
-};
+  	console.log("Message sent: %s", info.messageId);
+	
+	return res.redirect('/message/' + "판매 승인 완료");
+}
 
 // 구매자 또는 판매자 거절
 export const purchaseReject = async (req, res) => {
@@ -175,12 +171,15 @@ export const purchaseReject = async (req, res) => {
 		buyer = await User.findOne({ PK: transaction.buyer });
 		seller = await User.findOne({ PK: transaction.seller });
 	} catch (e) {
-		console.log(e);
-		return res.send('데이터베이스 로딩 오류: ' + e);
+		console.log("데이터베이스 로딩 오류: " + e);
+		return res.redirect('/message/' + "Error: 데이터베이스 로딩 오류");
 	}
 
 	// hash값 비교
-	if (hash !== transaction.hash) return res.send('해시값 다름\n' + hash + '\n' + transaction.hash);
+	if (hash !== transaction.hash) {
+		console.log("해시값 다름\n" + hash + "\n" + transaction.hash);
+		return res.redirect('/message/' + "이미 완료된 요청이거나 잘못된 요청입니다.");
+	}
 
 	try {
 		// transaction table 변경
@@ -191,22 +190,54 @@ export const purchaseReject = async (req, res) => {
 			reqAmount: 0
 		});
 	} catch (e) {
-		console.log(e);
-		return res.send('데이터베이스 수정 오류: ' + e);
+		console.log("데이터베이스 수정 오류: " + e);
+		return res.redirect('/message/' + "Error: 데이터베이스 수정 오류");
 	}
 
-	if (isBuyer === '1') {
-		// 구매자 최종 거절
-		// 판매자에게 거절 이메일 보내기
-
-		/**** 작업 필요 : 메시지 템플릿 rendering ****/
-		res.send('구매자 최종 거절이라니.. 너무행~!\n' + pk + ' ' + hash);
-	} else {
-		// 판매자 판매 거절
-		// 구매자에게 거절 이메일 보내기
-
-		/**** 작업 필요 : 메시지 템플릿 rendering ****/
-		res.send('판매자 거절이라니.. 너무행~!\n' + pk + ' ' + hash);
+	if (isBuyer === "1") {	// 구매자 최종 거절 -> 판매자에게 이메일 알림
+		const email_body = emailTempleteNotification(seller.name, `http://localhost:3000/main/transaction/${pk}`, "전력 구매 거절 안내",
+			"회원님이 요청하신 <strong style='font-weight: bold'>[" + transaction.description + "]</strong>에 대한 구매 요청이 구매자에 의해 거절되었습니다.");
+		let info;
+		try {
+			info = await transporter.sendMail({
+				from: '"Greedy" <hyncompany0@gmail.com>',
+				to: seller.email,
+				subject: "[구매알림] " + seller.name + "님이 요청하신 거래가 성사되지 않았습니다.",
+				html: email_body,
+				attachments: [{
+					filename: 'ourlogo.png',
+					path: './assets/images/ourlogo.png',
+					cid: 'ourlogo'
+				}]
+			});
+		} catch(e) {
+			console.log("이메일 전송 오류: " + e);
+			return res.redirect('/message/' + "Error: 이메일 전송 오류");
+		}
+		console.log("Message sent: %s", info.messageId);
+		return res.redirect('/message/' + "판매 거절되었습니다.");
+	} else {		// 판매자 판매 거절 -> 구매자에게 이메일 알림
+		const email_body = emailTempleteNotification(buyer.name, `http://localhost:3000/main/transaction/${pk}`, "전력 구매 거절 안내",
+			"회원님이 요청하신 <strong style='font-weight: bold'>[" + transaction.description + "]</strong>에 대한 구매 요청이 판매자에 의해 거절되었습니다.");
+		let info;
+		try {
+			info = await transporter.sendMail({
+				from: '"Greedy" <hyncompany0@gmail.com>',
+				to: buyer.email,
+				subject: "[구매알림] " + buyer.name + "님이 요청하신 거래가 성사되지 않았습니다.",
+				html: email_body,
+				attachments: [{
+					filename: 'ourlogo.png',
+					path: './assets/images/ourlogo.png',
+					cid: 'ourlogo'
+				}]
+			});
+		} catch(e) {
+			console.log("이메일 전송 오류: " + e);
+			return res.redirect('/message/' + "Error: 이메일 전송 오류");
+		}
+		console.log("Message sent: %s", info.messageId);
+		return res.redirect('/message/' + "구매를 최종 거절하였습니다.");
 	}
 };
 
@@ -223,13 +254,14 @@ export const finalAccept = async (req, res) => {
 		buyer = await User.findOne({ PK: transaction.buyer });
 		seller = await User.findOne({ PK: transaction.seller });
 	} catch (e) {
-		console.log(e);
-		return res.send('데이터베이스 로딩 오류: ' + e);
+		console.log("데이터베이스 로딩 오류: " + e);
+		return res.redirect('/message/' + "Error: 데이터베이스 로딩 오류");
 	}
 
-	if (hash !== transaction.hash)
-		// hash값 비교
-		return res.send('해시값 다름\n' + hash + '\n' + transaction.hash);
+	if (hash !== transaction.hash) {	// hash값 비교
+		console.log("해시값 다름\n" + hash + "\n" + transaction.hash);
+		return res.redirect('/message/' + "이미 완료된 요청이거나 잘못된 요청입니다.");
+	}
 
 	/**** 작업 필요 유효성 검사 ****/
 
@@ -237,14 +269,44 @@ export const finalAccept = async (req, res) => {
 		// transaction table 변경
 		const changed = await transaction.update({ status: 3, hash: '' });
 	} catch (e) {
-		console.log(e);
-		return res.send('데이터베이스 수정 오류: ' + e);
+		console.log("데이터베이스 수정 오류: " + e);
+		return res.redirect('/message/' + "Error: 데이터베이스 수정 오류");
 	}
 
-	/**** 작업 필요 : 구매자, 판매자 최종 안내 이메일 보내기 ****/
+	for (let i=0; i<2; i++) {	// 구매자, 판매자 최종 안내 이메일 보내기
+		let email_body, tmp_email, tmp_name, info;
+		if (i === 0) {	// 구매자에게
+			email_body = emailTempleteNotification(buyer.name, `http://localhost:3000/main/transaction/${pk}`, "전력 거래 진행 안내",
+				"회원님이 요청하신 <strong style='font-weight: bold'>[" + transaction.description + "]</strong>에 대한 거래가 시작되었습니다.<br><br>아래 버튼을 통해 거래 진행상황을 확인하세요.");
+			tmp_email = buyer.email;
+			tmp_name = buyer.name;
+		} else {	// 판매자에게
+			email_body = emailTempleteNotification(seller.name, `http://localhost:3000/main/transaction/${pk}`, "전력 거래 진행 안내",
+				"회원님의 <strong style='font-weight: bold'>[" + transaction.description + "]</strong>에 대한 거래가 시작되었습니다.<br><br>아래 버튼을 통해 거래 진행상황을 확인하세요.");
+			tmp_email = seller.email;
+			tmp_name = seller.name;
+		}
 
-	res.send('최종승인 안내~ ' + pk + ' ' + hash);
-};
+		try {
+			info = await transporter.sendMail({
+				from: '"Greedy" <hyncompany0@gmail.com>',
+				to: tmp_email,
+				subject: "[거래알림] " + tmp_name + "님이 요청하신 거래가 시작되었습니다.",
+				html: email_body,
+				attachments: [{
+					filename: 'ourlogo.png',
+					path: './assets/images/ourlogo.png',
+					cid: 'ourlogo'
+				}]
+			});
+		} catch (e) {
+			console.log("이메일 전송 오류: " + e);
+			return res.redirect('/message/' + "Error: 이메일 전송 오류");
+		}
+		console.log("Message sent: %s", info.messageId);
+	}
+	return res.redirect('/message/' + "거래가 최종 승인 및 시작되었습니다.");
+}
 
 /*** POST Method ***/
 // 판매글 추가 요청
@@ -320,8 +382,8 @@ export const purchaseRequest = async (req, res) => {
 		transaction = await Transaction.findOne({ PK: id });
 		seller = await User.findOne({ PK: transaction.seller });
 	} catch (e) {
-		console.log(e);
-		return res.send('데이터베이스 로딩 오류: ' + e);
+		console.log("데이터베이스 로딩 오류: " + e);
+		return res.redirect('/message/' + "Error: 데이터베이스 로딩 오류");
 	}
 	// console.log(req.body); console.log(buyer); console.log(transaction); console.log(seller);
 
@@ -346,16 +408,12 @@ export const purchaseRequest = async (req, res) => {
 			buyer: buyer.PK
 		});
 	} catch (e) {
-		console.log(e);
-		return res.send('데이터베이스 수정 오류: ' + e);
+		console.log("데이터베이스 수정 오류: " + e);
+		return res.redirect('/message/' + "Error: 데이터베이스 수정 오류");
 	}
 
 	// 이메일 보내기
-	const email_body = emailTemplete(
-		buyer.name,
-		seller.name,
-		transaction.description,
-		reqAmount,
+	const email_body = emailTempleteConfirm(buyer.name, seller.name, transaction.description, reqAmount, 
 		`http://localhost:3000/main/transaction/accept/${id}/${hash}`,
 		`http://localhost:3000/main/transaction/reject/${id}/0/${hash}`,
 		'전력 구매 요청 안내',
@@ -376,9 +434,9 @@ export const purchaseRequest = async (req, res) => {
 				}
 			]
 		});
-	} catch (e) {
-		console.log(e);
-		return res.send('이메일 전송 오류: ' + e);
+	} catch(e) {
+		console.log("이메일 전송 오류: " + e);
+		return res.redirect('/message/' + "Error: 이메일 전송 오류");
 	}
 	console.log('Message sent: %s', info.messageId);
 
@@ -395,9 +453,9 @@ const parseDate = (date) => {
 	return parsed;
 };
 
-// 이메일 템플릿
-function emailTemplete(from, to, desc, amount, approve_link, reject_link, title, contents /*, is_reject*/) {
-	const a = `
+// 이메일 템플릿 (수락/거절)
+function emailTempleteConfirm(from, to, desc, amount, approve_link, reject_link, title, contents) {
+	const a =  `
 	<html><head></head><body><table width="580" border="0" cellpadding="0" cellspacing="0" style="margin:0 auto;"><tbody><tr><td height="40"></td></tr><tr><td>
 		<table width="580" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff" style="margin:0 auto;">
 			<tbody><tr><td height="3" width="40" bgcolor="#1ea1f7"></td><td height="3" width="500" bgcolor="#1ea1f7"></td><td height="3" width="40" bgcolor="#1ea1f7"></td></tr><tr><td></td><td>
@@ -425,4 +483,31 @@ function emailTemplete(from, to, desc, amount, approve_link, reject_link, title,
 		</table>
 	</td></tr><tr><td height="40"></td></tr></tbody></table></body></html>`;
 	return a;
-}
+};
+
+// 이메일 템플릿 (안내)
+function emailTempleteNotification(to, checkLink, title, contents) {
+	const a =  `
+	<html><head></head><body><table width="580" border="0" cellpadding="0" cellspacing="0" style="margin:0 auto;"><tbody><tr><td height="40"></td></tr><tr><td>
+		<table width="580" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff" style="margin:0 auto;">
+			<tbody><tr><td height="3" width="40" bgcolor="#1ea1f7"></td><td height="3" width="500" bgcolor="#1ea1f7"></td><td height="3" width="40" bgcolor="#1ea1f7"></td></tr><tr><td></td><td>
+					<table width="500" border="0" cellpadding="0" cellspacing="0">
+						<tbody><tr><td height="20"></td></tr><tr><td align="center" height="32">
+							<img src="cid:ourlogo" style="width: 90%;min-width: 150px;" />
+						</td></tr></tbody>
+					</table>
+					</td><td></td></tr><!-- E: HEADER --><!-- S: BODY --><tr><td></td><td>
+					<table width="500" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td height="32" style="font-size:24px;text-align: center">
+						${title}
+						</td></tr><tr><td height="40"></td></tr><tr><td height="40" style="line-height: 1.5;font-size: 16px; word-break: keep-all;">
+						<strong style="font-weight: bold">안녕하세요, ${to}님</strong><br>
+							${contents}<br><br>
+						</td></tr><tr><td height="8"></td></tr><tr><td bgcolor="#f3f5f7" style="padding: 16px;text-align: center">
+							<a href='${checkLink}'><button style='background-color:"#4CAF50"; color:"white"; border-radius:10px; font-size:15px; font-weight:bold;'>확인하기</button></a>
+						</td></tr>
+					</td></tr></tbody></table>
+			</td><td></td></tr><!-- E: BODY --></tbody>
+		</table>
+	</td></tr><tr><td height="40"></td></tr></tbody></table></body></html>`;
+	return a;
+};
