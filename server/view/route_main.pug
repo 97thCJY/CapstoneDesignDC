@@ -54,11 +54,12 @@ block content2
                             input(type='text' id="now_name" name='modName' style=" width: 100%")
                             input(type='text' id="now_port" name='name' style='display : none')
                             .modal-footer.deviceModal
-                                form(method = 'post' , action = '/main'+ routes.delete)
-                                    input(style = 'display: none', name = 'deleteTarget')
-                                    input.deviceDelete(type = 'submit' ,value = '삭제')
                                 button.btn.btn-outline-secondary(type='button', data-bs-dismiss='modal') 닫기
                                 input.btn.btn-outline-danger(type='submit', onClick="requestRemoteFix()" value='저장')
+                        form#deleteForm(method = 'post' , action = '/main'+ routes.delete)
+                                input#deleteButtonSender(style = 'display: none', name = 'deleteTarget')
+                                input.deviceDelete(type = 'submit' ,value = '삭제')
+                                
         br
 
     script.
@@ -67,7 +68,7 @@ block content2
             alert("Product Id값 " + product_id + "번 on/off 요청");
 
             console.log('1');
-            document.write('<form hidden action="/main/remoteonoff" id="smb_form" method="post"><input type="number" id="productId" name="productId" value="'+ product_id +'"></form>');
+            document.write('<form hidden action="/main/remoteonoff" id="smb_form" method="post"><input type="number" id="productId" name="productId"  onsubmit="return false;" value="'+ product_id +'"></form>');
             console.log('2');
             document.getElementById("smb_form").submit();
             console.log('3');
@@ -81,9 +82,11 @@ block content2
             console.log("hi");
             device_pk = id;
             document.getElementById("now_name").value = name;
-            document.getElementById("now_port").value = id;
+            document.getElementById("now_port").value = name;
+            document.getElementById('deleteButtonSender').value = name;
         }
 
+     
         // device 수정 요청
         function requestRemoteFix() {
             var name = document.getElementById("now_name").value;

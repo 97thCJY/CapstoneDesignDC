@@ -16,6 +16,7 @@ const DEAL = '/deal';
 const CHECKELEC = '/check-elec';
 const DELETE = '/delete';
 const SAVEDEVICE = '/saveDevice';
+const REMOTEONOFF = '/remoteonoff'
 // deal Router
 
 const TRANSACTION = '/transaction';
@@ -45,7 +46,8 @@ const routes = {
 	trading: TRADING,
 	delete: DELETE,
 	saveDevice: SAVEDEVICE,
-	status: STATUS
+	status: STATUS,
+	remoteonoff: REMOTEONOFF
 };
 
 export default routes;

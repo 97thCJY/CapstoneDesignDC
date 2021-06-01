@@ -138,13 +138,31 @@ export const addDevice = async (req, res) => {
 
 // 원격 기기 제어 함수
 export const remoteOnOff = async (req, res) => {
-	console.log(req.body);
+	const {productId} = req.body;
+
+
+	try{
+		let device = await Device.findOne({PK : productId});
+		
+
+		await Device.findOneAndUpdate({PK : productId} , {
+			status : device.status ? false : true
+		})
+		console.log(productId)
+		device = await Device.findOne({PK : productId});
+
+		console.log(device);
+	}catch(e){
+		console.log(e);
+	}finally{
+		res.redirect(routes.main);
+
+	}
 
 	//////////////////////////
 	// status 변경 및 DB저장 //
 	//////////////////////////
 
-	res.redirect(routes.home);
 };
 
 const getTotalUsage = () => 0;
