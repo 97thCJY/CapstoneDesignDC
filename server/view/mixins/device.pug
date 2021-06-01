@@ -1,11 +1,8 @@
-
 mixin device(dv = {})
     .col
         .card.card_round
             div(align='right')
-                i.fas.fa-cog.fa-lg.card_setting(onclick='requestRemoteSetting(#{dv.name}, #{dv.PK}, `0`)', data-bs-toggle='modal', data-bs-target='#SettingModal')
-
-        
+                i.fas.fa-cog.fa-lg.card_setting(onclick='requestRemoteSetting(' + dv.name + ', ' + dv.PK + ', 0)', data-bs-toggle='modal', data-bs-target='#SettingModal')
             
             if (dv.status)
                 img#card_btn.card-img-remote.img-pointer(src='/assets/images/on_btn_img.png', onclick='requestRemoteOnOff(' + dv.PK + ')')
@@ -14,6 +11,7 @@ mixin device(dv = {})
 
             .card-title.py-0
                 h5.card-title.card_name #{dv.name}
+<<<<<<< HEAD
                 h1= dv.name
 
 
@@ -38,3 +36,6 @@ mixin device(dv = {})
                                             input.deviceDelete(type = 'submit' ,value = '삭제')
                                         button.btn.btn-outline-secondary(type='button', data-bs-dismiss='modal') 닫기
                                         input.btn.btn-outline-danger(type='submit', onClick="requestRemoteFix()" value='저장')
+=======
+            
+>>>>>>> 9a1c9e972cb04046709fe73059c35a7e1171c891
