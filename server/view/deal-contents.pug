@@ -21,8 +21,10 @@ block content2
                         .form-group.row
                             h5(for = 'transaction_amount').col-sm-2 판매량 (kw)
                             .col-sm-10.align-self-center
-                                
-                                input.modAmount(type='number' name ='amount' placeholder = data.amount)
+                                if (user.PK == data.seller)
+                                    input.modAmount(type='number' name ='amount' placeholder = data.amount)
+                                else
+                                    h5(name='amount' value =data.amount)= data.amount + 'Kw'
                         br
 
                         .row.form-group
@@ -34,7 +36,10 @@ block content2
                         .form-group.row
                             h5(for='transaction_amount').col-sm-2 내용
                             .col-sm-10.align-self-center
-                                textarea(name ='description') #{description}
+                                if (user.PK == data.seller)
+                                    textarea(name ='description') #{description}
+                                else
+                                    h5(name= 'description' value= description)= description
                                 
                         br
 
