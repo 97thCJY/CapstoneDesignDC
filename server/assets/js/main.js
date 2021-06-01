@@ -11,10 +11,10 @@ function getWeather(lat, lon) {
 		'03': 'fas fa-cloud',
 		'04': 'fas fa-cloud-meatball',
 		'09': 'fas fa-clod-sun-rain',
-		10: 'fas fa-cloud-showers-heavy',
-		11: 'fas fa-poo-storm',
-		13: 'fas fa-snowflake',
-		50: 'fas fa-smog'
+		'10': 'fas fa-cloud-showers-heavy',
+		'11': 'fas fa-poo-storm',
+		'13': 'fas fa-snowflake',
+		'50': 'fas fa-smog'
 	};
 	fetch(
 		`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=96c79cd2523ae35399c1d6f3e96c599b&units=metric`
