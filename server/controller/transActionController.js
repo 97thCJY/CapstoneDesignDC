@@ -92,13 +92,14 @@ export const purchaseAccept = async (req, res) => {
 		seller = await User.findOne({ PK: transaction.seller });
 	} catch (e) {
 		console.log(e);
-		return res.send("데이터베이스 로딩 오류: " + e);
+		return res.redirect('/message/' + "Error: 데이터베이스 로딩 오류");
 	}
 
 	// hash값 비교
-	if (hash !== transaction.hash)
-		return res.send("해시값 다름\n" + hash + "\n" + transaction.hash);
-
+	if (hash !== transaction.hash) {
+		console.log("해시값 다름\n" + hash + "\n" + transaction.hash);
+		return res.redirect('/message/' + "이미 완료된 요청이거나 잘못된 요청입니다.");
+	}
 	/**** 작업 필요 : 유효성 검사? ****/
 
 	// new hash값 생성
@@ -111,8 +112,8 @@ export const purchaseAccept = async (req, res) => {
 			hash: new_hash,
 		});
 	} catch (e) {
-		console.log(e);
-		return res.send("데이터베이스 수정 오류: " + e);
+		console.log("데이터베이스 수정 오류: " + e);
+		return res.redirect('/message/' + "Error: 데이터베이스 로딩 오류");
 	}
 	
 	// 이메일 보내기
@@ -134,13 +135,12 @@ export const purchaseAccept = async (req, res) => {
 			}]
 		});
 	} catch(e) {
-		console.log(e);
-		return res.send("이메일 전송 오류: " + e);
+		console.log("이메일 전송 오류: " + e);
+		return res.redirect('/message/' + "Error: 이메일 전송 오류");
 	}
   	console.log("Message sent: %s", info.messageId);
 	
-	/**** 작업 필요 : 메시지 템플릿 rendering ****/
-	res.send("승인하쎴쎼여~? " + pk + " " + hash);
+	return res.redirect('/message/' + "판매 승인 완료");
 }
 
 // 구매자 또는 판매자 거절
@@ -153,13 +153,15 @@ export const purchaseReject = async (req, res) => {
 		buyer = await User.findOne({ PK: transaction.buyer });
 		seller = await User.findOne({ PK: transaction.seller });
 	} catch (e) {
-		console.log(e);
-		return res.send("데이터베이스 로딩 오류: " + e);
+		console.log("데이터베이스 로딩 오류: " + e);
+		return res.redirect('/message/' + "Error: 데이터베이스 로딩 오류");
 	}
 
 	// hash값 비교
-	if (hash !== transaction.hash)
-		return res.send("해시값 다름\n" + hash + "\n" + transaction.hash);
+	if (hash !== transaction.hash) {
+		console.log("해시값 다름\n" + hash + "\n" + transaction.hash);
+		return res.redirect('/message/' + "이미 완료된 요청이거나 잘못된 요청입니다.");
+	}
 
 	try {	// transaction table 변경
 		const changed = await transaction.update({
@@ -169,8 +171,8 @@ export const purchaseReject = async (req, res) => {
 			reqAmount: 0
 		});
 	} catch (e) {
-		console.log(e);
-		return res.send("데이터베이스 수정 오류: " + e);
+		console.log("데이터베이스 수정 오류: " + e);
+		return res.redirect('/message/' + "Error: 데이터베이스 수정 오류");
 	}
 
 	if (isBuyer === "1") {	// 구매자 최종 거절 -> 판매자에게 이메일 알림
@@ -190,13 +192,11 @@ export const purchaseReject = async (req, res) => {
 				}]
 			});
 		} catch(e) {
-			console.log(e);
-			return res.send("이메일 전송 오류: " + e);
+			console.log("이메일 전송 오류: " + e);
+			return res.redirect('/message/' + "Error: 이메일 전송 오류");
 		}
 		console.log("Message sent: %s", info.messageId);
-
-		/**** 작업 필요 : 메시지 템플릿 rendering ****/
-		res.send("판매자 거절이라니.. 너무행~!\n" + pk + " " + hash);
+		return res.redirect('/message/' + "판매 거절되었습니다.");
 	} else {		// 판매자 판매 거절 -> 구매자에게 이메일 알림
 		const email_body = emailTempleteNotification(buyer.name, `http://localhost:3000/main/transaction/${pk}`, "전력 구매 거절 안내",
 			"회원님이 요청하신 <strong style='font-weight: bold'>[" + transaction.description + "]</strong>에 대한 구매 요청이 판매자에 의해 거절되었습니다.");
@@ -214,13 +214,11 @@ export const purchaseReject = async (req, res) => {
 				}]
 			});
 		} catch(e) {
-			console.log(e);
-			return res.send("이메일 전송 오류: " + e);
+			console.log("이메일 전송 오류: " + e);
+			return res.redirect('/message/' + "Error: 이메일 전송 오류");
 		}
 		console.log("Message sent: %s", info.messageId);
-		
-		/**** 작업 필요 : 메시지 템플릿 rendering ****/
-		res.send("구매자 최종 거절이라니.. 너무행~!\n" + pk + " " + hash);
+		return res.redirect('/message/' + "구매를 최종 거절하였습니다.");
 	}
 }
 
@@ -234,20 +232,22 @@ export const finalAccept = async (req, res) => {
 		buyer = await User.findOne({ PK: transaction.buyer });
 		seller = await User.findOne({ PK: transaction.seller });
 	} catch (e) {
-		console.log(e);
-		return res.send("데이터베이스 로딩 오류: " + e);
+		console.log("데이터베이스 로딩 오류: " + e);
+		return res.redirect('/message/' + "Error: 데이터베이스 로딩 오류");
 	}
 
-	if (hash !== transaction.hash)	// hash값 비교
-		return res.send("해시값 다름\n" + hash + "\n" + transaction.hash);
+	if (hash !== transaction.hash) {	// hash값 비교
+		console.log("해시값 다름\n" + hash + "\n" + transaction.hash);
+		return res.redirect('/message/' + "이미 완료된 요청이거나 잘못된 요청입니다.");
+	}
 
 	/**** 작업 필요 유효성 검사 ****/
 		
 	try {	// transaction table 변경
 		const changed = await transaction.update({ status: 3, hash: "" });
 	} catch (e) {
-		console.log(e);
-		return res.send("데이터베이스 수정 오류: " + e);
+		console.log("데이터베이스 수정 오류: " + e);
+		return res.redirect('/message/' + "Error: 데이터베이스 수정 오류");
 	}
 
 	for (let i=0; i<2; i++) {	// 구매자, 판매자 최종 안내 이메일 보내기
@@ -277,13 +277,12 @@ export const finalAccept = async (req, res) => {
 				}]
 			});
 		} catch (e) {
-			console.log(e);
-			return res.send("이메일 전송 오류: " + e);
+			console.log("이메일 전송 오류: " + e);
+			return res.redirect('/message/' + "Error: 이메일 전송 오류");
 		}
 		console.log("Message sent: %s", info.messageId);
 	}
-
-	res.send("최종승인 안내~ " + pk + " " + hash);
+	return res.redirect('/message/' + "거래가 최종 승인 및 시작되었습니다.");
 }
 
 /*** POST Method ***/
@@ -330,8 +329,8 @@ export const purchaseRequest = async (req, res) => {
 		transaction = await Transaction.findOne({ PK: id });
 		seller = await User.findOne({ PK: transaction.seller });
 	} catch (e) {
-		console.log(e);
-		return res.send("데이터베이스 로딩 오류: " + e);
+		console.log("데이터베이스 로딩 오류: " + e);
+		return res.redirect('/message/' + "Error: 데이터베이스 로딩 오류");
 	}
 	// console.log(req.body); console.log(buyer); console.log(transaction); console.log(seller);
 
@@ -355,8 +354,8 @@ export const purchaseRequest = async (req, res) => {
 			buyer: buyer.PK
 		});
 	} catch (e) {
-		console.log(e);
-		return res.send("데이터베이스 수정 오류: " + e);
+		console.log("데이터베이스 수정 오류: " + e);
+		return res.redirect('/message/' + "Error: 데이터베이스 수정 오류");
 	}
   	
 	// 이메일 보내기
@@ -378,8 +377,8 @@ export const purchaseRequest = async (req, res) => {
 			}]
 		});
 	} catch(e) {
-		console.log(e);
-		return res.send("이메일 전송 오류: " + e);
+		console.log("이메일 전송 오류: " + e);
+		return res.redirect('/message/' + "Error: 이메일 전송 오류");
 	}
   	console.log("Message sent: %s", info.messageId);
 	

@@ -12,6 +12,15 @@ export const getLogIn = (req, res) => {
 	});
 };
 
+export const message = (req, res) => {
+	const {params: { hashMessage }}= req;
+	const crypto = require('crypto');	// hash 라이브러리
+
+	res.render('message', {
+		message: hashMessage
+	});
+}
+
 export const postLogIn = passport.authenticate('local', {
 	failureRedirect: routes.login,
 	successRedirect: routes.main
