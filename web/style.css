@@ -137,13 +137,14 @@ header {
     color: black;
     border-radius: 10px;
     border: 0px solid #927da6;
-    padding: 1.5vw 1.8vw;
+    padding: 1vw 1vw;
     margin-bottom: 10px;
     display: inline-block;
     cursor: pointer;
     font-weight: 500;
     white-space: nowrap;
-    font-size: 1.5vw;
+    font-size: 1vw;
+    
 }
 
 .route-list-activate {
@@ -226,9 +227,10 @@ header {
 /* 원격 제어 page*/
 
 .card_round {
-    width: 100%;
+    width: 90%;
     border-radius: 25%;
     border: 1px solid black;
+    margin:auto;
 }
 
 .card_name {
@@ -283,7 +285,6 @@ header {
     transform: translate(-50%, -50%);
     width: 60%;
 }
-
 
 /* 전력 확인 page */
 
