@@ -8,9 +8,14 @@ header
         .col.align-items-center
           a(href=routes.main)
             img.logo_img(src='/assets/images/ourlogo.png')
-        #log_out.col.d-flex.justify-content-end
-          a(href=routes.logOut)
+
+          
+        #log_out.col.d-flex.justify-content-end.menuList
+          p.menu 메뉴
+          a(href=routes.logOut).logOut
             p.img-pointer(data-bs-toggle='modal', data-bs-target='#LogOutModal') 로그아웃
+          a(href= '/main/transactionStatus' ).loading
+            p 진행 상황
 
     div(style='border-top: 2px solid #555; padding-top:5px; margin-top: 10px;')
 
@@ -20,7 +25,7 @@ header
         .col.text-center.align-self-center(style='border-right: 0px solid #555;')
           a(href=`/main`)
             if (topNav === 'remote')
-              span.route-list.route-list-padding.route-list-activate
+              span.route-list.route-list-padding.route-list-activate.
                 img.route-img(src='/assets/images/remoter.png')
                 | &nbsp&nbsp&nbsp&nbsp원격 제어
             else
@@ -49,3 +54,64 @@ header
               span.route-list.route-list-padding
                 img.route-img(src='/assets/images/checkd.png')
                 | &nbsp&nbsp&nbsp&nbsp전력 확인
+  
+  script.
+
+
+    window.onload = () =>{
+      const menu = document.getElementsByClassName('menuList')[0];
+      const logout = document.getElementsByClassName('logOut')[0];
+
+      const progress = document.getElementsByClassName('loading')[0];
+
+      const listMenu = (e) => {
+       
+
+        menu.style.transition = 'top 1s ease';
+        menu.style.backgroundColor = ''
+
+        logout.style.display = 'block';
+        //
+        
+        logout.style.top = '32px';
+        logout.style.opacity = '1';
+        
+        progress.style.display = 'block';
+        progress.style.opacity = '1';
+        progress.style.top = ' 60px'
+
+        /*
+        menu.style.boxShadow = '1px 2px 3px grey';
+        menu.style.backgroundColor = "#7b69ee";
+        menu.style.color = '#f9f9f9';
+        menu.style.border-color= 'black';
+        */
+      };
+
+      const disableMenu = e =>{
+
+        logout.style.opacity = '0';
+        progress.style.opacity = '0';
+        logout.style.top = '0';
+        progress.style.top = '0';
+        /*
+         menu.style.boxShadow = 'none';
+        menu.style.backgroundColor = "rgba(233, 212, 96, 1)";
+        menu.style.color = 'black';
+        menu.style.border-color= 'black';
+        */
+      }
+      const init = () =>{
+
+        menu.addEventListener('mouseenter', listMenu);
+        menu.addEventListener('mouseleave', disableMenu);
+
+
+      }
+
+      init();
+      
+
+    }
+    
+

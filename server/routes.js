@@ -14,14 +14,15 @@ const MAIN = '/main';
 const USER = '/user';
 const DEAL = '/deal';
 const CHECKELEC = '/check-elec';
-
+const DELETE = '/delete';
+const SAVEDEVICE = '/saveDevice';
 // deal Router
 
 const TRANSACTION = '/transaction';
 const WRITE = '/write_transaction';
 const CHECKTRADE = '/:id';
 const TRADING = '/trading';
-
+const STATUS = '/transactionStatus';
 const routes = {
 	home: HOME,
 	login: LOGIN,
@@ -41,7 +42,10 @@ const routes = {
 			return CHECKTRADE;
 		}
 	},
-	trading: TRADING
+	trading: TRADING,
+	delete: DELETE,
+	saveDevice: SAVEDEVICE,
+	status: STATUS
 };
 
 export default routes;

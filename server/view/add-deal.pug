@@ -21,7 +21,7 @@ block content2
                     .form-group.row
                     label.col-sm-2.col-form-label(for='transaction_amount') &#xC608;&#xC0C1; &#xAC00;&#xACA9;
                     .col-sm-10
-                        input#transaction_price.form-control(disabled='' name='price')
+                        input#transaction_price.form-control(name='price' readonly)
                     br
                     .form-group.row
                     label.col-sm-2.col-form-label(for='transaction_description') &#xB0B4;&#xC6A9;
@@ -30,6 +30,20 @@ block content2
                     br
                     .text-center
                     button.btn.btn-secondary(onclick='addDeal()' type='submit') &#xC791;&#xC131;&#xD558;&#xAE30;
+    
+    script.
+        const target = document.getElementById('transaction_price');
+
+        const amount = document.getElementById('transaction_amount');
+
+        const priceUpdate = e =>{
+            const current = e.target.value;
+
+            console.log(current);
+            console.log(target);
+            target.value = `${current *108}` + '원';
+        }
+        amount.addEventListener('input' , priceUpdate)
 
         
 

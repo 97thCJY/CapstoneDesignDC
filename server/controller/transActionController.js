@@ -2,17 +2,17 @@ import routes from '../routes';
 import Transaction from '../models/transaction';
 import User from '../models/user';
 
-const crypto = require('crypto');	// hash 라이브러리
+const crypto = require('crypto'); // hash 라이브러리
 
-const nodemailer = require("nodemailer");	// 이메일 모듈 설정 (Gmail)
+const nodemailer = require('nodemailer'); // 이메일 모듈 설정 (Gmail)
 const transporter = nodemailer.createTransport({
 	service: 'gmail',
-	host: "smtp.gmail.com",
+	host: 'smtp.gmail.com',
 	port: 587,
 	secure: false, // true for 465, false for other ports
 	auth: {
-		user: "hyncompany0@gmail.com",
-		pass: "wlgkqhekwltkd"
+		user: 'hyncompany0@gmail.com',
+		pass: 'wlgkqhekwltkd'
 	}
 });
 
@@ -27,14 +27,17 @@ export const deal = async (req, res) => {
 		for (let i = 0; i < articleSet.length; i++) {
 			if (articleSet[i].status !== 3) {
 				let date;
-				const user = await User.find({ PK: articleSet[i].seller });
+				const user = await User.findOne({ PK: articleSet[i].seller });
 
 				targetObjList.push(JSON.stringify(articleSet[i]));
 				date = parseDate(JSON.parse(targetObjList[i]).createdAt);
 				targetObjList[i] = JSON.parse(targetObjList[i]);
+				targetObjList[i].sellerName = user.name;
 				targetObjList[i].createdAt = date;
-				targetObjList[i].sellerName = user[0].name;
+
+				//	targetObjList[i].sellerName = user[0].name;
 			}
+			//	console.log(targetObjList);
 		}
 		targetObjList.reverse();
 	} catch (e) {
@@ -58,7 +61,9 @@ export const write = (req, res) => {
 
 // 판매글 내용 페이지 출력
 export const checkTrade = async (req, res) => {
-	const {params: { id }}= req;
+	const {
+		params: { id }
+	} = req;
 	let data;
 	let seller;
 	try {
@@ -66,6 +71,7 @@ export const checkTrade = async (req, res) => {
 		data = JSON.parse(JSON.stringify(data));
 		data[0].createdAt = data[0].createdAt.substring(0, 10);
 		seller = await User.find({ PK: data[0].seller });
+		console.log(data);
 	} catch (e) {
 		console.log(e);
 	}
@@ -74,19 +80,23 @@ export const checkTrade = async (req, res) => {
 		topNav: 'transAction',
 		data: data[0],
 		seller: seller[0],
-		user: req.user
+		user: req.user,
+		description: data[0].description
 	});
 };
 
 /*** 이메일 응답용 GET Method ***/
 // 판매자 승인
 export const purchaseAccept = async (req, res) => {
-	const {params: { pk, hash }} = req;
-	let transaction;		// 판매글
-	let buyer;				// 판매자
-	let seller;				// 구매자
+	const {
+		params: { pk, hash }
+	} = req;
+	let transaction; // 판매글
+	let buyer; // 판매자
+	let seller; // 구매자
 
-	try {	// DB 불러오기
+	try {
+		// DB 불러오기
 		transaction = await Transaction.findOne({ PK: pk });
 		buyer = await User.findOne({ PK: transaction.buyer });
 		seller = await User.findOne({ PK: transaction.seller });
@@ -106,10 +116,11 @@ export const purchaseAccept = async (req, res) => {
 	const tmp = transaction.buyer + Date.now().toString() + transaction.reqAmount + pk;
 	const new_hash = crypto.createHash('md5').update(tmp).digest('hex');
 
-	try {	// transaction table 변경
+	try {
+		// transaction table 변경
 		const changed = await transaction.update({
 			status: 2,
-			hash: new_hash,
+			hash: new_hash
 		});
 	} catch (e) {
 		console.log("데이터베이스 수정 오류: " + e);
@@ -120,19 +131,23 @@ export const purchaseAccept = async (req, res) => {
 	const email_body = emailTempleteConfirm(seller.name, buyer.name, transaction.description, transaction.reqAmount, 
 		`http://localhost:3000/main/transaction/final/accept/${pk}/${new_hash}`,
 		`http://localhost:3000/main/transaction/reject/${pk}/1/${new_hash}`,
-		"전력 구매 최종 승인 안내", `${buyer.name}님이 요청하신 구매에 대해 승인하였습니다.`);
+		'전력 구매 최종 승인 안내',
+		`${buyer.name}님이 요청하신 구매에 대해 승인하였습니다.`
+	);
 	let info;
 	try {
 		info = await transporter.sendMail({
 			from: '"Greedy" <hyncompany0@gmail.com>',
 			to: buyer.email,
-			subject: "[구매알림] " + buyer.name + "님의 구매요청에 대한 최종 승인을 해주세요.",
+			subject: '[구매알림] ' + buyer.name + '님의 구매요청에 대한 최종 승인을 해주세요.',
 			html: email_body,
-			attachments: [{
-				filename: 'ourlogo.png',
-				path: './assets/images/ourlogo.png',
-				cid: 'ourlogo'
-			}]
+			attachments: [
+				{
+					filename: 'ourlogo.png',
+					path: './assets/images/ourlogo.png',
+					cid: 'ourlogo'
+				}
+			]
 		});
 	} catch(e) {
 		console.log("이메일 전송 오류: " + e);
@@ -145,10 +160,13 @@ export const purchaseAccept = async (req, res) => {
 
 // 구매자 또는 판매자 거절
 export const purchaseReject = async (req, res) => {
-	const {params: { pk, isBuyer, hash }} = req;
+	const {
+		params: { pk, isBuyer, hash }
+	} = req;
 	let transaction, buyer, seller;
 
-	try {	// DB 불러오기
+	try {
+		// DB 불러오기
 		transaction = await Transaction.findOne({ PK: pk });
 		buyer = await User.findOne({ PK: transaction.buyer });
 		seller = await User.findOne({ PK: transaction.seller });
@@ -163,10 +181,11 @@ export const purchaseReject = async (req, res) => {
 		return res.redirect('/message/' + "이미 완료된 요청이거나 잘못된 요청입니다.");
 	}
 
-	try {	// transaction table 변경
+	try {
+		// transaction table 변경
 		const changed = await transaction.update({
 			status: 0,
-			hash: "",
+			hash: '',
 			buyer: 0,
 			reqAmount: 0
 		});
@@ -220,14 +239,17 @@ export const purchaseReject = async (req, res) => {
 		console.log("Message sent: %s", info.messageId);
 		return res.redirect('/message/' + "구매를 최종 거절하였습니다.");
 	}
-}
+};
 
 // 구매자 최종 승인
 export const finalAccept = async (req, res) => {
-	const {params: { pk, hash }} = req;
+	const {
+		params: { pk, hash }
+	} = req;
 	let transaction, buyer, seller;
 
-	try {	// DB 불러오기
+	try {
+		// DB 불러오기
 		transaction = await Transaction.findOne({ PK: pk });
 		buyer = await User.findOne({ PK: transaction.buyer });
 		seller = await User.findOne({ PK: transaction.seller });
@@ -242,9 +264,10 @@ export const finalAccept = async (req, res) => {
 	}
 
 	/**** 작업 필요 유효성 검사 ****/
-		
-	try {	// transaction table 변경
-		const changed = await transaction.update({ status: 3, hash: "" });
+
+	try {
+		// transaction table 변경
+		const changed = await transaction.update({ status: 3, hash: '' });
 	} catch (e) {
 		console.log("데이터베이스 수정 오류: " + e);
 		return res.redirect('/message/' + "Error: 데이터베이스 수정 오류");
@@ -292,20 +315,27 @@ export const postTransact = async (req, res) => {
 	const { PK, email, IP } = req.user;
 	try {
 		const transactionList = await Transaction.find({});
-		let PK = transactionList[0].PK | 0;
+		console.log(transactionList);
 
-		for (let i = 0; i < transactionList.length; i++) {
-			if (PK < transactionList[i].PK) {
-				PK = transactionList[i].PK;
+		let transPK = transactionList.length == 0 ? 0 : 1;
+
+		if (transPK) {
+			transPK = 0;
+			for (let i = 0; i < transactionList.length; i++) {
+				if (transPK < transactionList[i].PK) {
+					transPK = transactionList[i].PK;
+				}
 			}
 		}
+
 		const transaction = await Transaction.create({
 			amount,
 			description,
-			PK: PK + 1, //관련 수정 요구
+			PK: transPK + 1, //관련 수정 요구
 			seller: PK,
 			createdAt: Date.now()
 		});
+		console.log(transactionList);
 		res.redirect('/main' + routes.transAction);
 	} catch (e) {
 		console.log(e);
@@ -315,17 +345,40 @@ export const postTransact = async (req, res) => {
 
 // 구매 요청 & 판매자에게 승인 이메일 전송
 export const purchaseRequest = async (req, res) => {
-	const {params: { id }} = req;	// transaction_id
-	let transaction;		// 판매글
-	let seller;				// 판매자
-	const buyer = req.user;	// 구매자
+	const {
+		params: { id }
+	} = req; // transaction_id
+
+	const { user } = req.user;
+
+	let transaction; // 판매글
+	let seller; // 판매자
+	const buyer = req.user; // 구매자
 	const reqAmount = req.body.purchase;
 
-	// 입력된 구매량 유효성검사
-	if (reqAmount < 1) 
-		return res.send(`<script type="text/javascript">alert("구매량은 1보다 커야합니다.");location.href="./${id}";</script>`);
+	const thisData = await Transaction.findOne({ PK: id });
 
-	try {	// DB 불러오기
+	if (req.user.PK == thisData.seller) {
+		const { description, amount } = req.body;
+		console.log(description, amount);
+
+		await Transaction.findOneAndUpdate(
+			{ PK: id },
+			{
+				amount,
+				description
+			}
+		);
+		res.redirect('/main/transaction');
+	}
+	// 입력된 구매량 유효성검사
+	if (reqAmount < 1)
+		return res.send(
+			`<script type="text/javascript">alert("구매량은 1보다 커야합니다.");location.href="./${id}";</script>`
+		);
+
+	try {
+		// DB 불러오기
 		transaction = await Transaction.findOne({ PK: id });
 		seller = await User.findOne({ PK: transaction.seller });
 	} catch (e) {
@@ -346,7 +399,8 @@ export const purchaseRequest = async (req, res) => {
 	const tmp = id + buyer.PK + Date.now().toString() + reqAmount;
 	const hash = crypto.createHash('md5').update(tmp).digest('hex');
 
-	try {	// transaction table 변경
+	try {
+		// transaction table 변경
 		const changed = await transaction.update({
 			status: 1,
 			hash: hash,
@@ -357,36 +411,39 @@ export const purchaseRequest = async (req, res) => {
 		console.log("데이터베이스 수정 오류: " + e);
 		return res.redirect('/message/' + "Error: 데이터베이스 수정 오류");
 	}
-  	
+
 	// 이메일 보내기
 	const email_body = emailTempleteConfirm(buyer.name, seller.name, transaction.description, reqAmount, 
 		`http://localhost:3000/main/transaction/accept/${id}/${hash}`,
 		`http://localhost:3000/main/transaction/reject/${id}/0/${hash}`,
-		"전력 구매 요청 안내", "회원님의 판매글에 아래과 같이 구매가 요청되었습니다.");
+		'전력 구매 요청 안내',
+		'회원님의 판매글에 아래과 같이 구매가 요청되었습니다.'
+	);
 	let info;
 	try {
 		info = await transporter.sendMail({
 			from: '"Greedy" <hyncompany0@gmail.com>',
 			to: seller.email,
-			subject: "[구매알림] " + seller.name + "님 구매요청 내역을 확인해주세요.",
+			subject: '[구매알림] ' + seller.name + '님 구매요청 내역을 확인해주세요.',
 			html: email_body,
-			attachments: [{
-				filename: 'ourlogo.png',
-				path: './assets/images/ourlogo.png',
-				cid: 'ourlogo'
-			}]
+			attachments: [
+				{
+					filename: 'ourlogo.png',
+					path: './assets/images/ourlogo.png',
+					cid: 'ourlogo'
+				}
+			]
 		});
 	} catch(e) {
 		console.log("이메일 전송 오류: " + e);
 		return res.redirect('/message/' + "Error: 이메일 전송 오류");
 	}
-  	console.log("Message sent: %s", info.messageId);
-	
+	console.log('Message sent: %s', info.messageId);
+
 	/**** 작업 필요 : 메시지 템플릿 rendering ****/
 	////////////////////////////////////////////////////////
 	res.redirect('/main' + routes.transAction);
 };
-
 
 /*** 추가 사용 함수 ***/
 // 날짜 데이터 파싱 함수

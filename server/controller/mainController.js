@@ -14,14 +14,13 @@ export const home = async (req, res) => {
 		const { deviceList } = req.user;
 
 		for (let i = 0; i < deviceList.length; i++) {
-			let device = await Device.find({ PK: deviceList[i] });
+			let device = await Device.findOne({ PK: deviceList[i] });
 
 			deviceObjList.push(JSON.parse(JSON.stringify(device)));
 		}
 	} catch (e) {
 		console.log('error: ' + e);
 	} finally {
-		console.log(deviceObjList);
 		res.render('route_main', {
 			pageTitle: 'Main',
 			topNav: 'remote',
@@ -54,6 +53,31 @@ export const checkElec = async (req, res) => {
 			topNav: 'checkElec',
 			resultObj
 		});
+	}
+};
+
+export const deleteDevice = async (req, res) => {
+	try {
+		console.log(req.body);
+		const { deleteTarget } = req.body;
+		console.log('start delete');
+		console.log(deleteTarget);
+		const target = await Device.findOne({ name: deleteTarget });
+		const tarPK = target.PK;
+		await Device.deleteOne({ name: deleteTarget });
+		const modList = req.user.deviceList;
+		const idx = modList.indexOf(tarPK);
+		modList.splice(idx, 1);
+		await User.findOneAndUpdate(
+			{ PK: req.user.PK },
+			{
+				deviceList: modList
+			}
+		);
+	} catch (e) {
+		console.log(e);
+	} finally {
+		res.redirect(routes.main);
 	}
 };
 
@@ -124,3 +148,31 @@ export const remoteOnOff = async (req, res) => {
 };
 
 const getTotalUsage = () => 0;
+
+export const deviceModification = async (req, res) => {
+	const { modName, name } = req.body;
+
+	try {
+		await Device.findOneAndUpdate(
+			{
+				name: name
+			},
+			{
+				name: modName
+			}
+		);
+
+		console.log(await Device.find({}));
+	} catch (e) {
+		console.log(e);
+	} finally {
+		res.redirect(routes.main);
+	}
+};
+
+export const status = (req, res) => {
+	console.log('on status');
+	res.render('transactionStatus', {
+		pageTitle: 'Progress'
+	});
+};
