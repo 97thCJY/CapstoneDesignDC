@@ -7,18 +7,12 @@ export const home = (req, res) => {
 };
 
 export const getLogIn = (req, res) => {
-	res.render('login', {
-		pageTitle: 'Log In'
-	});
+	res.render('login', { pageTitle: 'Log In' });
 };
 
 export const message = (req, res) => {
-	const {params: { hashMessage }}= req;
-	const crypto = require('crypto');	// hash 라이브러리
-
-	res.render('message', {
-		message: hashMessage
-	});
+	const {params: { message }}= req;
+	res.render('message', { message: message });
 }
 
 export const postLogIn = passport.authenticate('local', {
@@ -28,60 +22,50 @@ export const postLogIn = passport.authenticate('local', {
 
 export const logOut = (req, res) => {
 	req.logout();
-
 	res.redirect(routes.login);
 };
 
 export const join = (req, res) => {
-	console.log('on get join');
-	res.render('signUp', {
-		pageTitle: 'Sign Up'
-	});
+	res.render('signUp', { pageTitle: 'Sign Up' });
 };
 
 export const postJoin = async (req, res) => {
-	const { email, password, verifyPassword, name, contact } = req.body;
+	const { email, password, verifyPassword, name, contact, batteryMax } = req.body;
 
+	/* 유효성 검사 */
+	
+	// 비밀번호 다를경우
 	if (password !== verifyPassword) {
 		res.status(400);
-		res.render('signUp', { pageTitle: 'Sign Up' });
-	} else {
-		try {
-			const ulist = await User.find({});
-			let PK = ulist.length == 0 ? 0 : 1;
+		return res.render('signUp', { pageTitle: 'Sign Up' });
+	}
 
-			if (PK) {
-				PK = 0;
-
-				for (let i = 0; i < ulist.length; i++) {
-					if (ulist[i].PK > PK) {
-						PK = ulist[i].PK;
-					}
+	try {
+		const ulist = await User.find({});
+		let PK = ulist.length == 0 ? 0 : 1;
+		if (PK) {	// auto-increament
+			PK = 0;
+			for (let i = 0; i < ulist.length; i++) {
+				if (ulist[i].PK > PK) {
+					PK = ulist[i].PK;
 				}
 			}
-
-			const user = await User({
-				name,
-				email,
-				password,
-				contact,
-				PK: PK + 1,
-				batteryMax: 0,
-				IP: req.ip
-				//	deviceList: []
-			});
-
-			await User.register(user, password);
-			console.log('register finish!!');
-
-			res.redirect(routes.home);
-		} catch (e) {
-			console.log(e);
-			console.log('❌ error occured on function:: postJoin');
-
-			res.redirect(routes.join);
 		}
+		const user = await User({
+			name,
+			email,
+			password,
+			contact,
+			PK: PK + 1,
+			batteryMax,
+			IP: req.ip
+			//	deviceList: []
+		});
+		await User.register(user, password);
+		console.log('register finish!!');
+		res.redirect(routes.home);
+	} catch (e) {
+		console.log('❌ error occured on function:: postJoin');
+		res.redirect(routes.join);
 	}
 };
-
-///  call backs
