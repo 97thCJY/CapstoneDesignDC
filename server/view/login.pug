@@ -4,12 +4,11 @@ extends layout/main
 block content
     .text-center.container-sm#login_background
         .login-contents
-            a(href='')
-                img.logo_img(src='../assets/images/ourlogo.png')
-                
+            img.logo_img(src='../assets/images/ourlogo.png')
+
             br
 
-            form(action=routes.login, method="post")#login_form
+            form(action=routes.login, method="post")(style="margin-bottom:0px;")
                 input.login-input(type ="text" name='email' placeholder="이메일")
                 input.login-input(type ="password" name='password' placeholder="비밀번호")
                 hr

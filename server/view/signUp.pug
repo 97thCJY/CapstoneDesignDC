@@ -4,18 +4,19 @@ extends layout/main
 block content
     .text-center.container-sm#sign_up_flexBox
         .login-contents
-            a(href= routes.login)
-                img.logo_img(src='../assets/images/ourlogo.png')
+            img.logo_img(src='../assets/images/ourlogo.png')
             
             br
 
-            form(action=routes.join, method="post")#sign_up_form
+            form(action=routes.join, method="post")(style="margin-bottom:0px;")
                 input.login-input(type="text" name='email' placeholder="이메일")
                 input.login-input(type="password" name='password' placeholder="비밀번호")
                 input.login-input(type="password" name='verifyPassword' placeholder="비밀번호 재입력")
                 input.login-input(type="text" name='name' placeholder="이름")
                 input.login-input(type="text" name='contact' placeholder="연락처")
-                input.btn.btn-outline-primary.login-btn(type='submit' value='가입하기') 
+                hr
+                input.btn.btn-outline-primary.login-btn(type='submit' value='가입하기')
+
 
             a(href =routes.login)
                 button.btn.btn-outline-secondary.login-btn  뒤로 가기
