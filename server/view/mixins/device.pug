@@ -14,17 +14,23 @@ mixin device(dv = {})
 
             .card-title.py-0
                 h5.card-title.card_name #{dv.name}
-            #SettingModal.modal.fade(tabindex='-1', aria-hidden='true', aria-labelledby='SettingModalLabel')
+                h1= dv.name
+
+
+            
+
+            .modal.fade(tabindex='-1', aria-hidden='true', aria-labelledby='SettingModalLabel')
                         .modal-dialog.modal-dialog-centered.modal_state
                             .modal-content
                                 .modal-header(style='background: #505; color:white')
-                                    h5#SettingModalLabel.modal-title= dv.name
+                                    h5#SettingModalLabel.modal-title 기기 관리
                                     button.btn-close.btn-close-white(type='button', data-bs-dismiss='modal', aria-label='Close')
-                                    
+                                
+                                h1= dv.name
                                   
                                 form(action='/main/saveDevice' method='post').modal-body
-                                    
-                                    input(type='text' name='modName' value ='기기 이름 수정' style=" width: 100%")
+                                    h1= dv.name
+                                    input(type='text' name='modName' value= dv.name style=" width: 100%")
                                     input(type='text' name ='name' style='display : none' value = dv.name)
                                     .modal-footer.deviceModal
                                         form(method = 'post' , action = '/main'+ routes.delete)
