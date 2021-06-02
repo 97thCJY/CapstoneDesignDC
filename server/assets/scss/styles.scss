@@ -166,7 +166,7 @@ header {
     position: absolute;
     transition: all 0.3s ease;
     z-index: 19;
-	top: 60px;
+	top: 90px;
 	&:hover {
 		box-shadow: 1px 2px 3px grey;
 		background-color: #7b69ee;
@@ -179,6 +179,21 @@ header {
 	position: absolute;
 	transition: all 0.3s ease;
 	z-index: 18;
+	top: 60px;
+	&:hover {
+		box-shadow: 1px 2px 3px grey;
+		background-color: #7b69ee;
+		color: #f9f9f9;
+		border-color: black;
+	}
+}
+
+.profile {
+	display: none;
+	opacity: 0;
+	position: absolute;
+	transition: all 0.3s ease;
+	z-index: 17;
 	top: 30px;
 	&:hover {
 		box-shadow: 1px 2px 3px grey;
