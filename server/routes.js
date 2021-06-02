@@ -24,6 +24,7 @@ const WRITE = '/write_transaction';
 const CHECKTRADE = '/:id';
 const TRADING = '/trading';
 const STATUS = '/transactionStatus';
+const DELETETRANSACTION ='/deleteTransaction';
 const routes = {
 	home: HOME,
 	login: LOGIN,
@@ -47,7 +48,8 @@ const routes = {
 	delete: DELETE,
 	saveDevice: SAVEDEVICE,
 	status: STATUS,
-	remoteonoff: REMOTEONOFF
+	remoteonoff: REMOTEONOFF,
+	deleteTransaction: DELETETRANSACTION
 };
 
 export default routes;
