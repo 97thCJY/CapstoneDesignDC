@@ -2,24 +2,6 @@ import routes from '../routes';
 import Device from '../models/device';
 import User from '../models/user';
 
-// 내 정보 페이지 rendering
-export const userProfile = (req, res) => {
-	const { PK, name, email, batteryMax, IP, contact } = req.user;
-	const tmpUser = {
-		'PK': PK,
-		'name': name,
-		'email': email,
-		'batteryMax': batteryMax,
-		'IP': IP,
-		'contact': contact
-	}
-
-	res.render('profile', {
-		pageTitle: 'Profile',
-		user: tmpUser
-	});
-};
-
 /**** GET Method ****/
 // 원격 페이지 rendering
 export const home = async (req, res) => {
@@ -68,6 +50,45 @@ export const checkElec = async (req, res) => {
 			resultObj
 		});
 	}
+};
+
+// 내 정보 페이지 rendering
+export const userProfile = async (req, res) => {
+	const { PK, name, email, batteryMax, IP, contact } = req.user;
+
+	if (req.method === "POST") {
+		console.log("User POST METHOD~~~~~~~~~");
+		const { input_email, input_name, input_contact, input_batteryMax, input_IP } = req.body;
+
+		try {	// DB 수정
+			await User.findOneAndUpdate(
+				{ PK: PK },
+				{
+					name: input_name,
+					email: input_email,
+					batteryMax: input_batteryMax,
+					IP: input_IP,
+					contact: input_contact
+				}
+			);
+		} catch(e) {
+			console.log("DB Error", e);
+		} finally {
+			res.redirect('/main/user');
+		}
+	}
+	const tmpUser = {
+		'PK': PK,
+		'name': name,
+		'email': email,
+		'batteryMax': batteryMax,
+		'IP': IP,
+		'contact': contact
+	}
+	res.render('profile', {
+		pageTitle: 'Profile',
+		user: tmpUser
+	});
 };
 
 /**** POST Method ****/

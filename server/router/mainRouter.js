@@ -20,6 +20,7 @@ mainRouter.get('/', onlyPrivate, home);
 mainRouter.post('/', onlyPrivate, addDevice);
 mainRouter.post('/remoteonoff', onlyPrivate, remoteOnOff);
 mainRouter.get(routes.user, onlyPrivate, userProfile);
+mainRouter.post(routes.user, onlyPrivate, userProfile);
 mainRouter.post(routes.delete, onlyPrivate, deleteDevice);
 mainRouter.post(routes.saveDevice, onlyPrivate, deviceModification);
 mainRouter.get(routes.status, onlyPrivate, status);

@@ -311,9 +311,9 @@ header {
 		padding: auto 15px;
 		.login-input {
 			border: 1.5px solid #B4A7B7;
-		}
-		.login-input:focus {
-			border: 2px solid #B4A7B7;
+			&:focus {
+				border: 2px solid #B4A7B7;
+			}
 		}
 	}
 }
