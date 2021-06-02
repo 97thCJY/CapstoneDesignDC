@@ -1,0 +1,40 @@
+extends layout/template_main
+
+
+block content2
+    //- PK
+    main
+        br
+        .container.contents
+            // Contents Header
+            .row.contents-header
+                h3 내 정보
+            hr
+            div(style='background-color: white;')
+                table.table.table-bordered.custom-table
+                    tbody 
+                        tr
+                            td.left-td 아이디(이메일)
+                            td.right-td
+                                input.login-input(type ="text" name='email' placeholder="이메일" value=user.email)
+                        tr
+                            td.left-td 이름
+                            td.right-td
+                                input.login-input(type ="text" name='name' placeholder="이름" value=user.name)
+                        tr
+                            td.left-td 휴대폰번호
+                            td.right-td
+                                input.login-input(type ="text" name='contact' placeholder="휴대폰번호" value=user.contact)
+                        tr
+                            td.left-td 배터리 용량
+                            td.right-td
+                                input.login-input(type ="text" name='batteryMax' placeholder="배터리 용량" value=user.batteryMax)
+                        tr
+                            td.left-td IP
+                            td.right-td
+                                input.login-input(type ="text" name='IP' placeholder="IP" value=user.IP)
+                br
+                .custom-table.text-end
+                    button.btn.btn-sm.btn-secondary 수정하기
+                br
+        br

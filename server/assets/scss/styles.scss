@@ -69,7 +69,6 @@ body {
 }
 
 /* 푸터 */
-
 footer {
 	position: absolute;
     bottom: 0;
@@ -83,7 +82,6 @@ footer {
 }
 
 /* input-number 화살표 지우기 */
-
 input[type='number']::-webkit-outer-spin-button,
 input[type='number']::-webkit-inner-spin-button {
 	-webkit-appearance: none;
@@ -91,7 +89,6 @@ input[type='number']::-webkit-inner-spin-button {
 }
 
 /* 로고 바*/
-
 .weather_position {
     margin-top: 3vw;
 }
@@ -262,6 +259,30 @@ header {
     font-size: 2vh;
     font-weight: 600;
     border-radius: 10px;
+}
+
+/* 내 정보 page */
+.custom-table {
+	width: 70%;
+	min-width: 300px;
+	margin: 0 auto;
+	font-size: 1.3vw;
+
+	.left-td {
+		width: 30%;
+		min-width: 110px;
+		background-color: #e6c1f0;
+		padding: 17px 10px;
+	}
+	.right-td {
+		padding: auto 15px;
+		.login-input {
+			border: 1.5px solid #ba8fce;
+		}
+		.login-input:focus {
+			border: 2px solid #9973aa;
+		}
+	}
 }
 
 /* 원격 제어 page*/
