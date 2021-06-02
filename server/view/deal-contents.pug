@@ -18,47 +18,82 @@ block content2
             .row#deal-contents
                 form(method='post' action ='/main/transaction'+routes.checkTrade(data.PK)).form-container
                     .form-container.deal-contents-container
-                        .form-group.row
+                        .form-group
                             h5(for = 'transaction_amount').col-sm-2 판매량 (kw)
-                            .col-sm-10.align-self-center
+                            .align-self-center
                                 if (user.PK == data.seller)
                                     input.modAmount(type='number' name ='amount' placeholder = data.amount)
                                 else
-                                    h5(name='amount' value =data.amount)= data.amount + 'Kw'
-                        br
+                                    h5.clientView(name='amount' value =data.amount)= data.amount + 'Kw'
+                        
 
-                        .row.form-group
+                        .form-group
                             h5(for='transaction_amount').col-sm-2 판매 가격
-                            .col-sm-10.align-self-center
+                            .align-self-center
                                 h5.price #{data.amount * 103}원
-                        br
 
-                        .form-group.row
+                        .form-group
+                            h5(for='transaction_amount').col-sm-2 제목
+                            .align-self-center
+                                if (user.PK == data.seller)
+
+                                    input.title(type='text' , name='title' value= data.title)
+                                else
+                                    h5.clientView(name= 'title' )= data.title
+
+                        
+
+                        .form-group
                             h5(for='transaction_amount').col-sm-2 내용
-                            .col-sm-10.align-self-center
+                            .align-self-center
                                 if (user.PK == data.seller)
                                     textarea(name ='description') #{description}
                                 else
-                                    h5(name= 'description' value= description)= description
+                                    textarea.clientView(name= 'description' value= description readonly)= description
                                 
-                        br
+                        
 
                         //- 판매자일 경우
                         if (user.PK == data.seller)
                             .request_containerM
-                                input.btn.btn-danger(type='submit' value = '수정하기')
+                                input.btn.btn-danger.btn_custom(type='submit' value = '수정하기')
 
-                                button.btn.btn-danger(onclick = "requestDeleteTransaction()")
+                
                         else
                             .request_container
                                 input(type="number" name='purchase' placeholder ='구매량 입력(kw)')
                                 button.btn.btn-secondary(type='submit') 구매요청
+                if (user.PK == data.seller)
+                    form#deletingForm(action="/main/transaction/deleteTransaction", method="post")
+                        button.btn.btn-danger(onclick='handleDelete('+data.PK+')')  게시글 삭제
 
+                        input(type='text' , value = data.PK , name='PK' ,style="display:none")
 
     script.
         const mod = document.getElementsByClassName('modAmount')[0];
-        console.log(mod)
 
+        window.onload = () =>{
+            const price = document.getElementsByClassName('price')[0];
+
+            const reqAmount = e.target.value;
+            let cnt = 0;
+            let currentString = `${reqAmount *108}`;
+            let length =  currentString.length;
+            for(let i = currentString.length-1 ; i>= 0 ; i--){
+                if(i== 0){
+                    break;
+                }
+                cnt ++;
+                if(cnt == 3){
+                    currentString = currentString.slice(0,i) + ',' + currentString.slice(i,length);
+                    length++;
+                    cnt = 0;
+                }
+            }
+
+            price.innerText = currentString +'원';
+
+        }
         const handleModification = e =>{
             const price = document.getElementsByClassName('price')[0];
 
@@ -82,9 +117,15 @@ block content2
 
         }
         mod.addEventListener('input' , handleModification);
-        const requestDeleteTransaction => () =>{
-            //data pk 를 인자로!
-            document.write('<form hidden action="/main/transaction/deleteTransaction" id="smb_form" method="post"><input type="number" id="productId" name="productId"  onsubmit="return false;" value="'+ product_id +'"></form>');
-            
+
+       
+        const handleDelete = (PK)=>{
+            const form = document.getElementById('deletingForm');
+
+            const userSelect = confirm('정말로 삭제하시겠습니까?');
+
+            if(userSelect){
+                form.submit();
+            }
 
         }

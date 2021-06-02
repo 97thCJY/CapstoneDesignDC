@@ -7,6 +7,10 @@ const TransactionSchema = new mongoose.Schema({
 		type: Number,
 		required: ' PK is required'
 	},
+	title: {
+		type: String,
+		required: 'title required'
+	},
 	seller: {
 		type: Number,
 		required: 'creater Id is required'

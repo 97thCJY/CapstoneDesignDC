@@ -311,7 +311,7 @@ export const finalAccept = async (req, res) => {
 /*** POST Method ***/
 // 판매글 추가 요청
 export const postTransact = async (req, res) => {
-	const { amount, description } = req.body;
+	const { amount, description , title } = req.body;
 	const { PK, email, IP } = req.user;
 	try {
 		const transactionList = await Transaction.find({});
@@ -333,7 +333,8 @@ export const postTransact = async (req, res) => {
 			description,
 			PK: transPK + 1, //관련 수정 요구
 			seller: PK,
-			createdAt: Date.now()
+			createdAt: Date.now(),
+			title
 		});
 		console.log(transactionList);
 		res.redirect('/main' + routes.transAction);
@@ -511,3 +512,19 @@ function emailTempleteNotification(to, checkLink, title, contents) {
 	</td></tr><tr><td height="40"></td></tr></tbody></table></body></html>`;
 	return a;
 };
+
+
+export const deleteTransaction = async (req, res) =>{
+
+	const { PK } = req.body;
+
+	try{
+		await Transaction.findOneAndDelete({ PK });
+
+	}catch(e){
+		console.log(e);
+	}
+	
+
+	res.redirect('/main/transaction')
+}

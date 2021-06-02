@@ -9,7 +9,8 @@ import {
 	purchaseRequest,
 	purchaseAccept,
 	purchaseReject,
-	finalAccept
+	finalAccept,
+	deleteTransaction
 } from '../controller/transActionController.js';
 
 const transActionRouter = express.Router();
@@ -21,6 +22,7 @@ transActionRouter.get(routes.checkTrade(), onlyPrivate,checkTrade); // 판매글
 
 // method
 transActionRouter.post(routes.write, onlyPrivate, postTransact); // 판매글 작성
+transActionRouter.post(routes.deleteTransaction , onlyPrivate , deleteTransaction);
 transActionRouter.post(routes.checkTrade(),onlyPrivate, purchaseRequest); // 구매 요청
 
 // Response for Email

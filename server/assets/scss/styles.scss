@@ -19,6 +19,14 @@ span {
 	padding: 0px;
 }
 
+input:focus{
+	
+	outline: none;
+	border: 3px solid;
+	border-color: #7b69ee
+	
+}
+
 a {
 	color: black;
 	text-decoration: none;
@@ -115,7 +123,10 @@ input[type='number']::-webkit-inner-spin-button {
 }
 
 #log_out p {
-    color: #888;
+	color: #888;
+	&:hover{
+		color: #f9f9f9;
+	}
 }
 
 /* 네비게이션 바 */
@@ -130,6 +141,12 @@ header {
 	box-sizing: border-box;
 	z-index: 20;
 	text-align: center;
+	&:hover{
+		a{
+			opacity: 1;
+			display: block;
+		}
+	}
 }
 .customMenu {
 	width: 12vw;
@@ -147,19 +164,20 @@ header {
     position: relative;
 }
 .logOut {
-    opacity: 0;
+	opacity: 0;
+	display: none;
     position: absolute;
     transition: all 0.3s ease;
     z-index: 19;
 	top: 60px;
 	&:hover {
 		box-shadow: 1px 2px 3px grey;
-		background-color: #8A629C;
-		color: #f9f9f9;
+		background-color: #7b69ee;
 		border-color: black;
 	}
 }
 .loading {
+	display: none;
 	opacity: 0;
 	position: absolute;
 	transition: all 0.3s ease;
@@ -167,7 +185,7 @@ header {
 	top: 30px;
 	&:hover {
 		box-shadow: 1px 2px 3px grey;
-		background-color: #8A629C;
+		background-color: #7b69ee;
 		color: #f9f9f9;
 		border-color: black;
 	}
@@ -198,7 +216,7 @@ header {
 
 .route-list-activate {
 	/* background-color: lightgreen; */
-	background-color: #8A629C;
+	background-color: #7b69ee;
 	color: #eee;
 	font-weight: 700;
 }
@@ -330,6 +348,14 @@ header {
 	font-weight: bold;
 }
 
+.btn-secondary{
+	background-color: #7b69ee;
+
+	&:hover{
+		background-color: hsla(248, 53%, 51%, 0.596);
+	}
+
+}
 .card-check {
 	border-radius: 5%;
 	border: 3px solid gray;
@@ -383,19 +409,7 @@ header {
 	text-align: center;
 }
 
-.deal-contents-container {
-	padding-left: 150px;
-}
 
-.form-group {
-	input {
-		width: 300px;
-		text-align: center;
-	}
-	textarea {
-		width: 300px;
-	}
-}
 .request_container {
 	width: 410px;
 	display: flex;
@@ -446,4 +460,91 @@ header {
 }
 .modal-content{
 	position: relative;
+}
+
+/* deal -content*/
+#deletingForm{
+	margin-top: 10px;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+
+	button{
+		
+		width: 36vw;
+	}
+}
+.btn_custom{
+	background-color: #7b69ee;
+	&:hover{
+		background-color: hsla(248, 53%, 51%, 0.596);
+
+	}
+}
+#deal-contents{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-direction: column;
+}
+.deal-contents-container{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	width: 100%;
+	align-items: center;
+	max-width: 400px;
+	.btn-danger{
+		width: 36vw;
+	}
+
+	
+
+	.form-group{
+		.clientView,input{
+			max-width: 30rem;
+			flex-shrink: 0;
+			width: 25vw;
+			text-align: center;
+			color: grey;
+			&:focus{
+				color: black;
+			}
+		}
+		textarea{
+			max-width: 400px;
+		
+			width: 25vw;
+			text-align: center;
+			height: 200px;
+			color: grey;
+			border-radius: 10%;
+			&:focus{
+				outline: none;
+				border: 3px solid;
+				color: black;
+				border-color: #7b69ee
+			}
+
+		}
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+		margin-bottom: 30px;
+		
+		&:nth-child(3){
+			align-items: center;
+		}
+		&:nth-child(2){
+			div{
+				max-width: 400px;
+				
+				width: 300px;
+				display: flex;
+				justify-content: center;
+			}
+		}
+		
+	}
+
 }

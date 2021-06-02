@@ -14,6 +14,11 @@ block content2
             .form-container
                 form(action=`/main/transaction${routes.write}`, method="post")
                     .form-group.row
+                    label.col-sm-2.col-form-label(for='transaction_amount') 제목
+                    .col-sm-10
+                        input#transaction_amount.form-control(type='text' min='1' name = 'title')
+                    br
+                    .form-group.row
                     label.col-sm-2.col-form-label(for='transaction_amount') &#xD310;&#xB9E4;&#xB7C9; (kw)
                     .col-sm-10
                         input#transaction_amount.form-control(onchange='calculatePrice()' type='number' min='1' name = 'amount')
