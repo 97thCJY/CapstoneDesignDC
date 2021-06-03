@@ -5,39 +5,37 @@ import User from '../models/user';
 export const checkElectric = (req, res) => {
     console.log("hi get");
     res.status(200);
-    return res.send("999");
-    // const response = {
-    //     success: 1
-    // }
-    // return res.json(response);
+    return res.status(200).send("1");
 }
 
 // POST 테스트용
 export const tmp = (req, res) => {
     console.log("hi post");
     res.status(200);
-    return res.send("999");
+    return res.send("1");
 }
 
 // 전기량 받기
 export const getElec = async (req, res) => {
-    const { params: { PK, eUsage, eCharge, eSupply }} = req;
-    
+    const { params: {
+        PK,         // 사용자 PK
+        eUsage,     // 전력 사용량
+        eCharge,    // 전지 충전량
+        eSupply     // 태양광 발전량
+    }} = req;
+
+    console.log("[아두이노GET] pk:" + PK + " 사용량:" + eUsage + " 배터리량:" + eCharge + " 발전량:" + eSupply);
+
     try {	// DB 수정
-        await User.findOneAndUpdate(
-            { PK: PK },
-            {
-                eUsage: eUsage,
-                eCharge: eCharge,
-                eSupply: eSupply
-            }
-        );
+        await User.findOneAndUpdate({ PK: PK }, {
+            eUsage: eUsage,
+            eCharge: eCharge,
+            eSupply: eSupply
+        });
     } catch(e) {
-        console.log("DB Error", e);
-        res.status(500);
-        return res.send("error");
+        // console.log("DB Error", e);
+        return res.status(501).send("fail");
     } finally {
-        res.status(200);
-        return res.send("success");
+        return res.status(200).send("success");
     }
 }

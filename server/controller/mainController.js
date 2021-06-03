@@ -61,16 +61,13 @@ export const userProfile = async (req, res) => {
 		const { input_email, input_name, input_contact, input_batteryMax, input_IP } = req.body;
 
 		try {	// DB 수정
-			await User.findOneAndUpdate(
-				{ PK: PK },
-				{
-					name: input_name,
-					email: input_email,
-					batteryMax: input_batteryMax,
-					IP: input_IP,
-					contact: input_contact
-				}
-			);
+			await User.findOneAndUpdate( { PK: PK }, {
+				name: input_name,
+				email: input_email,
+				batteryMax: input_batteryMax,
+				IP: input_IP,
+				contact: input_contact
+			});
 		} catch(e) {
 			console.log("DB Error", e);
 		} finally {

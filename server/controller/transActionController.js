@@ -109,15 +109,12 @@ export const checkTrade = async (req, res) => {
 /*** 이메일 응답용 GET Method ***/
 // 판매자 승인
 export const purchaseAccept = async (req, res) => {
-	const {
-		params: { pk, hash }
-	} = req;
+	const { params: { pk, hash } } = req;
 	let transaction; // 판매글
 	let buyer; // 판매자
 	let seller; // 구매자
 
-	try {
-		// DB 불러오기
+	try {	// DB 불러오기
 		transaction = await Transaction.findOne({ PK: pk });
 		buyer = await User.findOne({ PK: transaction.buyer });
 		seller = await User.findOne({ PK: transaction.seller });
@@ -131,7 +128,13 @@ export const purchaseAccept = async (req, res) => {
 		console.log("해시값 다름\n" + hash + "\n" + transaction.hash);
 		return res.redirect('/message/' + "이미 완료된 요청이거나 잘못된 요청입니다.");
 	}
-	/**** 작업 필요 : 유효성 검사? ****/
+	/**** 작업 필요 : 유효성 검사?/ ****/
+	if (!sellerValidationTest(seller, transaction.reqAmount)) {
+		return res.send("false");
+		// return res.send(`<script type="text/javascript">alert("구매 불가: 충전 가능한 배터리 용량이 판매 전력량 보다 적습니다.");location.href="./${id}";</script>`);	
+	} else {
+		return res.send("true");
+	}
 
 	// new hash값 생성
 	const tmp = transaction.buyer + Date.now().toString() + transaction.reqAmount + pk;
@@ -333,13 +336,11 @@ export const finalAccept = async (req, res) => {
 // 판매글 추가 요청
 export const postTransact = async (req, res) => {
 	const { amount, description , title } = req.body;
-	const { PK, email, IP } = req.user;
+	const { PK } = req.user;
 	try {
+		// PK 설정
 		const transactionList = await Transaction.find({});
-		console.log(transactionList);
-
 		let transPK = transactionList.length == 0 ? 0 : 1;
-
 		if (transPK) {
 			transPK = 0;
 			for (let i = 0; i < transactionList.length; i++) {
@@ -357,73 +358,42 @@ export const postTransact = async (req, res) => {
 			createdAt: Date.now(),
 			title
 		});
-		console.log(transactionList);
-		res.redirect('/main' + routes.transAction);
+		return res.redirect('/main' + routes.transAction);
 	} catch (e) {
 		console.log(e);
-		res.redirect(routes.write);
+		return res.redirect(routes.write);
 	}
 };
 
 // 구매 요청 & 판매자에게 승인 이메일 전송
 export const purchaseRequest = async (req, res) => {
-	const {
-		params: { id }
-	} = req; // transaction_id
-
-	const { user } = req.user;
-
+	const { params: { id } } = req; // transaction_id
+	const buyer = req.user; // 구매자
+	const reqAmount = req.body.purchase;	// 구매 요청량
 	let transaction; // 판매글
 	let seller; // 판매자
-	const buyer = req.user; // 구매자
-	const reqAmount = req.body.purchase;
-
-	const thisData = await Transaction.findOne({ PK: id });
-
-	if (req.user.PK == thisData.seller) {
-		const { description, amount ,title} = req.body;
-		console.log(description, amount);
-
-		await Transaction.findOneAndUpdate(
-			{ PK: id },
-			{
-				amount,
-				description,
-				title
-			}
-		);
-		res.redirect('/main/transaction');
-	}
-	// 입력된 구매량 유효성검사
-	if (reqAmount < 1)
-		return res.send(
-			`<script type="text/javascript">alert("구매량은 1보다 커야합니다.");location.href="./${id}";</script>`
-		);
-
-	try {
-		// DB 불러오기
+	
+	try {	// DB 불러오기
 		transaction = await Transaction.findOne({ PK: id });
 		seller = await User.findOne({ PK: transaction.seller });
 	} catch (e) {
 		console.log("데이터베이스 로딩 오류: " + e);
 		return res.redirect('/message/' + "Error: 데이터베이스 로딩 오류");
 	}
-	// console.log(req.body); console.log(buyer); console.log(transaction); console.log(seller);
 
-	/**** 작업 필요? : DB 유효성 검사 ****/
-	/* 구매하고자 하는 전력량이 구매자의 배터리에 충전 가능한 용량에 수용할 수 있는지 확인
-		if (user_battery_max – user_elec_charge > transaction_req_amount)
-			pass
-		else
-			return error
-	*/
+	// 유효성검사
+	if (transaction.amount < reqAmount)	// 입력된 구매량
+		return res.send(`<script type="text/javascript">alert("판매하는 구매량보다 많습니다.");location.href="./${id}";</script>`);
+	if (reqAmount < 1)	// 입력된 구매량
+		return res.send(`<script type="text/javascript">alert("구매량은 1보다 커야합니다.");location.href="./${id}";</script>`);
+	if (!buyerValidationTest(buyer, reqAmount))	// 구매자 유효성 검사
+		return res.send(`<script type="text/javascript">alert("구매 불가: 충전 가능한 배터리 용량이 판매 전력량 보다 적습니다.");location.href="./${id}";</script>`);	
 
 	// 해시값 생성
 	const tmp = id + buyer.PK + Date.now().toString() + reqAmount;
 	const hash = crypto.createHash('md5').update(tmp).digest('hex');
 
-	try {
-		// transaction table 변경
+	try {	// transaction table 변경
 		const changed = await transaction.update({
 			status: 1,
 			hash: hash,
@@ -449,24 +419,30 @@ export const purchaseRequest = async (req, res) => {
 			to: seller.email,
 			subject: '[구매알림] ' + seller.name + '님 구매요청 내역을 확인해주세요.',
 			html: email_body,
-			attachments: [
-				{
-					filename: 'ourlogo.png',
-					path: './assets/images/ourlogo.png',
-					cid: 'ourlogo'
-				}
-			]
+			attachments: [{
+				filename: 'ourlogo.png',
+				path: './assets/images/ourlogo.png',
+				cid: 'ourlogo'
+			}]
 		});
 	} catch(e) {
 		console.log("이메일 전송 오류: " + e);
 		return res.redirect('/message/' + "Error: 이메일 전송 오류");
 	}
 	console.log('Message sent: %s', info.messageId);
-
-	/**** 작업 필요 : 메시지 템플릿 rendering ****/
-	////////////////////////////////////////////////////////
-	res.redirect('/main' + routes.transAction);
+	return res.redirect('/message/' + "정상적으로 구매 요청되었습니다.");
 };
+
+// 거래글 삭제 요청
+export const deleteTransaction = async (req, res) =>{
+	const { PK } = req.body;
+	try {
+		await Transaction.findOneAndDelete({ PK });
+	} catch(e){
+		console.log(e);
+	}
+	res.redirect('/main/transaction')
+}
 
 /*** 추가 사용 함수 ***/
 // 날짜 데이터 파싱 함수
@@ -535,18 +511,23 @@ function emailTempleteNotification(to, checkLink, title, contents) {
 	return a;
 };
 
+// 구매자 유효성 검사
+// (구매하고자 하는 전력량이 구매자의 배터리에 충전 가능한 용량에 수용할 수 있는지 확인)
+function buyerValidationTest(buyer, reqAmount) {
+	if (buyer.batteryMax - buyer.eCharge >= reqAmount)
+		return true;
+	else
+		return false;
+}
 
-export const deleteTransaction = async (req, res) =>{
-
-	const { PK } = req.body;
-
-	try{
-		await Transaction.findOneAndDelete({ PK });
-
-	}catch(e){
-		console.log(e);
-	}
-	
-
-	res.redirect('/main/transaction')
+// 판매자 유효성 검사
+// (판매자의 배터리 잔량이 구매량보다 많은지 확인)
+// (생산량이 소비량보다 많은지 확인)
+function sellerValidationTest(seller, reqAmount) {
+	console.log(seller, reqAmount);
+	if (true) {
+		return true;
+	} else {
+		return false;
+	}	
 }
