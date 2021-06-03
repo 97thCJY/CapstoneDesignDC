@@ -18,7 +18,7 @@ block content2
                                 h5.card-title 실시간 에너지 소비량 
                                 h7.unit (mA/s)
                             img.card-img-top(src='/assets/images/thunder.jpg')
-                            h5.card_name= resultObj.totalEuseage
+                            h5.card_name= resultObj.eUsage
                 .col
                     .card.card-check
                         .card-title.text-center.py-0
@@ -34,7 +34,7 @@ block content2
                                 h5.card-title 배터리 잔량
                                 h7.unit (%)
                             img.card-img-top(src='/assets/images/battery.jpg')
-                            h5.card_name= resultObj.batteryLeft
+                            h5.card_name= resultObj.eCharge
                 .col
                     .card.card-check
                         .card-title.text-center.py-0
@@ -43,6 +43,4 @@ block content2
                                 h7.unit (mA/s)
                             img.card-img-top(src='/assets/images/lights.jpg')
                             h5.card_name= resultObj.solarEsupply
-
-
         br

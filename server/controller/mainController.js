@@ -28,20 +28,17 @@ export const home = async (req, res) => {
 
 // 전력확인 페이지 rendering
 export const checkElec = async (req, res) => {
-	const { PK, name, eUsage, eCharge, eSupply, batteryMax, IP, deviceList } = req.user;
-
+	const { PK, eUsage, eCharge, eSupply, batteryMax } = req.user;
 	let resultObj = {
-		totalEuseage: 0,
+		eUsage: 0,
+		eCharge: 0,
 		eSupply: 0,
-		batteryLeft: 0,
-		solarEsupply: 0
 	};
 
 	try {
 		resultObj.eSupply += eSupply;
 		resultObj.eCharge += eCharge;
 		resultObj.eUsage += eUsage;
-		resultObj.totalEuseage += getTotalUsage(); // impl
 	} catch (e) {
 		console.log('error: ' + e);
 	} finally {
@@ -223,8 +220,6 @@ export const remoteOnOff = async (req, res) => {
 		res.redirect(routes.main);
 	}
 };
-
-const getTotalUsage = () => 0;
 
 export const deviceModification = async (req, res) => {
 	const { modName, name } = req.body;
