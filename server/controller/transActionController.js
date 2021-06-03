@@ -65,7 +65,8 @@ export const deal = async (req, res) => {
 			topNav: 'transAction',
 			articleList: targetObjList,
 			articleLength: articleSet.length,
-			page
+			page,
+			forES: JSON.stringify(targetObjList)
 		});
 	}
 };

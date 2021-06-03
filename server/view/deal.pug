@@ -54,15 +54,32 @@ block content2
 
             const nowPage = document.getElementsByClassName(`${paged}`);
 
-            console.log(nowPage);
+         
 
             nowPage[0].style.backgroundColor = '#7b69ee';
 
             const text = nowPage[0].getElementsByTagName('a');
             text[0].style.color = 'white';
 
+
+            const contents = document.getElementsByClassName('transactionContents');
+
+            let articles = JSON.parse(JSON.stringify(!{forES}));
+
+            for(let i = 0 ; i < contents.length; i++){
+                
+                if(articles[Math.floor(i/4)].status >=2){
+                    
+                    console.log(contents[i]);
+                    contents[i].style.color = 'grey';
+                }
+                
+            }
+
        
 
           
         }
+        
         window.addEventListener('load' , pageNationing)
+      
