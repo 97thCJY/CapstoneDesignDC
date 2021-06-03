@@ -29,7 +29,7 @@ export const getElec = async (req, res) => {
     try {	// DB 수정
         await User.findOneAndUpdate({ PK: PK }, {
             eUsage: eUsage,
-            eCharge: eCharge,
+            eCharge: eCharge / 100,
             eSupply: eSupply
         });
     } catch(e) {

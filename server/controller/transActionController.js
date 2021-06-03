@@ -127,12 +127,13 @@ export const purchaseAccept = async (req, res) => {
 		console.log("해시값 다름\n" + hash + "\n" + transaction.hash);
 		return res.redirect('/message/' + "이미 완료된 요청이거나 잘못된 요청입니다.");
 	}
-	/**** 작업 필요 : 유효성 검사?/ ****/
-	if (!sellerValidationTest(seller, transaction.reqAmount)) {
-		return res.send("false");
-		// return res.send(`<script type="text/javascript">alert("구매 불가: 충전 가능한 배터리 용량이 판매 전력량 보다 적습니다.");location.href="./${id}";</script>`);	
-	} else {
-		return res.send("true");
+	
+	// 유효성 검사
+	const validationTmp = sellerValidationTest(seller, transaction.reqAmount);
+	if (validationTmp === 0) {
+		return res.redirect('/message/' + "판매 불가: 배터리 여유공간이 부족합니다.");
+	} else if (validationTmp === 1) {
+		return res.redirect('/message/' + "판매 불가: 현재 배터리의 사용량이 충전량보다 많습니다.");
 	}
 
 	// new hash값 생성
@@ -266,9 +267,7 @@ export const purchaseReject = async (req, res) => {
 
 // 구매자 최종 승인
 export const finalAccept = async (req, res) => {
-	const {
-		params: { pk, hash }
-	} = req;
+	const { params: { pk, hash } } = req;
 	let transaction, buyer, seller;
 
 	try {
@@ -286,10 +285,21 @@ export const finalAccept = async (req, res) => {
 		return res.redirect('/message/' + "이미 완료된 요청이거나 잘못된 요청입니다.");
 	}
 
+	// 구매자 유효성 검사
+	if (!buyerValidationTest(buyer, transaction.reqAmount))
+		return res.redirect('/message/' + "구매 불가: 충전 가능한 배터리 용량이 판매 전력량 보다 적습니다.");
+	
 	/**** 작업 필요 유효성 검사 ****/
+	// 판매자 유효성 검사
+	const validationTmp = sellerValidationTest(seller, transaction.reqAmount);
+	if (validationTmp === 0) {
+		return res.redirect('/message/' + "판매 불가: 배터리 여유공간이 부족합니다.");
+	} else if (validationTmp === 1) {
+		return res.redirect('/message/' + "판매 불가: 현재 배터리의 사용량이 충전량보다 많습니다.");
+	}
 
-	try {
-		// transaction table 변경
+
+	try {	// transaction table 변경
 		const changed = await transaction.update({ status: 3, hash: '' });
 	} catch (e) {
 		console.log("데이터베이스 수정 오류: " + e);
@@ -340,6 +350,9 @@ export const postTransact = async (req, res) => {
 	// 유효성 검사
 	if (batteryMax < amount) {
 		return res.send(`<script type="text/javascript">alert("판매 불가: 판매하고자 하는 전력량이 배터리 용량을 초과합니다.");location.href="./";</script>`);
+	}
+	if (amount < 1) {
+		return res.send(`<script type="text/javascript">alert("판매 불가: 판매량은 1보다 커야 합니다.");location.href="./";</script>`);
 	}
 
 	try {
@@ -449,6 +462,21 @@ export const deleteTransaction = async (req, res) =>{
 	res.redirect('/main/transaction')
 }
 
+// 거래글 수정 요청
+export const modifyTransaction = async(req ,res) =>{
+	const {amount , title , description ,PK} = req.body;
+	try{
+		await Transaction.findOneAndUpdate({ PK },{
+			amount,
+			title,
+			description
+		});
+	}catch(e){
+		console.log(e);
+	}
+	res.redirect('/main/transaction');
+}
+
 /*** 추가 사용 함수 ***/
 // 날짜 데이터 파싱 함수
 const parseDate = (date) => {
@@ -530,33 +558,12 @@ function buyerValidationTest(buyer, reqAmount) {
 // (생산량이 소비량보다 많은지 확인)
 function sellerValidationTest(seller, reqAmount) {
 	console.log(seller, reqAmount);
-	if (true) {
-		return true;
-	} else {
-		return false;
-	}	
-}
 
-
-export const modifyTransaction = async(req ,res) =>{
-
-	const {amount , title , description ,PK} = req.body;
-
-	try{
-
-		await Transaction.findOneAndUpdate({
-			PK
-		},{
-			amount,
-			title,
-			description
-		});
-
-	}catch(e){
-		console.log(e);
-
-	}
-
-	res.redirect('/main/transaction');
-
+	// 판매자의 배터리잔량 < 구매량
+	if (seller.eCharge < reqAmount)
+		return 0;
+	// 판매자의 충전량 < 판매자의 사용량
+	if (seller.eSupply < seller.eUsage)
+		return 1;
+	return 2;	// success
 }
