@@ -38,7 +38,7 @@ export const deal = async (req, res) => {
 		//console.log(max);
 		let cnt = 0;
 		for (let i = (page-1)*10 ; i < max; i++) {
-			if (articleSet[i].status < 3) {
+		
 				let date;
 				const user = await User.findOne({ PK: articleSet[i].seller });
 
@@ -50,7 +50,7 @@ export const deal = async (req, res) => {
 				cnt++;
 				//console.log(cnt++);
 				//	targetObjList[i].sellerName = user[0].name;
-			}
+			
 			//	console.log(targetObjList);
 		}
 		//console.log(targetObjList);
