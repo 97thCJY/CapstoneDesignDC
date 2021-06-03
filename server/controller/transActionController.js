@@ -50,9 +50,8 @@ export const deal = async (req, res) => {
 				// console.log(cnt++);
 				// targetObjList[i].sellerName = user[0].name;
 			}
-		}
-		//console.log(targetObjList);
-		targetObjList.reverse();
+		// console.log(targetObjList);
+		// targetObjList.reverse();
 	} catch (e) {
 		console.log(e);
 	} finally {
