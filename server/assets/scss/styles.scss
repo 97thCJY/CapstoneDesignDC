@@ -77,7 +77,6 @@ body {
 }
 
 /* 푸터 */
-
 footer {
 	position: absolute;
     bottom: 0;
@@ -91,7 +90,6 @@ footer {
 }
 
 /* input-number 화살표 지우기 */
-
 input[type='number']::-webkit-outer-spin-button,
 input[type='number']::-webkit-inner-spin-button {
 	-webkit-appearance: none;
@@ -99,7 +97,6 @@ input[type='number']::-webkit-inner-spin-button {
 }
 
 /* 로고 바*/
-
 .weather_position {
     margin-top: 3vw;
 }
@@ -169,7 +166,7 @@ header {
     position: absolute;
     transition: all 0.3s ease;
     z-index: 19;
-	top: 60px;
+	top: 90px;
 	&:hover {
 		box-shadow: 1px 2px 3px grey;
 		background-color: #7b69ee;
@@ -182,6 +179,21 @@ header {
 	position: absolute;
 	transition: all 0.3s ease;
 	z-index: 18;
+	top: 60px;
+	&:hover {
+		box-shadow: 1px 2px 3px grey;
+		background-color: #7b69ee;
+		color: #f9f9f9;
+		border-color: black;
+	}
+}
+
+.profile {
+	display: none;
+	opacity: 0;
+	position: absolute;
+	transition: all 0.3s ease;
+	z-index: 17;
 	top: 30px;
 	&:hover {
 		box-shadow: 1px 2px 3px grey;
@@ -205,13 +217,13 @@ header {
     color: black;
     border-radius: 10px;
     border: 0px solid #927da6;
-    padding: 1.5vw 1.8vw;
+    padding: 1vw 1vw;
     margin-bottom: 10px;
     display: inline-block;
     cursor: pointer;
     font-weight: 500;
     white-space: nowrap;
-    font-size: 1.5vw;
+    font-size: 1vw;
 }
 
 .route-list-activate {
@@ -282,11 +294,36 @@ header {
     border-radius: 10px;
 }
 
+/* 내 정보 page */
+.custom-table {
+	width: 70%;
+	min-width: 300px;
+	margin: 0 auto;
+	font-size: 1.3vw;
+
+	.left-td {
+		width: 30%;
+		min-width: 110px;
+		background-color: #FFFADE;
+		padding: 17px 10px;
+	}
+	.right-td {
+		padding: auto 15px;
+		.login-input {
+			border: 1.5px solid #B4A7B7;
+			&:focus {
+				border: 2px solid #B4A7B7;
+			}
+		}
+	}
+}
+
 /* 원격 제어 page*/
 .card_round {
-    width: 100%;
+    width: 90%;
     border-radius: 25%;
     border: 1px solid black;
+	margin: auto;
 }
 
 .card_name {
@@ -382,9 +419,8 @@ header {
 .time_text {
     font-size: 20px;
 }
-////////////////////////////////////////////////////////////
-/* 판매글 작성 page, 내용 page */
 
+/* 판매글 작성 page, 내용 page */
 .form-container {
 	width: 100%;
 	max-width: 800px;

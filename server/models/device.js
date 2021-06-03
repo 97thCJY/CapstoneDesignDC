@@ -12,7 +12,7 @@ const DeviceSchema = new mongoose.Schema({
 	},
 	status: {
 		type: Boolean,
-		default: false,
+		default: true,
 		required: 'device status setting req'
 	}
 });

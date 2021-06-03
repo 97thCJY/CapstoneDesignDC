@@ -3,20 +3,87 @@ extends layout/main
 
 block content
     .text-center.container-sm#sign_up_flexBox
-        .login-contents
+        .login-contents(style="top: 15%;")
             img.logo_img(src='../assets/images/ourlogo.png')
-            
             br
 
             form(action=routes.join, method="post")(style="margin-bottom:0px;")
-                input.login-input(type="text" name='email' placeholder="이메일")
-                input.login-input(type="password" name='password' placeholder="비밀번호")
-                input.login-input(type="password" name='verifyPassword' placeholder="비밀번호 재입력")
-                input.login-input(type="text" name='name' placeholder="이름")
-                input.login-input(type="text" name='contact' placeholder="연락처")
+                input.login-input(type="text" id='email' name='email' placeholder="이메일" onclick='checkEmail()' onchange='checkEmail()')
+                p.text-muted(style="font-size:small; display:none;" id="emailMessage") 이메일을 입력하세요.
+                input.login-input(type="password" id='password' name='password' placeholder="비밀번호" onclick='checkPassword()' onchange='checkPassword()')
+                p.text-muted(style="font-size:small; display:none;" id="passwordMessage1") 올바른 비밀번호를 입력하세요.<br>(8자 이상 20자 이하의 숫자, 영문 조합)
+                input.login-input(type="password" id='verifyPassword' name='verifyPassword' placeholder="비밀번호 재입력" onclick='checkPassword()' onchange='checkPassword()')
+                p.text-muted(style="font-size:small; display:none;" id="passwordMessage2") 비밀번호가 일치하지 않습니다.
+                input.login-input(type="text" id='name' name='name' placeholder="이름")
+                input.login-input(type="text" id='contact' name='contact' placeholder="전화번호 (-없이)" maxlength=11 onclick='checkContact()' onchange='checkContact()')
+                p.text-muted(style="font-size:small; display:none;" id="contactMessage") 올바른 전화번호(-없이)를 입력하세요.
+                input.login-input(type="number" id='batteryMax' name='batteryMax' placeholder="배터리 용량" min=0)
                 hr
-                input.btn.btn-outline-primary.login-btn(type='submit' value='가입하기')
-
+                input.btn.btn-outline-primary.login-btn(type='submit' value='가입하기' id="submitBtn" disabled)
 
             a(href =routes.login)
                 button.btn.btn-outline-secondary.login-btn  뒤로 가기
+
+    script.
+        var emailFlag = 0, passwordFlag1 = 0, passwordFlag2 = 0, contactFlag = 0;
+        
+        // 이메일 형식 검사
+        function checkEmail() {
+            var email = document.getElementById("email").value;
+            var emailValidator = /^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+            if (emailValidator.test(email)) {   // 통과
+                document.getElementById("emailMessage").style.display = "none";
+                emailFlag = 1;
+            } else {
+                document.getElementById("emailMessage").style.display = "block";
+                emailFlag = 0;
+            }
+            checkPerfect();
+        }
+        
+        // 비밀번호 검사
+        function checkPassword() {
+            var password = document.getElementById("password").value;
+            var verifyPassword = document.getElementById("verifyPassword").value;
+            // 비밀번호 두개가 다를 경우
+            if (password === verifyPassword) {
+                document.getElementById("passwordMessage2").style.display = "none";
+                passwordFlag2 = 1;
+            } else {
+                document.getElementById("passwordMessage2").style.display = "block";
+                passwordFlag2 = 0;
+            }
+            // 비밀번호 형식 검사
+            var num = password.replace(/[^0-9]/g,'').length;    // 숫자
+            var eng = password.replace(/[^a-z]/g,'').length;    // 영어 소문자
+            if (password.length >= 8 && password.length <= 20 && num > 0 && eng > 0 && num + eng === password.length){
+                document.getElementById("passwordMessage1").style.display = "none";
+                passwordFlag1 = 1;
+            } else {
+                document.getElementById("passwordMessage1").style.display = "block";
+                passwordFlag1 = 0;
+            }
+            checkPerfect();
+        }
+        
+        // 전화번호 검사
+        function checkContact() {
+            var contact = document.getElementById("contact").value;
+            if (!isNaN(contact) && contact.length > 9 && contact.length < 12) {  // 통과
+                document.getElementById("contactMessage").style.display = "none";
+                contactFlag = 1;
+            } else {
+                document.getElementById("contactMessage").style.display = "block";
+                contactFlag = 0;
+            }
+            checkPerfect();
+        }
+        
+        // 가입하기 버튼 활성화 확인
+        function checkPerfect() {
+            if (emailFlag + passwordFlag1 + passwordFlag2 + contactFlag === 4) {
+                document.getElementById("submitBtn").disabled = false;
+            } else {
+                document.getElementById("submitBtn").disabled = true;
+            }
+        }
