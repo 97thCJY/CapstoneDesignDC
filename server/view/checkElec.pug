@@ -11,40 +11,38 @@ block content2
             hr
             // Contents List
             #check-list.row.row-cols-2.row-cols-md-4.g-4(style='background-color: white;')
+                .col
+                    .card.card-check
+                        .card-title.text-center.py-0
+                            .check-header
+                                h5.card-title 실시간 에너지 소비량 
+                                h7.unit (mA/s)
+                            img.card-img-top(src='/assets/images/thunder.jpg')
+                            h5.card_name= resultObj.totalEuseage
+                .col
+                    .card.card-check
+                        .card-title.text-center.py-0
+                            .check-header
+                                h5.card-title 에너지 충전량 
+                                h7.unit (mA/s)
+                            img.card-img-top(src='/assets/images/thunder.jpg')
+                            h5.card_name= resultObj.eSupply
+                .col
+                    .card.card-check
+                        .card-title.text-center.py-0
+                            .check-header
+                                h5.card-title 배터리 잔량
+                                h7.unit (%)
+                            img.card-img-top(src='/assets/images/battery.jpg')
+                            h5.card_name= resultObj.batteryLeft
+                .col
+                    .card.card-check
+                        .card-title.text-center.py-0
+                            .check-header
+                                h5.card-title 태양열 발전량 
+                                h7.unit (mA/s)
+                            img.card-img-top(src='/assets/images/lights.jpg')
+                            h5.card_name= resultObj.solarEsupply
+
+
         br
-
-    script.
-        var check_list = [{
-            "id": 1,
-            "amount": "100W",
-            "name": "총 전력 사용량"
-            }, {
-            "id": 2,
-            "amount": "200W",
-            "name": "전기 충전량?"
-            }, {
-            "id": 3,
-            "amount": "300W",
-            "name": "배터리 전력량"
-            }, {
-            "id": 4,
-            "amount": "500W",
-            "name": "태양광 발전량"
-        }];
-
-        var tmp_str = "";
-        for (var i = 0; i < check_list.length; i++) {
-            var img_src = ["/assets/images/thunder.jpg", "/assets/images/thunder.jpg", "/assets/images/battery.jpg", "/assets/images/lights.jpg"];
-            tmp_str +=
-            '<div class="col">\
-                <div class="card card-check">\
-                    <div class="card-title text-center py-0">\
-                        <h5 class="card-title card-check-title">' + check_list[i].name + '</h5>\
-                        <img class="card-img-top" src="' + img_src[i] + '"/>\
-                        <h5 class="card_name">' + check_list[i].amount + ' </h5>\
-                    </div>\
-                </div>\
-            </div>';
-        }
-
-        document.getElementById("check-list").innerHTML = tmp_str;
