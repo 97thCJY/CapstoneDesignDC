@@ -22,7 +22,7 @@ span {
 input:focus{
 	outline: none;
 	border: 3px solid;
-	border-color: #8a629c
+	border-color:  #7b69ee;
 }
 
 a {
@@ -165,7 +165,7 @@ header {
 	top: 90px;
 	&:hover {
 		box-shadow: 1px 2px 3px grey;
-		background-color: #8A629C;
+		background-color:  #7b69ee;
 		border-color: black;
 	}
 }
@@ -178,7 +178,7 @@ header {
 	top: 60px;
 	&:hover {
 		box-shadow: 1px 2px 3px grey;
-		background-color: #8a629c;
+		background-color:  #7b69ee;
 		color: #f9f9f9;
 		border-color: black;
 	}
@@ -193,7 +193,7 @@ header {
 	top: 30px;
 	&:hover {
 		box-shadow: 1px 2px 3px grey;
-		background-color: #8a629c;
+		background-color:  #7b69ee;
 		color: #f9f9f9;
 		border-color: black;
 	}
@@ -224,7 +224,7 @@ header {
 
 .route-list-activate {
 	/* background-color: lightgreen; */
-	background-color: #8a629c;
+	background-color:  #7b69ee;
 	color: #eee;
 	font-weight: 700;
 }
@@ -382,7 +382,7 @@ header {
 }
 
 .btn-secondary{
-	background-color: #8a629c;
+	background-color: #7b69ee;
 
 	&:hover{
 		background-color: hsla(248, 53%, 51%, 0.596);
@@ -473,7 +473,7 @@ header {
 	padding: 7px 13px;
 	border-radius: 10%;
 	&:hover {
-		background-color: #8a629c;
+		background-color:  #7b69ee;
 		color: white;
 	}
 }
@@ -507,7 +507,7 @@ header {
 	}
 }
 .btn_custom{
-	background-color: #8a629c;
+	background-color:  #7b69ee;
 	&:hover{
 		background-color: hsla(248, 53%, 51%, 0.596);
 
@@ -555,7 +555,7 @@ header {
 				outline: none;
 				border: 3px solid;
 				color: black;
-				border-color: #8a629c
+				border-color: #7b69ee;
 			}
 
 		}
