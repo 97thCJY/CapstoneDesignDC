@@ -28,6 +28,10 @@ export const deal = async (req, res) => {
 	//console.log(req);
 	//let page = req.body.pagenation;
 	//console.log(page);
+
+	const d = await Transaction.find({});
+	console.log(d);
+
 	page = page ? page: 1;
 	let articleSet = await Transaction.find({});
 	articleSet = articleSet.reverse();

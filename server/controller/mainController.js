@@ -105,15 +105,17 @@ export const status = async (req, res) => {
 	console.log(transaction_seller);
 	console.log(transaction_buyer);
 
+	console.log(1);
+	console.log(nowUser , transaction_buyer , transaction_seller);
 
-	if( nowUser == transaction_buyer){
+	if(transaction_buyer){
 		res.render('transactionStatus', {
 			pageTitle: 'status',
 			topNav: 'transAction',
 			isBuyer: true
 		});
 
-	}else if(nowUser == transaction_seller){
+	}else if(transaction_seller){
 		res.render('transactionStatus', {
 			pageTitle: 'status',
 			topNav: 'transAction',
