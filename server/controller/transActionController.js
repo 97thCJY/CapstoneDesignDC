@@ -315,13 +315,11 @@ export const finalAccept = async (req, res) => {
 // 판매글 추가 요청
 export const postTransact = async (req, res) => {
 	const { amount, description , title } = req.body;
-	const { PK, email, IP } = req.user;
+	const { PK } = req.user;
 	try {
+		// PK 설정
 		const transactionList = await Transaction.find({});
-		console.log(transactionList);
-
 		let transPK = transactionList.length == 0 ? 0 : 1;
-
 		if (transPK) {
 			transPK = 0;
 			for (let i = 0; i < transactionList.length; i++) {
@@ -339,11 +337,10 @@ export const postTransact = async (req, res) => {
 			createdAt: Date.now(),
 			title
 		});
-		console.log(transactionList);
-		res.redirect('/main' + routes.transAction);
+		return res.redirect('/main' + routes.transAction);
 	} catch (e) {
 		console.log(e);
-		res.redirect(routes.write);
+		return res.redirect(routes.write);
 	}
 };
 
