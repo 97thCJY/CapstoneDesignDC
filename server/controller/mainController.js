@@ -99,7 +99,7 @@ export const addDevice = async (req, res) => {
 	// 입력값 검사
 	if (name === '' || port === undefined) {
 		// 오류 반환 & 새로고침
-		res.send(
+		return res.send(
 			'<script type="text/javascript">alert("전자기기 이름 또는 포트를 선택해주세요.");location.href="/";</script>'
 		);
 	}
@@ -122,7 +122,7 @@ export const addDevice = async (req, res) => {
 		const newDevice = await Device.create({
 			name,
 			port,
-			status: false,
+			status: true,
 			PK: PK + 1
 		});
 
