@@ -18,6 +18,7 @@ block content2
                 thead
                     tr
                         th.text-center(scope='col') 제목
+                        th.text-center(scope='col') 거래 상태
                         th.text-center(scope='col') 글쓴이
                         th.text-center(scope='col') 작성일
                         th.text-center(scope='col') 판매량
@@ -67,8 +68,8 @@ block content2
             let articles = JSON.parse(JSON.stringify(!{forES}));
 
             for(let i = 0 ; i < contents.length; i++){
-                
-                if(articles[Math.floor(i/4)].status >=2){
+
+                if(articles[Math.floor(i/5)].status >= 2){
                     
                     console.log(contents[i]);
                     contents[i].style.color = 'grey';
@@ -76,10 +77,48 @@ block content2
                 
             }
 
+
+            statusSetting();
+
        
 
           
         }
+
+        const statusSetting = () =>{
+
+            let articles = JSON.parse(JSON.stringify(!{forES}));
+
+            const target = document.getElementsByClassName('transStatus');
+
+            for(let i = 0 ; i < articles.length ; i++){
+                
+             
+                if(articles[i].status == 1 || articles[i].status == 0){
+
+                    target[i].innerHTML = '거래가능'
+                    target[i].style.color = '#2541b2'
+                    target[i].style.fontWeight = 'Bold'
+                }
+                else if(articles[i].status == 2 || articles[i].status == 3){
+
+                    target[i].innerHTML = '거래 중'
+                    target[i].style.color = '#e5d549'
+                    target[i].style.fontWeight = 'Bold'
+                }else{
+                    target[i].innerHTML = '거래 완료'
+                    target[i].style.color = '#f54748'
+                    target[i].style.fontWeight = 'Bold'
+
+                }
+            }
+
+
+
+
+        }
+
+
         
         window.addEventListener('load' , pageNationing)
       
