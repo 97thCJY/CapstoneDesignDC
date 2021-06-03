@@ -2,6 +2,7 @@ extends layout/template_main
 include mixins/transaction
 
 block content2
+    
     main
         br
         .container.contents.mb-3
@@ -24,3 +25,44 @@ block content2
                 for item of articleList
                     +transaction(item)
             div
+            .pagenation_container
+                ul#pagination
+    script.
+        const paged = !{page};
+        const NUMB = 10;
+        const articleLen = !{articleLength};
+
+        const pageSwapRequest = (pn) =>{
+            console.log(pn);
+
+            const xhr = new XMLHttpRequest();
+            
+            xhr.open("GET", 'http://localhost:3000/main/transaction'+'?page='+pn, true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            //xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+            xhr.send(null);
+
+            location.reload();
+        }
+        const pageNationing = e =>{
+            const pageList = document.getElementById('pagination');
+
+            for(let i = 0 ; i < Math.ceil(articleLen / 10) ; i++){
+                pageList.innerHTML = pageList.innerHTML + `
+                <a href ="/main/transaction?page=${i+1}"><li class='page ${i+1}' onclick ='pageSwapRequest(${i+1})'> ${i+1}</a> `
+            }
+
+            const nowPage = document.getElementsByClassName(`${paged}`);
+
+            console.log(nowPage);
+
+            nowPage[0].style.backgroundColor = '#7b69ee';
+
+            const text = nowPage[0].getElementsByTagName('a');
+            text[0].style.color = 'white';
+
+       
+
+          
+        }
+        window.addEventListener('load' , pageNationing)

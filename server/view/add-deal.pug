@@ -16,12 +16,12 @@ block content2
                     .form-group.row
                     label.col-sm-2.col-form-label(for='transaction_amount') 제목
                     .col-sm-10
-                        input#transaction_amount.form-control(type='text' min='1' name = 'title')
+                        input.form-control(type='text' min='1' name = 'title')
                     br
                     .form-group.row
                     label.col-sm-2.col-form-label(for='transaction_amount') &#xD310;&#xB9E4;&#xB7C9; (kw)
                     .col-sm-10
-                        input#transaction_amount.form-control(onchange='calculatePrice()' type='number' min='1' name = 'amount')
+                        input#transaction_amount.form-control(type='number' min='1' name = 'amount')
                     br
                     .form-group.row
                     label.col-sm-2.col-form-label(for='transaction_amount') &#xC608;&#xC0C1; &#xAC00;&#xACA9;
@@ -45,7 +45,7 @@ block content2
             const current = e.target.value;
 
             let currentString = `${current*108}`;
-            
+         
             let cnt =0
             let length = currentString.length;
             for(let i = currentString.length-1 ; i>= 0 ; i--){

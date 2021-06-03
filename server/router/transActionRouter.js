@@ -17,6 +17,7 @@ const transActionRouter = express.Router();
 
 // rendering page
 transActionRouter.get('/',onlyPrivate, deal); // 판매글 목록 페이지
+//transActionRouter.get('/?'+':id' , onlyPrivate, pageDeal)
 transActionRouter.get(routes.write,onlyPrivate, write); // 판매글 작성 페이지
 transActionRouter.get(routes.checkTrade(), onlyPrivate,checkTrade); // 판매글 세부내용 페이지
 
@@ -31,6 +32,6 @@ transActionRouter.get('/reject/:pk/:isBuyer/:hash', onlyPrivate,purchaseReject);
 transActionRouter.get('/final/accept/:pk/:hash',onlyPrivate, finalAccept); // 구매자 최종 승인
 
 // for auth
-transActionRouter.get('*', onlyPrivate, isUnvalidRoutes);
+//transActionRouter.get('*', onlyPrivate, isUnvalidRoutes);
 
 export default transActionRouter;

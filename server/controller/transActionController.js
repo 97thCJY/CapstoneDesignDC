@@ -2,6 +2,8 @@ import routes from '../routes';
 import Transaction from '../models/transaction';
 import User from '../models/user';
 
+
+let PG =0;
 const crypto = require('crypto'); // hash 라이브러리
 
 const nodemailer = require('nodemailer'); // 이메일 모듈 설정 (Gmail)
@@ -20,25 +22,40 @@ const transporter = nodemailer.createTransport({
 // 판매글 목록 페이지 출력
 export const deal = async (req, res) => {
 	const targetObjList = [];
+	console.log('deal');
+	let {page} = req.query;
+
+	console.log(req.query);
+	console.log(page);
+	//console.log(req);
+	//let page = req.body.pagenation;
+	//console.log(page);
+	page = page ? page: 1;
+	let articleSet = await Transaction.find({});
+	articleSet = articleSet.reverse();
 
 	try {
-		let articleSet = await Transaction.find({});
+		let max = page*10 <= articleSet.length ? page*10 : articleSet.length;
 
-		for (let i = 0; i < articleSet.length; i++) {
+		//console.log(max);
+		let cnt = 0;
+		for (let i = (page-1)*10 ; i < max; i++) {
 			if (articleSet[i].status < 3) {
 				let date;
 				const user = await User.findOne({ PK: articleSet[i].seller });
 
 				targetObjList.push(JSON.stringify(articleSet[i]));
-				date = parseDate(JSON.parse(targetObjList[i]).createdAt);
-				targetObjList[i] = JSON.parse(targetObjList[i]);
-				targetObjList[i].sellerName = user.name;
-				targetObjList[i].createdAt = date;
-
+				date = parseDate(JSON.parse(targetObjList[cnt]).createdAt);
+				targetObjList[cnt] = JSON.parse(targetObjList[cnt]);
+				targetObjList[cnt].sellerName = user.name;
+				targetObjList[cnt].createdAt = date;
+				cnt++;
+				//console.log(cnt++);
 				//	targetObjList[i].sellerName = user[0].name;
 			}
 			//	console.log(targetObjList);
 		}
+		//console.log(targetObjList);
 		targetObjList.reverse();
 	} catch (e) {
 		console.log(e);
@@ -46,10 +63,14 @@ export const deal = async (req, res) => {
 		res.render('deal', {
 			pageTitle: 'TransAction',
 			topNav: 'transAction',
-			articleList: targetObjList
+			articleList: targetObjList,
+			articleLength: articleSet.length,
+			page
 		});
 	}
 };
+
+
 
 // 판매글 작성 페이지 출력
 export const write = (req, res) => {
@@ -360,14 +381,15 @@ export const purchaseRequest = async (req, res) => {
 	const thisData = await Transaction.findOne({ PK: id });
 
 	if (req.user.PK == thisData.seller) {
-		const { description, amount } = req.body;
+		const { description, amount ,title} = req.body;
 		console.log(description, amount);
 
 		await Transaction.findOneAndUpdate(
 			{ PK: id },
 			{
 				amount,
-				description
+				description,
+				title
 			}
 		);
 		res.redirect('/main/transaction');

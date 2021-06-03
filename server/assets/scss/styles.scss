@@ -584,3 +584,39 @@ header {
 	}
 
 }
+
+/*pagenation*/
+
+.pagenation_container{
+	width: 100%;
+	ul{
+		text-decoration: none;
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		list-style: none;
+
+	}
+
+	.page{
+		margin-left: 5px;
+		font-size: 20px;
+		
+		height: 100%;
+		&:hover{
+			color: white;
+		}
+
+	}
+	li{
+		list-style: none;
+		border: 1px solid;
+		padding: 3px 12px;
+		border-radius: 5%;
+		&:hover{
+			background-color: #7b69ee;
+			border: 1px solid;
+			border-color: black;			
+		}
+	}
+}
