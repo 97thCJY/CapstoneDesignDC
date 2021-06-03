@@ -17,7 +17,7 @@ export const localArduino = async (req, res) => {
     }} = req;
     let user;
     let deviceObjList = [];
-
+    
 	try {
         user = await User.findOne({ PK: PK });
 		const deviceList = user.deviceList;
@@ -51,16 +51,20 @@ export const localArduino = async (req, res) => {
     } catch(e) {
         return res.status(555).send("error in updating user");
     }
-    return res.status(200).json(deviceObjList);
+
+    if (deviceObjList.length === 0)
+        return res.status(204).json(deviceObjList);
+    else
+        return res.status(200).json(deviceObjList);
 }
 
 // External 측정값 받고 (PK, 완료된 양, 속도, 남은 시간) : transaction status, reqAmount, isSeller 보내기
 export const externalArduino = async (req, res) => {
     const { params: {
-        PK,         // 사용자 PK
-        doneAmount, // 완료된 양
-        speed,      // 전송 속도
-        time        // 남은 시간
+        PK,             // 사용자 PK
+        doneAmount,     // 완료된 양
+        speed,          // 전송 속도
+        time            // 남은 시간
     }} = req;
 
     let nowDate = new Date();
