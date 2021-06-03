@@ -350,33 +350,11 @@ export const postTransact = async (req, res) => {
 // 구매 요청 & 판매자에게 승인 이메일 전송
 export const purchaseRequest = async (req, res) => {
 	const { params: { id } } = req; // transaction_id
-	const { user } = req.user;
+	const buyer = req.user; // 구매자
+	const reqAmount = req.body.purchase;	// 구매 요청량
 	let transaction; // 판매글
 	let seller; // 판매자
-	const buyer = req.user; // 구매자
-	const reqAmount = req.body.purchase;
-	const thisData = await Transaction.findOne({ PK: id });
-
-	if (req.user.PK == thisData.seller) {
-		const { description, amount } = req.body;
-		console.log(description, amount);
-		await Transaction.findOneAndUpdate({ PK: id },{
-			amount,
-			description
-		});
-		res.redirect('/main/transaction');
-	}
 	
-	// 입력된 구매량 유효성검사
-	if (reqAmount < 1)
-		return res.send(`<script type="text/javascript">alert("구매량은 1보다 커야합니다.");location.href="./${id}";</script>`);
-	// if (transaction.amount < reqAmount)
-	// 	return res.send(`<script type="text/javascript">alert("판매하는 구매량보다 많습니다.");location.href="./${id}";</script>`);
-	
-	// 구매자 유효성 검사
-	if (!buyerValidationTest(buyer, reqAmount))
-		return res.send(`<script type="text/javascript">alert("구매 불가: 충전 가능한 배터리 용량이 판매 전력량 보다 적습니다.");location.href="./${id}";</script>`);	
-
 	try {	// DB 불러오기
 		transaction = await Transaction.findOne({ PK: id });
 		seller = await User.findOne({ PK: transaction.seller });
@@ -384,14 +362,20 @@ export const purchaseRequest = async (req, res) => {
 		console.log("데이터베이스 로딩 오류: " + e);
 		return res.redirect('/message/' + "Error: 데이터베이스 로딩 오류");
 	}
-	// console.log(req.body); console.log(buyer); console.log(transaction); console.log(seller);
+
+	// 유효성검사
+	if (transaction.amount < reqAmount)	// 입력된 구매량
+		return res.send(`<script type="text/javascript">alert("판매하는 구매량보다 많습니다.");location.href="./${id}";</script>`);
+	if (reqAmount < 1)	// 입력된 구매량
+		return res.send(`<script type="text/javascript">alert("구매량은 1보다 커야합니다.");location.href="./${id}";</script>`);
+	if (!buyerValidationTest(buyer, reqAmount))	// 구매자 유효성 검사
+		return res.send(`<script type="text/javascript">alert("구매 불가: 충전 가능한 배터리 용량이 판매 전력량 보다 적습니다.");location.href="./${id}";</script>`);	
 
 	// 해시값 생성
 	const tmp = id + buyer.PK + Date.now().toString() + reqAmount;
 	const hash = crypto.createHash('md5').update(tmp).digest('hex');
 
-	try {
-		// transaction table 변경
+	try {	// transaction table 변경
 		const changed = await transaction.update({
 			status: 1,
 			hash: hash,
