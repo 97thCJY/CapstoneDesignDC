@@ -2,8 +2,6 @@ import routes from '../routes';
 import Transaction from '../models/transaction';
 import User from '../models/user';
 
-
-let PG =0;
 const crypto = require('crypto'); // hash 라이브러리
 
 const nodemailer = require('nodemailer'); // 이메일 모듈 설정 (Gmail)
@@ -336,7 +334,13 @@ export const finalAccept = async (req, res) => {
 // 판매글 추가 요청
 export const postTransact = async (req, res) => {
 	const { amount, description , title } = req.body;
-	const { PK } = req.user;
+	const { PK, batteryMax } = req.user;
+
+	// 유효성 검사
+	if (batteryMax < amount) {
+		return res.send(`<script type="text/javascript">alert("판매 불가: 판매하고자 하는 전력량이 배터리 용량을 초과합니다.");location.href="./";</script>`);
+	}
+
 	try {
 		// PK 설정
 		const transactionList = await Transaction.find({});
