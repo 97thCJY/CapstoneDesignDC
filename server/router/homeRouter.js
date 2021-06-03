@@ -25,7 +25,7 @@ homeRouter.get(routes.logOut, onlyPrivate, logOut);
 homeRouter.get(routes.join, onlyPublic, join);
 homeRouter.post(routes.join, onlyPublic, postJoin);
 
-homeRouter.get("/message/:hashMessage", message);
+homeRouter.get("/message/:message", message);
 
 homeRouter.get('*', isUnvalidRoutes); // 이외에  지정하지 않은 라우트에 대해서 전부 home으로 redirect
 

@@ -14,9 +14,11 @@ header
           .menuList
             p.menu.customMenu 메뉴
             a(href=routes.logOut).logOut.customMenu
-              p.img-pointer(data-bs-toggle='modal', data-bs-target='#LogOutModal')(style="padding-top:5px") 로그아웃
+              p.img-pointer(data-bs-toggle='modal' data-bs-target='#LogOutModal')(style="padding-top:5px") 로그아웃
             a(href= '/main/transactionStatus' ).loading.customMenu
-              p(style="padding-top:5px") 진행 상황
+              p(style="padding-top:5px") 현재 거래
+            a(href= '/main/user' ).profile.customMenu
+              p(style="padding-top:5px") 내 정보
 
     div(style='border-top: 2px solid #555; padding-top:5px; margin-top: 10px;')
 
@@ -61,6 +63,7 @@ header
       const menu = document.getElementsByClassName('menuList')[0];
       const logout = document.getElementsByClassName('logOut')[0];
       const progress = document.getElementsByClassName('loading')[0];
+      const profile = document.getElementsByClassName('profile')[0];
 
       const listMenu = (e) => {
         logout.style.display = 'block';
@@ -68,6 +71,9 @@ header
 
         progress.style.display = 'block';
         progress.style.opacity = '1';
+
+        profile.style.display = 'block';
+        profile.style.opacity = '1';
 
         /*
         menu.style.boxShadow = '1px 2px 3px grey';
@@ -80,7 +86,7 @@ header
       const disableMenu = e =>{
         logout.style.opacity = '0';
         progress.style.opacity = '0';
-        
+        profile.style.opacity = '0';
       }
       const init = () =>{
         menu.addEventListener('mouseenter', listMenu);

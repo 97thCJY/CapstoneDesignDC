@@ -1,0 +1,80 @@
+extends layout/template_main
+
+
+block content2
+    //- PK
+    main
+        br
+        .container.contents
+            // Contents Header
+            .row.contents-header
+                h3 내 정보
+            hr
+            div(style='background-color: white;')
+                form(action='/main/user', method="post")
+                    table.table.table-bordered.custom-table
+                        tbody 
+                            tr
+                                td.left-td 아이디(이메일)
+                                td.right-td
+                                    input.login-input(type ="text" name='input_email' placeholder="이메일" value=user.email id="email" onclick='checkEmail()' onchange='checkEmail()')
+                                    p.text-muted(style="font-size:small; display:none;" id="emailMessage") 이메일을 입력하세요.
+                            tr
+                                td.left-td 이름
+                                td.right-td
+                                    input.login-input(type ="text" name='input_name' placeholder="이름" value=user.name)
+                            tr
+                                td.left-td 휴대폰번호(-없이)
+                                td.right-td
+                                    input.login-input(type="text" name='input_contact' placeholder="전화번호 (-없이)" value=user.contact id='contact' maxlength=11 onclick='checkContact()' onchange='checkContact()')
+                                    p.text-muted(style="font-size:small; display:none;" id="contactMessage") 올바른 전화번호(-없이)를 입력하세요.
+                            tr
+                                td.left-td 배터리 용량
+                                td.right-td
+                                    input.login-input(type ="text" name='input_batteryMax' placeholder="배터리 용량" value=user.batteryMax)
+                            tr
+                                td.left-td IP
+                                td.right-td
+                                    input.login-input(type ="text" name='input_IP' placeholder="IP" value=user.IP)
+                    br
+                    .custom-table.text-end
+                        button.btn.btn-sm.btn-secondary(type="submit" id="submitBtn") 수정하기
+        br
+    script.
+        var emailFlag = 1, contactFlag = 1;
+        
+        // 이메일 형식 검사
+        function checkEmail() {
+            var email = document.getElementById("email").value;
+            var emailValidator = /^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+            if (emailValidator.test(email)) {   // 통과
+                document.getElementById("emailMessage").style.display = "none";
+                emailFlag = 1;
+            } else {
+                document.getElementById("emailMessage").style.display = "block";
+                emailFlag = 0;
+            }
+            checkPerfect();
+        }
+
+        // 전화번호 검사
+        function checkContact() {
+            var contact = document.getElementById("contact").value;
+            if (!isNaN(contact) && contact.length > 9 && contact.length < 12) {  // 통과
+                document.getElementById("contactMessage").style.display = "none";
+                contactFlag = 1;
+            } else {
+                document.getElementById("contactMessage").style.display = "block";
+                contactFlag = 0;
+            }
+            checkPerfect();
+        }
+
+        // 수정하기 버튼 활성화 확인
+        function checkPerfect() {
+            if (emailFlag + contactFlag === 2) {
+                document.getElementById("submitBtn").disabled = false;
+            } else {
+                document.getElementById("submitBtn").disabled = true;
+            }
+        }

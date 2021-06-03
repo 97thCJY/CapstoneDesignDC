@@ -13,6 +13,7 @@ import routes from './routes';
 import homeRouter from './router/homeRouter.js';
 import transActionRouter from './router/transActionRouter';
 import mainRouter from './router/mainRouter';
+import arduinoRouter from './router/arduinoRouter';
 
 import './passport.js';
 
@@ -50,6 +51,7 @@ app.use(passport.session());
 
 app.use('*', globalMiddleWare);
 
+app.use('/arduino', arduinoRouter);
 app.use(`/main${routes.transAction}`, transActionRouter);
 app.use(routes.main, mainRouter);
 app.use(routes.home, homeRouter);

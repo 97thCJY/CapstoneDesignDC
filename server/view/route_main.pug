@@ -65,7 +65,7 @@ block content2
     script.
         // 원격 기기 on/off 요청
         function requestRemoteOnOff(product_id) {
-            alert("Product Id값 " + product_id + "번 on/off 요청");
+           
 
             console.log('1');
             document.write('<form hidden action="/main/remoteonoff" id="smb_form" method="post"><input type="number" id="productId" name="productId"  onsubmit="return false;" value="'+ product_id +'"></form>');
@@ -91,10 +91,4 @@ block content2
         function requestRemoteFix() {
             var name = document.getElementById("now_name").value;
             var port = document.getElementById("now_port").value;
-
-            if (name === "" || port === "") {
-                alert("이름과 포트번호를 입력해주세요.")
-            } else {
-                alert("변경 내용 수정 요청\nID: " + portid + "\n이름: " + name + "\n포트: " + port);
-            }
         }
