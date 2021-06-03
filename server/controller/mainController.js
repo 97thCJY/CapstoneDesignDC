@@ -224,8 +224,6 @@ export const remoteOnOff = async (req, res) => {
 	}
 };
 
-const getTotalUsage = () => 0;
-
 export const deviceModification = async (req, res) => {
 	const { modName, name } = req.body;
 
