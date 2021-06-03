@@ -34,7 +34,8 @@ block content2
                         textarea#transaction_description.form-control(rows='10' name='description')
                     br
                     .text-center
-                    button.btn.btn-secondary(onclick='addDeal()' type='submit') &#xC791;&#xC131;&#xD558;&#xAE30;
+                    .articleButtonContainer
+                        button.btn.btn-secondary.makeArticle(onclick='addDeal()' type='submit') &#xC791;&#xC131;&#xD558;&#xAE30;
     
     script.
         const target = document.getElementById('transaction_price');

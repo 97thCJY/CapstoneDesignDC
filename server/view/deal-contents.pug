@@ -22,6 +22,17 @@ block content2
                     form(method='post' action ='/main/transaction'+routes.modifyTransaction).form-container
                         .form-container.deal-contents-container
                             .form-group
+                                h5(for='transaction_amount').col-sm-2 제목
+                                .align-self-center
+                                    if (user.PK == data.seller)
+
+                                        input.title(type='text' , name='title' value= data.title)
+                                    else
+                                        h5.clientView(name= 'title' )= data.title
+
+                            
+
+                            .form-group
                                 h5(for = 'transaction_amount').col-sm-2 판매량 (W)
                                 .align-self-center
                                     if (user.PK == data.seller)
@@ -33,19 +44,9 @@ block content2
                             .form-group
                                 h5(for='transaction_amount').col-sm-2 판매 가격
                                 .align-self-center
-                                    h5.price #{data.amount * 108}원
-
-                            .form-group
-                                h5(for='transaction_amount').col-sm-2 제목
-                                .align-self-center
-                                    if (user.PK == data.seller)
-
-                                        input.title(type='text' , name='title' value= data.title)
-                                    else
-                                        h5.clientView(name= 'title' )= data.title
+                                    input(type='text' value=`${data.amount * 108}원` readonly).price
 
                             
-
                             .form-group
                                 h5(for='transaction_amount').col-sm-2 내용
                                 .align-self-center
@@ -75,7 +76,7 @@ block content2
                             .form-group
                                 h5(for='transaction_amount').col-sm-2 판매 가격
                                 .align-self-center
-                                    h5.price #{data.amount * 108}원
+                                    input(type='text' value=`${data.amount * 108}원` readonly).price
 
                             .form-group
                                 h5(for='transaction_amount').col-sm-2 제목
@@ -155,7 +156,8 @@ block content2
                 }
             }
 
-            price.innerText = currentString +'원';
+            price.value = currentString +'원';
+            price.style.color = 'black'
 
         }
         mod.addEventListener('input' , handleModification);

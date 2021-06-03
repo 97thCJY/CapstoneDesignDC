@@ -477,11 +477,7 @@ header {
 		color: white;
 	}
 }
-.request_containerM {
-	input {
-		width: 410px;
-	}
-}
+
 .modal-body{
 	margin: 0;
 }
@@ -499,58 +495,89 @@ header {
 	margin-top: 10px;
 	width: 100%;
 	display: flex;
+	padding-left:60px;
 	justify-content: center;
 
 	button{
-		
-		width: 36vw;
+		padding: 12px 1px;
+		width: 35vw;
 	}
 }
-.btn_custom{
-	background-color:  #7b69ee;
-	&:hover{
-		background-color: hsla(248, 53%, 51%, 0.596);
 
-	}
-}
 #deal-contents{
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	flex-direction: column;
 }
+
+
+
+
 .deal-contents-container{
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	width: 100%;
 	align-items: center;
-	max-width: 400px;
-	.btn-danger{
-		width: 36vw;
+	max-width: 100%;
+	
+	.request_container{
+		input{
+			border: 1px solid;
+			border-color: #CED4D9;
+			border-radius: 5px;
+			padding: 5px 1px;
+			&:focus{
+				border: 3px solid;
+				border-color: #7b69ee;
+			}
+		}
 	}
-
 	
 
 	.form-group{
+		.btn-danger{
+			border-color: #7b69ee;
+		}
+		.price{
+			margin-top: 10px;
+		}
+		h5{
+			font-size: 17px;
+			opacity: 0.8;
+		}
+		
+		.align-self-center{
+			width:100%;
+		}
 		.clientView,input{
-			max-width: 30rem;
+
+			border-radius: 5px;
+			border: 1px solid;
+			border-color: #CED4D9;
 			flex-shrink: 0;
-			width: 25vw;
-			text-align: center;
+			width: 100%;
+		
 			color: grey;
+			padding: 5px 10px;
+			margin-top: 10px;
 			&:focus{
 				color: black;
+				border: 3px solid;
+				border-color : #7b69ee;
 			}
 		}
 		textarea{
-			max-width: 400px;
 		
-			width: 25vw;
-			text-align: center;
-			height: 200px;
+		
+			width: 100%;
+			padding: 10px 10px;
+			height: 350px;
 			color: grey;
-			border-radius: 10%;
+			border-radius: 5px;
+			border-color :#CED4D9;
+			margin-top: 10px;
 			&:focus{
 				outline: none;
 				border: 3px solid;
@@ -559,25 +586,34 @@ header {
 			}
 
 		}
-		width: 100%;
+		width: 90%;
 		display: flex;
+		flex-direction: column;
 		justify-content: space-between;
 		margin-bottom: 30px;
 		
-		&:nth-child(3){
-			align-items: center;
-		}
-		&:nth-child(2){
-			div{
-				max-width: 400px;
-				
-				width: 300px;
-				display: flex;
-				justify-content: center;
-			}
-		}
+	
 		
 	}
+	.request_containerM{
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		.btn_custom{
+			background-color:  #7b69ee;
+			width: 35vw;
+			padding: 12px 1px;
+			border-color: black;
+			border: 1px solid;
+			&:hover{
+				
+				background-color: hsla(248, 53%, 51%, 0.596);
+		
+			}
+		}
+
+	}
+	
 
 }
 
@@ -615,4 +651,43 @@ header {
 			border-color: black;			
 		}
 	}
+}
+
+
+/* add-deal*/
+
+.form-container{
+	padding-left: 30px;
+	display: flex;
+	justify-content: center;
+	width: 83.333%;
+
+	input,textarea{
+		outline: none;
+		&:focus{
+			outline: none;
+			border: 3px solid;
+			border-color: #7b69ee;
+		}
+	}
+	
+	.col-sm-10{
+		
+		width: 100%;
+	}
+	form{
+		width: 100%;
+	}
+	.articleButtonContainer{
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		.makeArticle{
+			padding: 12px 1px;
+			width: 30vw;
+	
+		}
+
+	}
+	
 }
