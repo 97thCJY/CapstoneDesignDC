@@ -1,6 +1,7 @@
 import routes from '../routes';
 import Device from '../models/device';
 import User from '../models/user';
+import Transaction from '../models/transaction';
 
 /**** GET Method ****/
 // 원격 페이지 rendering
@@ -85,6 +86,36 @@ export const userProfile = async (req, res) => {
 	res.render('profile', {
 		pageTitle: 'Profile',
 		user: tmpUser
+	});
+};
+
+// 현재 거래 페이지 rendering
+export const status = async (req, res) => {
+	const nowUser = req.user;	// 현재 사용자
+	let transaction_seller;		// 거래-구매자
+	let transaction_buyer;		// 거래-판매자
+
+	try {	// DB 수정
+		transaction_seller = await Transaction.findOne({ seller: nowUser.PK });
+		transaction_buyer = await Transaction.findOne({ buyer: nowUser.PK });
+	} catch(e) {
+		return res.redirect('/message/' + "Error: 데이터베이스 로딩 오류");
+	}
+	
+	console.log(transaction_seller);
+	console.log(transaction_buyer);
+
+	// if (transaction_seller != null) {
+	// 	return res.redirect('/message/' + "판매자 ㅎㅇ");
+	// } else if (transaction_buyer != null) {
+	// 	return res.redirect('/message/' + "구매자 ㅎㅇ");
+	// } else {
+	// 	return res.redirect('/message/' + "거래 없음");
+	// }
+	
+	return res.render('transactionStatus', {
+		pageTitle: 'status',
+		topNav: 'transAction'
 	});
 };
 
@@ -195,11 +226,4 @@ export const deviceModification = async (req, res) => {
 	} finally {
 		res.redirect(routes.main);
 	}
-};
-
-export const status = (req, res) => {
-	console.log('on status');
-	res.render('transactionStatus', {
-		pageTitle: 'Progress'
-	});
 };

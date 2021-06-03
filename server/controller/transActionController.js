@@ -35,7 +35,6 @@ export const deal = async (req, res) => {
 	try {
 		let max = page*10 <= articleSet.length ? page*10 : articleSet.length;
 
-		//console.log(max);
 		let cnt = 0;
 		for (let i = (page-1)*10 ; i < max; i++) {
 		
@@ -48,10 +47,9 @@ export const deal = async (req, res) => {
 				targetObjList[cnt].sellerName = user.name;
 				targetObjList[cnt].createdAt = date;
 				cnt++;
-				//console.log(cnt++);
-				//	targetObjList[i].sellerName = user[0].name;
-			
-			//	console.log(targetObjList);
+				// console.log(cnt++);
+				// targetObjList[i].sellerName = user[0].name;
+			}
 		}
 		//console.log(targetObjList);
 		targetObjList.reverse();
@@ -69,8 +67,6 @@ export const deal = async (req, res) => {
 	}
 };
 
-
-
 // 판매글 작성 페이지 출력
 export const write = (req, res) => {
 	res.render('add-deal', {
@@ -81,9 +77,7 @@ export const write = (req, res) => {
 
 // 판매글 내용 페이지 출력
 export const checkTrade = async (req, res) => {
-	const {
-		params: { id }
-	} = req;
+	const { params: { id } } = req;
 	let data;
 	let seller;
 	try {
@@ -464,7 +458,7 @@ export const deleteTransaction = async (req, res) =>{
 
 // 거래글 수정 요청
 export const modifyTransaction = async(req ,res) =>{
-	const {amount , title , description ,PK} = req.body;
+	const {amount, title, description ,PK} = req.body;
 	try{
 		await Transaction.findOneAndUpdate({ PK },{
 			amount,
