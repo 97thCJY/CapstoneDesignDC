@@ -22,12 +22,12 @@ block content2
                     form(method='post' action ='/main/transaction'+routes.modifyTransaction).form-container
                         .form-container.deal-contents-container
                             .form-group
-                                h5(for = 'transaction_amount').col-sm-2 판매량 (kw)
+                                h5(for = 'transaction_amount').col-sm-2 판매량 (W)
                                 .align-self-center
                                     if (user.PK == data.seller)
                                         input.modAmount(type='number' name ='amount' placeholder = data.amount)
                                     else
-                                        h5.clientView(name='amount' value =data.amount)= data.amount + 'Kw'
+                                        h5.clientView(name='amount' value =data.amount)= data.amount + 'W'
                             
 
                             .form-group
