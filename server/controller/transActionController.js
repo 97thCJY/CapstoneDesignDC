@@ -531,3 +531,27 @@ function sellerValidationTest(seller, reqAmount) {
 		return false;
 	}	
 }
+
+
+export const modifyTransaction = async(req ,res) =>{
+
+	const {amount , title , description ,PK} = req.body;
+
+	try{
+
+		await Transaction.findOneAndUpdate({
+			PK
+		},{
+			amount,
+			title,
+			description
+		});
+
+	}catch(e){
+		console.log(e);
+
+	}
+
+	res.redirect('/main/transaction');
+
+}

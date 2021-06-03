@@ -10,7 +10,8 @@ import {
 	purchaseAccept,
 	purchaseReject,
 	finalAccept,
-	deleteTransaction
+	deleteTransaction,
+	modifyTransaction
 } from '../controller/transActionController.js';
 
 const transActionRouter = express.Router();
@@ -21,7 +22,7 @@ transActionRouter.get('/',onlyPrivate, deal); // 판매글 목록 페이지
 transActionRouter.get(routes.write,onlyPrivate, write); // 판매글 작성 페이지
 transActionRouter.get(routes.checkTrade(), onlyPrivate,checkTrade); // 판매글 세부내용 페이지
 
-// method
+transActionRouter.post(routes.modifyTransaction, onlyPrivate ,modifyTransaction);
 transActionRouter.post(routes.write, onlyPrivate, postTransact); // 판매글 작성
 transActionRouter.post(routes.deleteTransaction , onlyPrivate , deleteTransaction);
 transActionRouter.post(routes.checkTrade(),onlyPrivate, purchaseRequest); // 구매 요청

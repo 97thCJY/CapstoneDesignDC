@@ -16,50 +16,92 @@ block content2
             hr
 
             .row#deal-contents
-                form(method='post' action ='/main/transaction'+routes.checkTrade(data.PK)).form-container
-                    .form-container.deal-contents-container
-                        .form-group
-                            h5(for = 'transaction_amount').col-sm-2 판매량 (kw)
-                            .align-self-center
-                                if (user.PK == data.seller)
-                                    input.modAmount(type='number' name ='amount' placeholder = data.amount)
-                                else
-                                    h5.clientView(name='amount' value =data.amount)= data.amount + 'Kw'
-                        
 
-                        .form-group
-                            h5(for='transaction_amount').col-sm-2 판매 가격
-                            .align-self-center
-                                h5.price #{data.amount * 108}원
+                //- seller's view
+                if (user.PK == data.seller)
+                    form(method='post' action ='/main/transaction'+routes.modifyTransaction).form-container
+                        .form-container.deal-contents-container
+                            .form-group
+                                h5(for = 'transaction_amount').col-sm-2 판매량 (kw)
+                                .align-self-center
+                                    if (user.PK == data.seller)
+                                        input.modAmount(type='number' name ='amount' placeholder = data.amount)
+                                    else
+                                        h5.clientView(name='amount' value =data.amount)= data.amount + 'Kw'
+                            
 
-                        .form-group
-                            h5(for='transaction_amount').col-sm-2 제목
-                            .align-self-center
-                                if (user.PK == data.seller)
+                            .form-group
+                                h5(for='transaction_amount').col-sm-2 판매 가격
+                                .align-self-center
+                                    h5.price #{data.amount * 108}원
 
-                                    input.title(type='text' , name='title' value= data.title)
-                                else
-                                    h5.clientView(name= 'title' )= data.title
+                            .form-group
+                                h5(for='transaction_amount').col-sm-2 제목
+                                .align-self-center
+                                    if (user.PK == data.seller)
 
-                        
+                                        input.title(type='text' , name='title' value= data.title)
+                                    else
+                                        h5.clientView(name= 'title' )= data.title
 
-                        .form-group
-                            h5(for='transaction_amount').col-sm-2 내용
-                            .align-self-center
-                                if (user.PK == data.seller)
-                                    textarea(name ='description') #{description}
-                                else
-                                    textarea.clientView(name= 'description' value= description readonly)= description
-                                
-                        
+                            
 
-                        //- 판매자일 경우
-                        if (user.PK == data.seller)
+                            .form-group
+                                h5(for='transaction_amount').col-sm-2 내용
+                                .align-self-center
+                                    if (user.PK == data.seller)
+                                        textarea(name ='description') #{description}
+                                    else
+                                        textarea.clientView(name= 'description' value= description readonly)= description
                             .request_containerM
                                 input.btn.btn-danger.btn_custom(type='submit' value = '수정하기')
+                                input(type='text' name='PK' , value =data.PK style='display:none')
 
-                
-                        else
+
+
+
+                else
+                    form(method='post' action ='/main/transaction'+routes.checkTrade(data.PK)).form-container
+                        .form-container.deal-contents-container
+                            .form-group
+                                h5(for = 'transaction_amount').col-sm-2 판매량 (kw)
+                                .align-self-center
+                                    if (user.PK == data.seller)
+                                        input.modAmount(type='number' name ='amount' placeholder = data.amount)
+                                    else
+                                        h5.clientView(name='amount' value =data.amount)= data.amount + 'Kw'
+                            
+
+                            .form-group
+                                h5(for='transaction_amount').col-sm-2 판매 가격
+                                .align-self-center
+                                    h5.price #{data.amount * 108}원
+
+                            .form-group
+                                h5(for='transaction_amount').col-sm-2 제목
+                                .align-self-center
+                                    if (user.PK == data.seller)
+
+                                        input.title(type='text' , name='title' value= data.title)
+                                    else
+                                        h5.clientView(name= 'title' )= data.title
+
+                            
+
+                            .form-group
+                                h5(for='transaction_amount').col-sm-2 내용
+                                .align-self-center
+                                    if (user.PK == data.seller)
+                                        textarea(name ='description') #{description}
+                                    else
+                                        textarea.clientView(name= 'description' value= description readonly)= description
+                                    
+                            
+
+                            //- 판매자일 경우
+                        
+                    
+                            
                             .request_container
                                 input(type="number" name='purchase' placeholder ='구매량 입력(kw)')
                                 button.btn.btn-secondary(type='submit') 구매요청
