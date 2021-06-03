@@ -2,8 +2,6 @@ extends layout/template_main
 
 block content2
     br
-    
-
     .container.contents
         .row.contents-header
             h3 실시간 거래 확인
@@ -11,22 +9,16 @@ block content2
         .real-time-container
             #check-list.row.row-cols-2.row-cols-md-3.g-2.justify-content-center
 
+            br
             .progress-info
-                h3 예상 시간 ##
-
+                h5 예상 시간 ##
             .canvas-container
                 canvas#progressBar
                 h4#progress_d ##%
-                
-
-
+        br
 
     script.
-        
-
-
         //********* 중요  pow = 받아와야해 ,total 또한
-
         window.onload = () =>{
                 var check_list = [{
                 "id": 1,
@@ -76,76 +68,53 @@ block content2
             const s = document.getElementsByClassName('r-seller')[0];
 
             if(buyer){
-
                 b.style.color = 'blue';
-
             }else{
                 s.style.color = 'blue';
             }
-
         }
 
-        const total = 100;
-        let pow =0;
+        const total = 100;      // 거래할 전체 양
+        let pow =0;             // 거래 완료된 양
         const canvas = document.getElementById('progressBar');
         const pg = document.getElementById('progress_d');
-       
+        
         canvas.style.height = '50px';
-        let w =canvas.clientWidth;
+        let w = canvas.clientWidth;
         let h = canvas.clientHeight;
-
-
-
         const ctx = canvas.getContext('2d');
-
         const refreshData = () =>{
             const xhr = new XMLHttpRequest();
-            
             xhr.open("GET", 'http://localhost:3000/main/transactionStatus', true);
             xhr.setRequestHeader('Content-Type', 'application/json');
             xhr.send(null);
-
         }
 
         let currentTime = 0;
 
         const update =(pow) =>{
-
-
             refreshData();
             ctx.beginPath();
             ctx.fillStyle = '#7b69ee';
             ctx.fillRect(0,0,pow*w/total /2.41 , h*3);
-       
             pg.innerText = `${Math.floor(pow/total *100)}%`
-
             console.log(pow/total * w);
-            
-
         }
 
-        const animate =() =>{   
-
+        const animate =() =>{
             if(pow /total * w  >= w){
                 console.log(1);
                 return 0;
             }
 
             currentTime ++;
-
             if(currentTime == 12){
                 ctx.clearRect(0,0,pow/total * w , h*3);
                 pow =pow + 1;
                 update(pow);
                 currentTime = 0;
-
-
             }
-            
             requestAnimationFrame(animate);
-
         }
-
         update(pow);
         animate();
-        
