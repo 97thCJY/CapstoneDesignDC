@@ -20,11 +20,11 @@ const transActionRouter = express.Router();
 transActionRouter.get('/',onlyPrivate, deal); // 판매글 목록 페이지
 //transActionRouter.get('/?'+':id' , onlyPrivate, pageDeal)
 transActionRouter.get(routes.write,onlyPrivate, write); // 판매글 작성 페이지
-transActionRouter.get(routes.checkTrade(), onlyPrivate,checkTrade); // 판매글 세부내용 페이지
+transActionRouter.get(routes.checkTrade(), onlyPrivate, checkTrade); // 판매글 세부내용 페이지
 
-transActionRouter.post(routes.modifyTransaction, onlyPrivate ,modifyTransaction);
+transActionRouter.post(routes.modifyTransaction, onlyPrivate, modifyTransaction);	// 판매글 수정
 transActionRouter.post(routes.write, onlyPrivate, postTransact); // 판매글 작성
-transActionRouter.post(routes.deleteTransaction , onlyPrivate , deleteTransaction);
+transActionRouter.post(routes.deleteTransaction, onlyPrivate , deleteTransaction);	// 판매글 삭제
 transActionRouter.post(routes.checkTrade(),onlyPrivate, purchaseRequest); // 구매 요청
 
 // Response for Email

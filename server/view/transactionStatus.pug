@@ -2,14 +2,81 @@ extends layout/template_main
 
 block content2
     br
-    
+    script.
+        function progress_change() {        // progress bar
+            var current_progress = 0;
+            var progress = document.getElementById("dynamic");
+            var interval = setInterval(function() {
+                current_progress += 10;
+                progress.style.width = current_progress + '%';
+                progress.setAttribute("aria-valuenow", current_progress)
+                progress.textContent = current_progress + '%';
+                /*$("#dynamic")
+                    .css("width", current_progress + "%")
+                    .attr("aria-valuenow", current_progress)
+                    .text(current_progress + "% Complete");*/
+                if (current_progress >= 100) {
+                    clearInterval(interval);
+                }
+            }, 1000);
+        }
+
     .container.contents
         .row.contents-header
             h3 실시간 거래 확인
         hr
-        .row.row-cols-2.row-cols-md-3.g-2.justify-content-center#check-list
+        
+        #check-list.row.row-cols-2.row-cols-md-3.g-2.justify-content-center
+            .position-relative
+                div(style='width:700px; margin:auto;')
+                    #dynamic.progress.progress-bar.bg-success.progress-bar-striped.progress_style.mt-3.mb-3.ml-3(role='progressbar', aria-valuenow='0', aria-valuemin='0', aria-valuemax='100', style='width:0%;')
+                        span#current-progress 99%
+                    script.
+                        progress_change();
+                    .text-center.time_text.mb-3 전송 속도: 12.3kw
+                    .text-center.time_text.mb-3 예상 소요 시간: 3분 24초
 
 
+    script.
+        var check_list = [{
+            "id": 1,
+            "amount_send": "223kw",
+            "amount_rest": "100kw",
+            "name": "판매자"
+        }, {
+            "id": 2,
+            "amount_send": "100kw",
+            "amount_rest": "223kw",
+            "name": "구매자"
+        }];
 
-        .text-center.time_text.mb-3 전송 속도 : #
-        .text-center.time_text.mb-3 예상 소요 시간 : #분 #초
+        var tmp_str = "";
+        for (var i = 0; i < check_list.length; i++) {
+            var img_src = ["/assets/images/thunder.jpg", "/assets/images/thunder.jpg"];
+            if (i == 0) {
+                tmp_str +=
+                    '<div class="col">\
+                    <div class="card card-check">\
+                        <div class="card-title text-center py-0">\
+                            <img class="card-img-top" src="' + img_src[i] + '"/>\
+                            <h5 class="card-title card-check-title">' + check_list[i].name + '</h5>\
+                            <h5 class="card_name">보낸 양 : ' + check_list[i].amount_send + ' </h5>\
+                            <h5 class="card_name">남은 양 : ' + check_list[i].amount_rest + ' </h5>\
+                        </div>\
+                    </div>\
+                </div>';
+            } else {
+                tmp_str +=
+                    '<div class="col">\
+                    <div class="card card-check">\
+                        <div class="card-title text-center py-0">\
+                            <img class="card-img-top" src="' + img_src[i] + '"/>\
+                            <h5 class="card-title card-check-title">' + check_list[i].name + '</h5>\
+                            <h5 class="card_name">받은 양 : ' + check_list[i].amount_send + ' </h5>\
+                            <h5 class="card_name">남은 양 : ' + check_list[i].amount_rest + ' </h5>\
+                        </div>\
+                    </div>\
+                </div>';
+            }
+        }
+        document.getElementById("check-list").innerHTML = tmp_str;
