@@ -15,7 +15,8 @@ block content2
                     table.table.table-bordered.custom-table
                         tbody 
                             tr
-                                td.left-td 아이디(이메일)
+                                td.left-td 아이디
+                                    small (이메일)
                                 td.right-td
                                     input.login-input(type ="text" name='input_email' placeholder="이메일" value=user.email id="email" onclick='checkEmail()' onchange='checkEmail()')
                                     p.text-muted(style="font-size:small; display:none;" id="emailMessage") 이메일을 입력하세요.
@@ -24,12 +25,14 @@ block content2
                                 td.right-td
                                     input.login-input(type ="text" name='input_name' placeholder="이름" value=user.name)
                             tr
-                                td.left-td 휴대폰번호(-없이)
+                                td.left-td 휴대폰번호
+                                    small (-없이)
                                 td.right-td
                                     input.login-input(type="text" name='input_contact' placeholder="전화번호 (-없이)" value=user.contact id='contact' maxlength=11 onclick='checkContact()' onchange='checkContact()')
                                     p.text-muted(style="font-size:small; display:none;" id="contactMessage") 올바른 전화번호(-없이)를 입력하세요.
                             tr
                                 td.left-td 배터리 용량
+                                    small (mah)
                                 td.right-td
                                     input.login-input(type ="text" name='input_batteryMax' placeholder="배터리 용량" value=user.batteryMax)
                             tr

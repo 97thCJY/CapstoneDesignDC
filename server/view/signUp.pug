@@ -17,7 +17,7 @@ block content
                 input.login-input(type="text" id='name' name='name' placeholder="이름")
                 input.login-input(type="text" id='contact' name='contact' placeholder="전화번호 (-없이)" maxlength=11 onclick='checkContact()' onchange='checkContact()')
                 p.text-muted(style="font-size:small; display:none;" id="contactMessage") 올바른 전화번호(-없이)를 입력하세요.
-                input.login-input(type="number" id='batteryMax' name='batteryMax' placeholder="배터리 용량" min=0)
+                input.login-input(type="number" id='batteryMax' name='batteryMax' placeholder="배터리 용량 (mah)" min=0)
                 hr
                 input.btn.btn-outline-primary.login-btn(type='submit' value='가입하기' id="submitBtn" disabled)
 

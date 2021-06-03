@@ -2,8 +2,6 @@ import routes from '../routes';
 import Transaction from '../models/transaction';
 import User from '../models/user';
 
-
-let PG =0;
 const crypto = require('crypto'); // hash 라이브러리
 
 const nodemailer = require('nodemailer'); // 이메일 모듈 설정 (Gmail)
@@ -337,7 +335,13 @@ export const finalAccept = async (req, res) => {
 // 판매글 추가 요청
 export const postTransact = async (req, res) => {
 	const { amount, description , title } = req.body;
-	const { PK } = req.user;
+	const { PK, batteryMax } = req.user;
+
+	// 유효성 검사
+	if (batteryMax < amount) {
+		return res.send(`<script type="text/javascript">alert("판매 불가: 판매하고자 하는 전력량이 배터리 용량을 초과합니다.");location.href="./";</script>`);
+	}
+
 	try {
 		// PK 설정
 		const transactionList = await Transaction.find({});
@@ -383,10 +387,10 @@ export const purchaseRequest = async (req, res) => {
 	}
 
 	// 유효성검사
-	if (transaction.amount < reqAmount)	// 입력된 구매량
-		return res.send(`<script type="text/javascript">alert("판매하는 구매량보다 많습니다.");location.href="./${id}";</script>`);
 	if (reqAmount < 1)	// 입력된 구매량
 		return res.send(`<script type="text/javascript">alert("구매량은 1보다 커야합니다.");location.href="./${id}";</script>`);
+	if (transaction.amount < reqAmount)	// 입력된 구매량
+		return res.send(`<script type="text/javascript">alert("판매하는 구매량보다 많습니다.");location.href="./${id}";</script>`);
 	if (!buyerValidationTest(buyer, reqAmount))	// 구매자 유효성 검사
 		return res.send(`<script type="text/javascript">alert("구매 불가: 충전 가능한 배터리 용량이 판매 전력량 보다 적습니다.");location.href="./${id}";</script>`);	
 
