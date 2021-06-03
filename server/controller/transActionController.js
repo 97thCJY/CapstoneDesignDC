@@ -20,22 +20,16 @@ const transporter = nodemailer.createTransport({
 // 판매글 목록 페이지 출력
 export const deal = async (req, res) => {
 	const targetObjList = [];
-	console.log('deal');
 	let {page} = req.query;
 
-	console.log(req.query);
-	console.log(page);
+	//console.log(req.query);
+	//console.log(page);
 	//console.log(req);
 	//let page = req.body.pagenation;
 	//console.log(page);
-
-	const d = await Transaction.find({});
-	console.log(d);
-
 	page = page ? page: 1;
 	let articleSet = await Transaction.find({});
 	articleSet = articleSet.reverse();
-
 	try {
 		let max = page*10 <= articleSet.length ? page*10 : articleSet.length;
 

@@ -102,11 +102,7 @@ export const status = async (req, res) => {
 		return res.redirect('/message/' + "Error: 데이터베이스 로딩 오류");
 	}
 	
-	console.log(transaction_seller);
-	console.log(transaction_buyer);
-
-	console.log(1);
-	console.log(nowUser , transaction_buyer , transaction_seller);
+	
 
 	if(transaction_buyer){
 		res.render('transactionStatus', {
