@@ -105,6 +105,25 @@ export const status = async (req, res) => {
 	console.log(transaction_seller);
 	console.log(transaction_buyer);
 
+
+	if( nowUser == transaction_buyer){
+		res.render('transactionStatus', {
+			pageTitle: 'status',
+			topNav: 'transAction',
+			isBuyer: true
+		});
+
+	}else if(nowUser == transaction_seller){
+		res.render('transactionStatus', {
+			pageTitle: 'status',
+			topNav: 'transAction',
+			isBuyer: false
+		});
+
+	}else{
+		res.redirect('/main');
+	}
+
 	// if (transaction_seller != null) {
 	// 	return res.redirect('/message/' + "판매자 ㅎㅇ");
 	// } else if (transaction_buyer != null) {
@@ -113,10 +132,7 @@ export const status = async (req, res) => {
 	// 	return res.redirect('/message/' + "거래 없음");
 	// }
 	
-	return res.render('transactionStatus', {
-		pageTitle: 'status',
-		topNav: 'transAction'
-	});
+	
 };
 
 /**** POST Method ****/
