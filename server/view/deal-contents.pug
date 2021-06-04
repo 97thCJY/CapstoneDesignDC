@@ -58,9 +58,6 @@ block content2
                                 input.btn.btn-danger.btn_custom(type='submit' value = '수정하기')
                                 input(type='text' name='PK' , value =data.PK style='display:none')
 
-
-
-
                 else
                     form(method='post' action ='/main/transaction'+routes.checkTrade(data.PK)).form-container
                         .form-container.deal-contents-container

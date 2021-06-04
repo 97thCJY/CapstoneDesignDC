@@ -7,7 +7,7 @@ block content2
     .container.contents
         // Contents Header
         .row.contents-header
-            h3 &#xD310;&#xB9E4;&#xAE00; &#xC791;&#xC131;&#xD558;&#xAE30;
+            h3 판매글 작성하기
         hr
         // Contents List
         .row
@@ -19,17 +19,17 @@ block content2
                         input.form-control(type='text' min='1' name = 'title')
                     br
                     .form-group.row
-                    label.col-sm-2.col-form-label(for='transaction_amount') &#xD310;&#xB9E4;&#xB7C9; (W)
+                    label.col-sm-2.col-form-label(for='transaction_amount') 판매량 (wh)
                     .col-sm-10
                         input#transaction_amount.form-control(type='number' min='1' name = 'amount')
                     br
                     .form-group.row
-                    label.col-sm-2.col-form-label(for='transaction_amount') &#xC608;&#xC0C1; &#xAC00;&#xACA9;
+                    label.col-sm-2.col-form-label(for='transaction_amount') 예상 가격
                     .col-sm-10
                         input#transaction_price.form-control(name='price' readonly)
                     br
                     .form-group.row
-                    label.col-sm-2.col-form-label(for='transaction_description') &#xB0B4;&#xC6A9;
+                    label.col-sm-2.col-form-label(for='transaction_description') 내용
                     .col-sm-10
                         textarea#transaction_description.form-control(rows='10' name='description')
                     br
@@ -45,21 +45,9 @@ block content2
         const priceUpdate = e =>{
             const current = e.target.value;
 
-            let currentString = `${current*108}`;
+            let currentString = `${current*0.108}`;
          
             let cnt =0
-            let length = currentString.length;
-            for(let i = currentString.length-1 ; i>= 0 ; i--){
-                if(i== 0){
-                    break;
-                }
-                cnt ++;
-                if(cnt == 3){
-                    currentString = currentString.slice(0,i) + ',' + currentString.slice(i,length);
-                    length++;
-                    cnt = 0;
-                }
-            }
             target.value = currentString + '원';
         }
         amount.addEventListener('input' , priceUpdate)

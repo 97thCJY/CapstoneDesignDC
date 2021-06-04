@@ -24,7 +24,7 @@ export const localArduino = async (req, res) => {
         
         // user를 찾지 못함
         if (deviceList === null)
-            return res.status(555).send("invalid user");
+            return res.status(200).send("invalid user");
 
         // 기기 목록 불러오기
 		for (let i = 0; i < deviceList.length; i++) {
@@ -35,7 +35,7 @@ export const localArduino = async (req, res) => {
             });
 		}
 	} catch (e) {
-        return res.status(555).send("error in user and device");
+        return res.status(200).send("error in user and device");
 	}
 
     // 로그 출력
@@ -43,17 +43,21 @@ export const localArduino = async (req, res) => {
     console.log("[Local Arduino] pk:" + PK + " 사용량:" + eUsage + " 배터리량:" + eCharge + " 발전량:" + eSupply + "[" + nowDate.toUTCString() + "]");
 
     try {	// User DB 수정
+        let new_eCharge = user.eCharge - eCharge;
+        if (new_eCharge < 0) new_eCharge = 0;
+        if (new_eCharge > 100) new_eCharge = 100;
+
         await User.findOneAndUpdate({ PK: PK }, {
             eUsage: eUsage,
-            eCharge: eCharge / 100,
+            eCharge: new_eCharge,
             eSupply: eSupply
         });
     } catch(e) {
-        return res.status(555).send("error in updating user");
+        return res.status(200).send("error in updating user");
     }
 
     if (deviceObjList.length === 0)
-        return res.status(204).json(deviceObjList);
+        return res.status(200).json(deviceObjList);
     else
         return res.status(200).json(deviceObjList);
 }
