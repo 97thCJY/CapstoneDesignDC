@@ -93,7 +93,8 @@ export const status = async (req, res) => {
 	let transaction_buyer;		// 거래-판매자
 
 	try {	// DB 수정
-		transaction_seller = await Transaction.findOne({ seller: nowUser.PK });
+		transaction_seller = await Transaction.findOne({ seller: nowUser.PK,
+		status : 3});
 		transaction_buyer = await Transaction.findOne({ buyer: nowUser.PK });
 	} catch(e) {
 		return res.redirect('/message/' + "Error: 데이터베이스 로딩 오류");
