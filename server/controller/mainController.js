@@ -28,26 +28,28 @@ export const home = async (req, res) => {
 
 // 전력확인 페이지 rendering
 export const checkElec = async (req, res) => {
-	const { PK, eUsage, eCharge, eSupply, batteryMax } = req.user;
+	const { PK } = req.user;
+	let user;
+
+	try {	// DB 수정
+		user = await User.findOne({ PK: PK });
+	} catch(e) {
+		return res.redirect('/message/' + "Error: 데이터베이스 로딩 오류");
+	}
 	let resultObj = {
-		eUsage: 0,
-		eCharge: 0,
-		eSupply: 0,
+		eUsage: user.eUsage,
+		eCharge: user.eCharge,
+		eSupply: user.eSupply
 	};
 
-	try {
-		resultObj.eSupply += eSupply;
-		resultObj.eCharge += eCharge;
-		resultObj.eUsage += eUsage;
-	} catch (e) {
-		console.log('error: ' + e);
-	} finally {
-		res.render('checkElec', {
-			pageTitle: 'Check Elec',
-			topNav: 'checkElec',
-			resultObj
-		});
-	}
+	if (req.method === "POST")
+        return res.status(200).json(resultObj);
+
+	res.render('checkElec', {
+		pageTitle: 'Check Elec',
+		topNav: 'checkElec',
+		resultObj
+	});
 };
 
 // 내 정보 페이지 rendering

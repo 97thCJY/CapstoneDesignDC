@@ -10,7 +10,7 @@ block content2
                 h3 전력 확인
             hr
             // Contents List
-            #check-list.row.row-cols-2.row-cols-md-4.g-4(style='background-color: white;')
+            #check-list.row.row-cols-2.row-cols-md-3.g-3(style='background-color: white;')
                 .col
                     .card.card-check
                         .card-title.text-center.py-0
@@ -18,15 +18,15 @@ block content2
                                 h5.card-title 실시간 에너지 소비량 
                                 h7.unit (mA/s)
                             img.card-img-top(src='/assets/images/thunder.jpg')
-                            h5.card_name= resultObj.eUsage
+                            h5#eUsage.card_name= resultObj.eUsage
                 .col
                     .card.card-check
                         .card-title.text-center.py-0
                             .check-header
                                 h5.card-title 에너지 충전량 
                                 h7.unit (mA/s)
-                            img.card-img-top(src='/assets/images/thunder.jpg')
-                            h5.card_name= resultObj.eSupply
+                            img.card-img-top(src='/assets/images/lights.jpg')
+                            h5#eSupply.card_name= resultObj.eSupply
                 .col
                     .card.card-check
                         .card-title.text-center.py-0
@@ -34,13 +34,22 @@ block content2
                                 h5.card-title 배터리 잔량
                                 h7.unit (%)
                             img.card-img-top(src='/assets/images/battery.jpg')
-                            h5.card_name= resultObj.eCharge
-                .col
-                    .card.card-check
-                        .card-title.text-center.py-0
-                            .check-header
-                                h5.card-title 태양열 발전량 
-                                h7.unit (mA/s)
-                            img.card-img-top(src='/assets/images/lights.jpg')
-                            h5.card_name= resultObj.solarEsupply
+                            h5#eCharge.card_name= resultObj.eCharge
         br
+    script.
+        function refreshData() {
+            const xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === xhr.DONE) {
+                    var responseObj = JSON.parse(xhr.responseText);
+                    console.log("refresh!", responseObj);
+                    document.getElementById("eUsage").innerText = responseObj.eUsage;
+                    document.getElementById("eSupply").innerText = responseObj.eSupply;
+                    document.getElementById("eCharge").innerText = responseObj.eCharge;
+                }
+            }
+            xhr.open("POST", './check-elec', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send(null);
+        }
+        setInterval(refreshData, 3000);
