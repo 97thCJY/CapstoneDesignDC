@@ -59,7 +59,6 @@ block content2
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === xhr.DONE) {
                     var responseObj = JSON.parse(xhr.responseText);
-                    //- console.log("refresh!", responseObj);
                     total = responseObj.reqAmount;
                     pow = responseObj.amount_send;
 

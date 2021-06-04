@@ -552,8 +552,8 @@ function sellerValidationTest(seller, reqAmount) {
 	console.log(seller, reqAmount);
 
 	// 판매자의 배터리잔량 < 구매량
-	if (seller.eCharge < reqAmount)
-		return 0;
+	// if (seller.eCharge < reqAmount)
+		// return 0;
 	// 판매자의 충전량 < 판매자의 사용량
 	// if (seller.eSupply < seller.eUsage)	{태양광 패널 충전량 부족으로 일단 주석처리}
 	// 	return 1;
