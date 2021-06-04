@@ -102,17 +102,43 @@ export const status = async (req, res) => {
 	
 
 	if(transaction_buyer){
+
+		const buyer = nowUser;
+		const seller = await User.findOne({PK : transaction_buyer.seller});
+
+		const data = {
+			buy : buyer.name,
+			sell: seller.name,
+			reqAmount: transaction_buyer.reqAmount,
+			amount_send:transaction_buyer.amount_send
+		}
+		console.log(data);
 		res.render('transactionStatus', {
 			pageTitle: 'status',
 			topNav: 'transAction',
-			isBuyer: true
+			isBuyer: true,
+			dat: JSON.stringify(data),
+			data
 		});
 
 	}else if(transaction_seller){
+		const buyer = await User.findOne({PK :transaction_seller.buyer});
+		const seller = nowUser;
+
+		const data = {
+			buy : buyer.name,
+			sell: seller.name,
+			reqAmount: transaction_buyer.reqAmount,
+			amount_send:transaction_buyer.amount_send
+		}
+		console.log(data);
 		res.render('transactionStatus', {
 			pageTitle: 'status',
 			topNav: 'transAction',
-			isBuyer: false
+			isBuyer: false,
+			transAction: transaction_seller,
+			dat : JSON.stringify(data),
+			data
 		});
 
 	}else{

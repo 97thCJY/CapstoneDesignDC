@@ -8,74 +8,46 @@ block content2
         hr
         .real-time-container
             #check-list.row.row-cols-2.row-cols-md-3.g-2.justify-content-center
+                .col.real-C
+                    .card.card-check
+                        .card-title.text-center.py-0
+                            img.card-img-top(src='/assets/images/thunder.jpg')
+                            h5.card-title.card-check-title.r-seller #{data.sell}
+                            h5.card_name 보낸 양 : #{data.amount_send}
+                            h5.card_name 남은 양 : #{data.reqAmount - data.amount_send}
+                .col.real-C
+                    .card.card-check
+                        .card-title.text-center.py-0
+                            img.card-img-top(src='/assets/images/thunder.jpg')
+                            h5.card-title.card-check-title.r-buyer #{data.buy}
+                            h5.card_name 받은 양 : #{data.reqAmount - data.amount_send}
+                            h5.card_name 남은 양 : #{data.amount_send} 
 
             br
             .progress-info
-                h5 예상 시간 ##
+                h5 예상 시간 #분 #초
             .canvas-container
                 canvas#progressBar
                 h4#progress_d ##%
-        br
-
+              
     script.
-        //********* 중요  pow = 받아와야해 ,total 또한
-        window.onload = () =>{
-                var check_list = [{
-                "id": 1,
-                "amount_send": "223kw",
-                "amount_rest": "100kw",
-                "name": "판매자"
-            }, {
-                "id": 2,
-                "amount_send": "100kw",
-                "amount_rest": "223kw",
-                "name": "구매자"
-            }];
+        
+        let info = JSON.parse(JSON.stringify(!{dat}));
 
-            var tmp_str = "";
-            for (var i = 0; i < check_list.length; i++) {
-                var img_src = ["/assets/images/thunder.jpg", "/assets/images/thunder.jpg"];
-                if (i == 0) {
-                    tmp_str +=
-                        '<div class="col real-C">\
-                        <div class="card card-check">\
-                            <div class="card-title text-center py-0">\
-                                <img class="card-img-top" src="' + img_src[i] + '"/>\
-                                <h5 class="card-title card-check-title r-seller">' + check_list[i].name + '</h5>\
-                                <h5 class="card_name">보낸 양 : ' + check_list[i].amount_send + ' </h5>\
-                                <h5 class="card_name">남은 양 : ' + check_list[i].amount_rest + ' </h5>\
-                            </div>\
-                        </div>\
-                    </div>';
-                } else {
-                    tmp_str +=
-                        '<div class="col real-C">\
-                        <div class="card card-check">\
-                            <div class="card-title text-center py-0">\
-                                <img class="card-img-top" src="' + img_src[i] + '"/>\
-                                <h5 class="card-title card-check-title r-buyer">' + check_list[i].name + '</h5>\
-                                <h5 class="card_name">받은 양 : ' + check_list[i].amount_send + ' </h5>\
-                                <h5 class="card_name">남은 양 : ' + check_list[i].amount_rest + ' </h5>\
-                            </div>\
-                        </div>\
-                    </div>';
-                }
-            }
-            document.getElementById("check-list").innerHTML = tmp_str +document.getElementById("check-list").innerHTML;
-
-            const buyer = !{isBuyer};
-            const b = document.getElementsByClassName('r-buyer')[0];
-            const s = document.getElementsByClassName('r-seller')[0];
-
-            if(buyer){
-                b.style.color = 'blue';
-            }else{
-                s.style.color = 'blue';
-            }
+        
+        const buyer = !{isBuyer};
+        const b = document.getElementsByClassName('r-buyer')[0];
+        const s = document.getElementsByClassName('r-seller')[0];
+        console.log(b);
+        if(buyer){
+            b.style.color = 'blue';
+        }else{
+            s.style.color = 'blue';
         }
+        
 
-        const total = 100;      // 거래할 전체 양
-        let pow =0;             // 거래 완료된 양
+        const total = info.reqAmount;      // 거래할 전체 양
+        let pow =info.amount_send;             // 거래 완료된 양
         const canvas = document.getElementById('progressBar');
         const pg = document.getElementById('progress_d');
         
@@ -98,19 +70,16 @@ block content2
             ctx.fillStyle = '#7b69ee';
             ctx.fillRect(0,0,pow*w/total /2.41 , h*3);
             pg.innerText = `${Math.floor(pow/total *100)}%`
-            console.log(pow/total * w);
         }
 
         const animate =() =>{
             if(pow /total * w  >= w){
-                console.log(1);
                 return 0;
             }
 
             currentTime ++;
             if(currentTime == 12){
                 ctx.clearRect(0,0,pow/total * w , h*3);
-                pow =pow + 1;
                 update(pow);
                 currentTime = 0;
             }
