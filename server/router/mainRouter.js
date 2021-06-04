@@ -24,6 +24,7 @@ mainRouter.post(routes.user, onlyPrivate, userProfile);
 mainRouter.post(routes.delete, onlyPrivate, deleteDevice);
 mainRouter.post(routes.saveDevice, onlyPrivate, deviceModification);
 mainRouter.get(routes.status, onlyPrivate, status);
+mainRouter.post(routes.status, onlyPrivate, status);
 
 
 mainRouter.get(routes.checkElec, onlyPrivate, checkElec);

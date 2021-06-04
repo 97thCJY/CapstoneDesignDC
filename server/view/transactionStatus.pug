@@ -13,41 +13,37 @@ block content2
                         .card-title.text-center.py-0
                             img.card-img-top(src='/assets/images/thunder.jpg')
                             h5.card-title.card-check-title.r-seller #{data.sell}
-                            h5.card_name 보낸 양 : #{data.amount_send}
-                            h5.card_name 남은 양 : #{data.reqAmount - data.amount_send}
+                            h5.card_name 보낸 양 :
+                                span#amount_send1 #{data.amount_send}
+                            h5.card_name 남은 양 :
+                                span#amount_remain1 #{data.reqAmount - data.amount_send}
                 .col.real-C
                     .card.card-check
                         .card-title.text-center.py-0
                             img.card-img-top(src='/assets/images/thunder.jpg')
                             h5.card-title.card-check-title.r-buyer #{data.buy}
-                            h5.card_name 받은 양 : #{data.reqAmount - data.amount_send}
-                            h5.card_name 남은 양 : #{data.amount_send} 
-
+                            h5.card_name 받은 양 :
+                                span#amount_remain2 #{data.reqAmount - data.amount_send}
+                            h5.card_name 남은 양 :
+                                span#amount_send2 #{data.amount_send} 
             br
-            .progress-info
-                h5 예상 시간 #분 #초
             .canvas-container
                 canvas#progressBar
                 h4#progress_d ##%
-              
+            br
+    br
     script.
-        
         let info = JSON.parse(JSON.stringify(!{dat}));
 
-        
+        // 본인 이름 색칠
         const buyer = !{isBuyer};
         const b = document.getElementsByClassName('r-buyer')[0];
         const s = document.getElementsByClassName('r-seller')[0];
-        console.log(b);
-        if(buyer){
-            b.style.color = 'blue';
-        }else{
-            s.style.color = 'blue';
-        }
-        
+        if (buyer) b.style.color = 'blue';
+        else s.style.color = 'blue';
 
-        const total = info.reqAmount;      // 거래할 전체 양
-        let pow =info.amount_send;             // 거래 완료된 양
+        let total = info.reqAmount;   // 거래할 전체 양
+        let pow =info.amount_send;      // 거래 완료된 양
         const canvas = document.getElementById('progressBar');
         const pg = document.getElementById('progress_d');
         
@@ -55,31 +51,44 @@ block content2
         let w = canvas.clientWidth;
         let h = canvas.clientHeight;
         const ctx = canvas.getContext('2d');
+
         const refreshData = () =>{
             const xhr = new XMLHttpRequest();
-            xhr.open("GET", 'http://localhost:3000/main/transactionStatus', true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === xhr.DONE) {
+                    var responseObj = JSON.parse(xhr.responseText);
+                    console.log("refresh!", responseObj);
+                    total = responseObj.reqAmount;
+                    pow = responseObj.amount_send;
+
+                    document.getElementById("amount_send1").innerText =  responseObj.amount_send;
+                    document.getElementById("amount_remain1").innerText =  responseObj.reqAmount - responseObj.amount_send;
+                    document.getElementById("amount_send2").innerText =  responseObj.amount_send;
+                    document.getElementById("amount_remain2").innerText =  responseObj.reqAmount - responseObj.amount_send;
+                }
+            }
+            xhr.open("POST", './transactionStatus', true);
             xhr.setRequestHeader('Content-Type', 'application/json');
             xhr.send(null);
         }
 
         let currentTime = 0;
 
-        const update =(pow) =>{
+        const update = (pow) =>{
             refreshData();
             ctx.beginPath();
             ctx.fillStyle = '#7b69ee';
-            ctx.fillRect(0,0,pow*w/total /2.41 , h*3);
+            ctx.fillRect(0, 0, pow * w / total / 2.41, h * 3);
             pg.innerText = `${Math.floor(pow/total *100)}%`
         }
 
         const animate =() =>{
-            if(pow /total * w  >= w){
+            if (pow / total * w  >= w)
                 return 0;
-            }
-
+            
             currentTime ++;
-            if(currentTime == 12){
-                ctx.clearRect(0,0,pow/total * w , h*3);
+            if(currentTime == 60){
+                ctx.clearRect(0, 0, pow / total * w, h * 3);
                 update(pow);
                 currentTime = 0;
             }

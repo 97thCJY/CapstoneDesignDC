@@ -77,7 +77,6 @@ export const externalArduino = async (req, res) => {
         return res.status(200).send("error in finding transaction");
 	}
 
-    console.log(transaction);
     // 거래중 X
     if (transaction == null) {
         console.log("no data");
@@ -105,5 +104,6 @@ export const externalArduino = async (req, res) => {
             return res.status(200).send("error in saving transaction");
         }
     }
+    console.log(returnObj);
     return res.status(200).json(returnObj);
 }

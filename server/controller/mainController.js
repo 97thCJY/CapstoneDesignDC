@@ -93,27 +93,31 @@ export const status = async (req, res) => {
 	let transaction_buyer;		// 거래-판매자
 
 	try {	// DB 수정
-		transaction_seller = await Transaction.findOne({ seller: nowUser.PK,
-		status : 3});
-		transaction_buyer = await Transaction.findOne({ buyer: nowUser.PK });
-	} catch(e) {
+		transaction_seller = await Transaction.findOne({ seller: nowUser.PK, status: 3 });
+		transaction_buyer = await Transaction.findOne({ buyer: nowUser.PK, status: 3 });
+	} catch (e) {
 		return res.redirect('/message/' + "Error: 데이터베이스 로딩 오류");
 	}
-	
-	
 
-	if(transaction_buyer){
-
+	if (transaction_buyer != null) {
+		console.log("buyer", transaction_buyer)
 		const buyer = nowUser;
-		const seller = await User.findOne({PK : transaction_buyer.seller});
-
+		const seller = await User.findOne({ PK: transaction_buyer.seller });
 		const data = {
-			buy : buyer.name,
+			buy: buyer.name,
 			sell: seller.name,
 			reqAmount: transaction_buyer.reqAmount,
-			amount_send:transaction_buyer.amount_send
+			amount_send: transaction_buyer.amount_send
 		}
-		console.log(data);
+		
+		if (req.method === "POST") {
+			let resultObj = {
+				reqAmount: transaction_buyer.reqAmount,
+				amount_send: transaction_buyer.amount_send
+			};
+			return res.status(200).json(resultObj);
+		}
+
 		res.render('transactionStatus', {
 			pageTitle: 'status',
 			topNav: 'transAction',
@@ -121,40 +125,35 @@ export const status = async (req, res) => {
 			dat: JSON.stringify(data),
 			data
 		});
-
-	}else if(transaction_seller){
-		const buyer = await User.findOne({PK :transaction_seller.buyer});
+	} else if (transaction_seller != null) {
+		const buyer = await User.findOne({ PK: transaction_seller.buyer });
 		const seller = nowUser;
-
 		const data = {
-			buy : buyer.name,
+			buy: buyer.name,
 			sell: seller.name,
-			reqAmount: transaction_buyer.reqAmount,
-			amount_send:transaction_buyer.amount_send
+			reqAmount: transaction_seller.reqAmount,
+			amount_send: transaction_seller.amount_send
 		}
-		console.log(data);
+
+		if (req.method === "POST") {
+			let resultObj = {
+				reqAmount: transaction_seller.reqAmount,
+				amount_send: transaction_seller.amount_send
+			};
+			return res.status(200).json(resultObj);
+		}
+
 		res.render('transactionStatus', {
 			pageTitle: 'status',
 			topNav: 'transAction',
 			isBuyer: false,
 			transAction: transaction_seller,
-			dat : JSON.stringify(data),
+			dat: JSON.stringify(data),
 			data
 		});
-
-	}else{
+	} else {
 		res.redirect('/main');
 	}
-
-	// if (transaction_seller != null) {
-	// 	return res.redirect('/message/' + "판매자 ㅎㅇ");
-	// } else if (transaction_buyer != null) {
-	// 	return res.redirect('/message/' + "구매자 ㅎㅇ");
-	// } else {
-	// 	return res.redirect('/message/' + "거래 없음");
-	// }
-	
-	
 };
 
 /**** POST Method ****/
@@ -165,11 +164,8 @@ export const addDevice = async (req, res) => {
 	// 입력값 검사
 	if (name === '' || port === undefined) {
 		// 오류 반환 & 새로고침
-		return res.send(
-			'<script type="text/javascript">alert("전자기기 이름 또는 포트를 선택해주세요.");location.href="/";</script>'
-		);
+		return res.send('<script type="text/javascript">alert("전자기기 이름 또는 포트를 선택해주세요.");location.href="/";</script>');
 	}
-
 	try {
 		let deviceList = await Device.find({});
 		let PK = deviceList.length == 0 ? 0 : 1;
