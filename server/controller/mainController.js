@@ -100,7 +100,6 @@ export const status = async (req, res) => {
 	}
 
 	if (transaction_buyer != null) {
-		console.log("buyer", transaction_buyer)
 		const buyer = nowUser;
 		const seller = await User.findOne({ PK: transaction_buyer.seller });
 		const data = {

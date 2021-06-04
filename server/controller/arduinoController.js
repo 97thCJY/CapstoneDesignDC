@@ -60,7 +60,7 @@ export const localArduino = async (req, res) => {
 
 // External 측정값 받고 (PK, 완료된 양, 속도, 남은 시간) : transaction status, reqAmount, isSeller 보내기
 export const externalArduino = async (req, res) => {
-    const { params: {
+    let { params: {
         doneAmount,     // 완료된 양
         speed,          // 전송 속도
         time            // 남은 시간
@@ -83,6 +83,7 @@ export const externalArduino = async (req, res) => {
         return res.status(200).send("0");
     }
 
+    doneAmount = parseInt(doneAmount);
     const returnObj = {
         seller: transaction.seller,
         buyer: transaction.buyer,

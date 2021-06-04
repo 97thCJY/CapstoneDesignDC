@@ -20,7 +20,7 @@ const transporter = nodemailer.createTransport({
 // 판매글 목록 페이지 출력
 export const deal = async (req, res) => {
 	const targetObjList = [];
-	let {page} = req.query;
+	let { page } = req.query;
 
 	//console.log(req.query);
 	//console.log(page);

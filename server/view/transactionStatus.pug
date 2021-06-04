@@ -8,6 +8,8 @@ block content2
         hr
         .real-time-container
             #check-list.row.row-cols-2.row-cols-md-3.g-2.justify-content-center
+                img(src="/assets/images/arrow.png" style="width:10vw;")
+            #check-list.row.row-cols-2.row-cols-md-3.g-2.justify-content-center
                 .col.real-C
                     .card.card-check
                         .card-title.text-center.py-0
@@ -57,7 +59,7 @@ block content2
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === xhr.DONE) {
                     var responseObj = JSON.parse(xhr.responseText);
-                    console.log("refresh!", responseObj);
+                    //- console.log("refresh!", responseObj);
                     total = responseObj.reqAmount;
                     pow = responseObj.amount_send;
 
@@ -87,7 +89,7 @@ block content2
                 return 0;
             
             currentTime ++;
-            if(currentTime == 60){
+            if(currentTime == 12){
                 ctx.clearRect(0, 0, pow / total * w, h * 3);
                 update(pow);
                 currentTime = 0;
