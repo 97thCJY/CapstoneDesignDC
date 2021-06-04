@@ -27,6 +27,7 @@ mainRouter.get(routes.status, onlyPrivate, status);
 
 
 mainRouter.get(routes.checkElec, onlyPrivate, checkElec);
+mainRouter.post(routes.checkElec, onlyPrivate, checkElec);
 
 //mainRouter.get('*', isUnvalidRoutes);
 

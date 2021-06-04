@@ -3,7 +3,7 @@ import User from '../models/user';
 import Transaction from '../models/transaction';
 
 // GET 테스트용
-export const checkElectric = (req, res) => { console.log("hi get");return res.status(200).send("1"); }
+export const checkElectric = (req, res) => { console.log("hi get"); return res.status(200).send("1"); }
 // POST 테스트용
 export const tmp = (req, res) => { console.log("hi post"); return res.status(200).send("1"); }
 
@@ -67,6 +67,17 @@ export const externalArduino = async (req, res) => {
         time            // 남은 시간
     }} = req;
 
+    let transaction_buyer;
+    let transaction_seller;
+    
+	try {
+        transaction_buyer = await Transaction.findOne({ buyer: PK, status: 3 });
+        transaction_seller = await Transaction.findOne({ seller: PK, status: 3 });
+	} catch (e) {
+        return res.status(555).send("error in finding transaction");
+	}
+
+    // 로그 출력
     let nowDate = new Date();
     console.log("[External GET] pk:" + PK + " 완료된양:" + doneAmount + " 전송속도:" + speed + " 남은시간:" + time + "[" + nowDate.toUTCString() + "]");
     
