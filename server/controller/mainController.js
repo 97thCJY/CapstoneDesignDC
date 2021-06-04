@@ -54,18 +54,17 @@ export const checkElec = async (req, res) => {
 
 // 내 정보 페이지 rendering
 export const userProfile = async (req, res) => {
-	const { PK, name, email, batteryMax, IP, contact } = req.user;
+	const { PK, name, email, batteryMax, contact } = req.user;
 
 	if (req.method === "POST") {
 		console.log("User POST METHOD~~~~~~~~~");
-		const { input_email, input_name, input_contact, input_batteryMax, input_IP } = req.body;
+		const { input_email, input_name, input_contact, input_batteryMax } = req.body;
 
 		try {	// DB 수정
 			await User.findOneAndUpdate( { PK: PK }, {
 				name: input_name,
 				email: input_email,
 				batteryMax: input_batteryMax,
-				IP: input_IP,
 				contact: input_contact
 			});
 		} catch(e) {
@@ -79,7 +78,6 @@ export const userProfile = async (req, res) => {
 		'name': name,
 		'email': email,
 		'batteryMax': batteryMax,
-		'IP': IP,
 		'contact': contact
 	}
 	res.render('profile', {

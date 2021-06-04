@@ -35,10 +35,6 @@ const UserSchema = new mongoose.Schema({
 		type: Number,
 		required: 'Max battery value required'
 	},
-	IP: {
-		type: String,
-		required: 'ip required'
-	},
 	deviceList: {
 		type: Array,
 		default: []

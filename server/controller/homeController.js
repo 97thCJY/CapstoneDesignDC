@@ -49,8 +49,7 @@ export const postJoin = async (req, res) => {
 			password,
 			contact,
 			PK: PK + 1,
-			batteryMax,
-			IP: req.ip
+			batteryMax
 			//	deviceList: []
 		});
 		await User.register(user, password);
