@@ -554,7 +554,7 @@ function sellerValidationTest(seller, reqAmount) {
 	if (seller.eCharge < reqAmount)
 		return 0;
 	// 판매자의 충전량 < 판매자의 사용량
-	if (seller.eSupply < seller.eUsage)
-		return 1;
+	// if (seller.eSupply < seller.eUsage)	{태양광 패널 충전량 부족으로 일단 주석처리}
+	// 	return 1;
 	return 2;	// success
 }
