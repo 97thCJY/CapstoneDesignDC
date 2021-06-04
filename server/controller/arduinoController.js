@@ -61,25 +61,49 @@ export const localArduino = async (req, res) => {
 // External 측정값 받고 (PK, 완료된 양, 속도, 남은 시간) : transaction status, reqAmount, isSeller 보내기
 export const externalArduino = async (req, res) => {
     const { params: {
-        PK,             // 사용자 PK
         doneAmount,     // 완료된 양
         speed,          // 전송 속도
         time            // 남은 시간
     }} = req;
-
-    let transaction_buyer;
-    let transaction_seller;
-    
-	try {
-        transaction_buyer = await Transaction.findOne({ buyer: PK, status: 3 });
-        transaction_seller = await Transaction.findOne({ seller: PK, status: 3 });
-	} catch (e) {
-        return res.status(555).send("error in finding transaction");
-	}
+    let transaction;
 
     // 로그 출력
     let nowDate = new Date();
-    console.log("[External GET] pk:" + PK + " 완료된양:" + doneAmount + " 전송속도:" + speed + " 남은시간:" + time + "[" + nowDate.toUTCString() + "]");
+    console.log("[External Arduino] 완료된양:" + doneAmount + " 전송속도:" + speed + " 남은시간:" + time + "[" + nowDate.toUTCString() + "]");
     
-    return res.status(200).send("success");
+	try {  // DB 불러오기
+        transaction = await Transaction.findOne({ status: 3 });
+	} catch (e) {
+        return res.status(200).send("error in finding transaction");
+	}
+
+    console.log(transaction);
+    // 거래중 X
+    if (transaction == null) {
+        console.log("no data");
+        return res.status(200).send("0");
+    }
+
+    const returnObj = {
+        seller: transaction.seller,
+        buyer: transaction.buyer,
+        amount: transaction.reqAmount,
+        amount_send: doneAmount
+    };
+    
+    // 거래 종료 할지 말지?
+    if (returnObj.amount < returnObj.amount_send) {
+        try {  // DB 저장
+            const changed = await transaction.update({ amount_send: doneAmount, status: 4 });
+        } catch (e) {
+            return res.status(200).send("error in saving transaction");
+        }
+    } else {
+        try {  // DB 저장
+            const changed = await transaction.update({ amount_send: doneAmount });
+        } catch (e) {
+            return res.status(200).send("error in saving transaction");
+        }
+    }
+    return res.status(200).json(returnObj);
 }

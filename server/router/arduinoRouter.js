@@ -13,7 +13,7 @@ arduinoRouter.get('/api/local/:PK/:eUsage/:eCharge/:eSupply', localArduino);
 
 // transaction 상황 받고 (PK, 완료된 양, 속도, 남은 시간)
 // transaction status, reqAmount 보내기
-arduinoRouter.get('/api/external/:PK/:doneAmount/:speed/:time', externalArduino);
+arduinoRouter.get('/api/external/:doneAmount/:speed/:time', externalArduino);
 
 //arduinoRouter.get('*', isUnvalidRoutes);
 
