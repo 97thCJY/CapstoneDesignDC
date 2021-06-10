@@ -6,7 +6,7 @@ import {
 	write,
 	checkTrade,
 	postTransact,
-	purchaseRequest,
+	purchaseReq,
 	purchaseAccept,
 	purchaseReject,
 	finalAccept,
@@ -25,7 +25,7 @@ transActionRouter.get(routes.checkTrade(), onlyPrivate, checkTrade); // 판매�
 transActionRouter.post(routes.modifyTransaction, onlyPrivate, modifyTransaction);	// 판매글 수정
 transActionRouter.post(routes.write, onlyPrivate, postTransact); // 판매글 작성
 transActionRouter.post(routes.deleteTransaction, onlyPrivate , deleteTransaction);	// 판매글 삭제
-transActionRouter.post(routes.checkTrade(),onlyPrivate, purchaseRequest); // 구매 요청
+transActionRouter.post(routes.checkTrade(),onlyPrivate, purchaseReq); // 구매 요청
 
 // Response for Email
 transActionRouter.get('/accept/:pk/:hash',onlyPrivate, purchaseAccept); // 판매자 승인
