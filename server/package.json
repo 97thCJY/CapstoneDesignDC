@@ -6,7 +6,7 @@
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"dev:server": "nodemon --exec babel-node init.js --delay 0.5",
-		"dev:assets": "WEBPACK_ENV=development webpack -w"
+		"dev:assets": "cross-env WEBPACK_ENV=development webpack -w"
 	},
 	"author": "",
 	"license": "ISC",
