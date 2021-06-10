@@ -144,8 +144,8 @@ export const purchaseAccept = async (req, res) => {
 	
 	// 이메일 보내기
 	const email_body = emailTempleteConfirm(seller.name, buyer.name, transaction.description, transaction.reqAmount, 
-		`http://localhost:8000/main/transaction/final/accept/${pk}/${new_hash}`,
-		`http://localhost:8000/main/transaction/reject/${pk}/1/${new_hash}`,
+		`http://localhost:3000/main/transaction/final/accept/${pk}/${new_hash}`,
+		`http://localhost:3000/main/transaction/reject/${pk}/1/${new_hash}`,
 		'전력 구매 최종 승인 안내',
 		`${buyer.name}님이 요청하신 구매에 대해 승인하였습니다.`
 	);
@@ -210,7 +210,7 @@ export const purchaseReject = async (req, res) => {
 	}
 
 	if (isBuyer === "0") {	// 구매자 최종 거절 -> 판매자에게 이메일 알림
-		const email_body = emailTempleteNotification(buyer.name, `http://localhost:8000/main/transaction/${pk}`, "전력 구매 거절 안내",
+		const email_body = emailTempleteNotification(buyer.name, `http://localhost:3000/main/transaction/${pk}`, "전력 구매 거절 안내",
 			"회원님이 요청하신 <strong style='font-weight: bold'>[" + transaction.description + "]</strong>에 대한 구매 요청이 판매자에 의해 거절되었습니다.");
 		let info;
 		try {
@@ -232,7 +232,7 @@ export const purchaseReject = async (req, res) => {
 		console.log("Message sent: %s", info.messageId);
 		return res.redirect('/message/' + "판매 거절되었습니다.");
 	} else {		// 판매자 판매 거절 -> 구매자에게 이메일 알림
-		const email_body = emailTempleteNotification(seller.name, `http://localhost:8000/main/transaction/${pk}`, "전력 구매 거절 안내",
+		const email_body = emailTempleteNotification(seller.name, `http://localhost:3000/main/transaction/${pk}`, "전력 구매 거절 안내",
 			"회원님이 요청하신 <strong style='font-weight: bold'>[" + transaction.description + "]</strong>에 대한 구매 요청이 구매자에 의해 거절되었습니다.");
 		let info;
 		try {
@@ -300,12 +300,12 @@ export const finalAccept = async (req, res) => {
 	for (let i=0; i<2; i++) {	// 구매자, 판매자 최종 안내 이메일 보내기
 		let email_body, tmp_email, tmp_name, info;
 		if (i === 0) {	// 구매자에게
-			email_body = emailTempleteNotification(buyer.name, `http://localhost:8000/main/transaction/${pk}`, "전력 거래 진행 안내",
+			email_body = emailTempleteNotification(buyer.name, `http://localhost:3000/main/transaction/${pk}`, "전력 거래 진행 안내",
 				"회원님이 요청하신 <strong style='font-weight: bold'>[" + transaction.description + "]</strong>에 대한 거래가 시작되었습니다.<br><br>아래 버튼을 통해 거래 진행상황을 확인하세요.");
 			tmp_email = buyer.email;
 			tmp_name = buyer.name;
 		} else {	// 판매자에게
-			email_body = emailTempleteNotification(seller.name, `http://localhost:8000/main/transaction/${pk}`, "전력 거래 진행 안내",
+			email_body = emailTempleteNotification(seller.name, `http://localhost:3000/main/transaction/${pk}`, "전력 거래 진행 안내",
 				"회원님의 <strong style='font-weight: bold'>[" + transaction.description + "]</strong>에 대한 거래가 시작되었습니다.<br><br>아래 버튼을 통해 거래 진행상황을 확인하세요.");
 			tmp_email = seller.email;
 			tmp_name = seller.name;
@@ -416,8 +416,8 @@ export const purchaseReq = async (req, res) => {
 
 	// 이메일 보내기
 	const email_body = emailTempleteConfirm(buyer.name, seller.name, transaction.description, reqAmount, 
-		`http://localhost:8000/main/transaction/accept/${id}/${hash}`,
-		`http://localhost:8000/main/transaction/reject/${id}/0/${hash}`,
+		`http://localhost:3000/main/transaction/accept/${id}/${hash}`,
+		`http://localhost:3000/main/transaction/reject/${id}/0/${hash}`,
 		'전력 구매 요청 안내',
 		'회원님의 판매글에 아래과 같이 구매가 요청되었습니다.'
 	);
