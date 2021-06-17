@@ -12,7 +12,6 @@ block content2
                 .col.text-end.align-self-center
                     p.text-muted Created
                     p.text-muted #{data.createdAt}
-            
             hr
 
             .row#deal-contents
@@ -25,13 +24,9 @@ block content2
                                 h5(for='transaction_amount').col-sm-2 제목
                                 .align-self-center
                                     if (user.PK == data.seller)
-
                                         input.title(type='text' , name='title' value= data.title)
                                     else
                                         h5.clientView(name= 'title' )= data.title
-
-                            
-
                             .form-group
                                 h5(for = 'transaction_amount').col-sm-2 판매량 (W)
                                 .align-self-center
@@ -39,14 +34,10 @@ block content2
                                         input.modAmount(type='number' name ='amount' placeholder = data.amount)
                                     else
                                         h5.clientView(name='amount' value =data.amount)= data.amount + 'W'
-                            
-
                             .form-group
                                 h5(for='transaction_amount').col-sm-2 판매 가격
                                 .align-self-center
-                                    input(type='text' value=`${data.amount * 108}원` readonly).price
-
-                            
+                                    input(type='text' value=`${data.amount * 0.108}원` readonly).price
                             .form-group
                                 h5(for='transaction_amount').col-sm-2 내용
                                 .align-self-center
@@ -68,24 +59,19 @@ block content2
                                         input.modAmount(type='number' name ='amount' placeholder = data.amount)
                                     else
                                         h5.clientView(name='amount' value =data.amount)= data.amount + 'Kw'
-                            
 
                             .form-group
                                 h5(for='transaction_amount').col-sm-2 판매 가격
                                 .align-self-center
-                                    input(type='text' value=`${data.amount * 108}원` readonly).price
+                                    input(type='text' value=`${data.amount * 0.108}원` readonly).price
 
                             .form-group
                                 h5(for='transaction_amount').col-sm-2 제목
                                 .align-self-center
                                     if (user.PK == data.seller)
-
-                                        input.title(type='text' , name='title' value= data.title)
+                                        input.title(type='text', name='title' value= data.title)
                                     else
                                         h5.clientView(name= 'title' )= data.title
-
-                            
-
                             .form-group
                                 h5(for='transaction_amount').col-sm-2 내용
                                 .align-self-center
@@ -93,13 +79,8 @@ block content2
                                         textarea(name ='description') #{description}
                                     else
                                         textarea.clientView(name= 'description' value= description readonly)= description
-                                    
-                            
 
                             //- 판매자일 경우
-                        
-                    
-                            
                             .request_container
                                 input(type="number" name='purchase' placeholder ='구매량 입력(kw)')
                                 button.btn.btn-secondary(type='submit') 구매요청
@@ -114,43 +95,29 @@ block content2
 
         window.onload = () =>{
             const price = document.getElementsByClassName('price')[0];
-
             const reqAmount = e.target.value;
             let cnt = 0;
-            let currentString = `${reqAmount *108}`;
+            let currentString = `${reqAmount *0.108}`;
             let length =  currentString.length;
             for(let i = currentString.length-1 ; i>= 0 ; i--){
-                if(i== 0){
+                if (i == 0)
                     break;
-                }
                 cnt ++;
-                if(cnt == 3){
-                    currentString = currentString.slice(0,i) + ',' + currentString.slice(i,length);
-                    length++;
-                    cnt = 0;
-                }
             }
-
-            price.innerText = currentString +'원';
-
+            price.innerText = currentString + '원';
         }
         const handleModification = e =>{
             const price = document.getElementsByClassName('price')[0];
 
             const reqAmount = e.target.value;
             let cnt = 0;
-            let currentString = `${reqAmount *108}`;
+            let currentString = `${reqAmount *0.108}`;
             let length =  currentString.length;
             for(let i = currentString.length-1 ; i>= 0 ; i--){
                 if(i== 0){
                     break;
                 }
                 cnt ++;
-                if(cnt == 3){
-                    currentString = currentString.slice(0,i) + ',' + currentString.slice(i,length);
-                    length++;
-                    cnt = 0;
-                }
             }
 
             price.value = currentString +'원';

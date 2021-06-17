@@ -13,7 +13,6 @@ block content2
             // Contents List
             #remote-list.row.row-cols-2.row-cols-md-4
                 for item of deviceList
-                    
                     +device({
                         name: item.name,
                         status: item.status,
@@ -40,6 +39,13 @@ block content2
                                         option(value='3') Port-3
                                         option(value='4') Port-4
                                         option(value='5') Port-5
+                                        option(value='6') Port-6
+                                        option(value='7') Port-7
+                                        option(value='8') Port-8
+                                        option(value='9') Port-9
+                                        option(value='10') Port-10
+                                        option(value='11') Port-11
+                                        option(value='12') Port-12
                                 .modal-footer
                                     button.btn.btn-outline-secondary(type='button', data-bs-dismiss='modal') &#xB2EB;&#xAE30;
                                     button.btn.btn-outline-danger(type='submit') &#xC800;&#xC7A5;
@@ -59,19 +65,13 @@ block content2
                         form#deleteForm(method = 'post' , action = '/main'+ routes.delete)
                                 input#deleteButtonSender(style = 'display: none', name = 'deleteTarget')
                                 input.deviceDelete(type = 'submit' ,value = '삭제')
-                                
         br
 
     script.
         // 원격 기기 on/off 요청
         function requestRemoteOnOff(product_id) {
-           
-
-            console.log('1');
             document.write('<form hidden action="/main/remoteonoff" id="smb_form" method="post"><input type="number" id="productId" name="productId"  onsubmit="return false;" value="'+ product_id +'"></form>');
-            console.log('2');
             document.getElementById("smb_form").submit();
-            console.log('3');
         }
 
         // 클릭된 device PK

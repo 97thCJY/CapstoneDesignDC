@@ -84,7 +84,8 @@ export const externalArduino = async (req, res) => {
     // 거래중 X
     if (transaction == null) {
         console.log("no data");
-        return res.status(200).send("0");
+        const noDataObj = { seller: 0, buyer: 0, amount: 0, amount_send: 0 }
+        return res.status(200).json(noDataObj);
     }
 
     doneAmount = parseInt(doneAmount);

@@ -12,7 +12,6 @@ export const home = async (req, res) => {
 
 		for (let i = 0; i < deviceList.length; i++) {
 			let device = await Device.findOne({ PK: deviceList[i] });
-
 			deviceObjList.push(JSON.parse(JSON.stringify(device)));
 		}
 	} catch (e) {
