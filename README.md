@@ -3,7 +3,7 @@
 
 ><p align="center"><i>2021-1 세종대학교 캡스톤 프로젝트<br>2021 세종대학교 창의설계경진대회 최우수상</i></p>
 
-![ourlogo](https://user-images.githubusercontent.com/77145383/122884593-465dfb80-d379-11eb-89ae-c42852185212.png)
+<center><img src="https://user-images.githubusercontent.com/77145383/122884593-465dfb80-d379-11eb-89ae-c42852185212.png"></center>
 
 
 ## Description
