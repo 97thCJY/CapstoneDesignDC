@@ -11,8 +11,8 @@ const transporter = nodemailer.createTransport({
 	port: 587,
 	secure: false, // true for 465, false for other ports
 	auth: {
-		user: 'hyncompany0@gmail.com',
-		pass: 'wlgkqhekwltkd'
+		user: 'input your email',
+		pass: 'input your password'
 	}
 });
 
@@ -143,7 +143,7 @@ export const purchaseAccept = async (req, res) => {
 	let info;
 	try {
 		info = await transporter.sendMail({
-			from: '"Greedy" <hyncompany0@gmail.com>',
+			from: '"Greedy" <input your email>',
 			to: buyer.email,
 			subject: '[구매알림] ' + buyer.name + '님의 구매요청에 대한 최종 승인을 해주세요.',
 			html: email_body,
@@ -206,7 +206,7 @@ export const purchaseReject = async (req, res) => {
 		let info;
 		try {
 			info = await transporter.sendMail({
-				from: '"Greedy" <hyncompany0@gmail.com>',
+				from: '"Greedy" <input your email>',
 				to: buyer.email,
 				subject: "[구매알림] " + buyer.name + "님이 요청하신 거래가 성사되지 않았습니다.",
 				html: email_body,
@@ -228,7 +228,7 @@ export const purchaseReject = async (req, res) => {
 		let info;
 		try {
 			info = await transporter.sendMail({
-				from: '"Greedy" <hyncompany0@gmail.com>',
+				from: '"Greedy" <input your email>',
 				to: seller.email,
 				subject: "[구매알림] " + seller.name + "님이 요청하신 거래가 성사되지 않았습니다.",
 				html: email_body,
@@ -304,7 +304,7 @@ export const finalAccept = async (req, res) => {
 
 		try {
 			info = await transporter.sendMail({
-				from: '"Greedy" <hyncompany0@gmail.com>',
+				from: '"Greedy" <input your email>',
 				to: tmp_email,
 				subject: "[거래알림] " + tmp_name + "님이 요청하신 거래가 시작되었습니다.",
 				html: email_body,
@@ -415,7 +415,7 @@ export const purchaseReq = async (req, res) => {
 	let info;
 	try {
 		info = await transporter.sendMail({
-			from: '"Greedy" <hyncompany0@gmail.com>',
+			from: '"Greedy" <input your email>',
 			to: seller.email,
 			subject: '[구매알림] ' + seller.name + '님 구매요청 내역을 확인해주세요.',
 			html: email_body,
