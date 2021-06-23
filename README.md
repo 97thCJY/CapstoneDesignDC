@@ -19,12 +19,14 @@
  
 # Environment
 ### Hardware
-Arduino Uno (R3) 5V
+
+- Arduino Uno (R3) 5V
 
 ### Software
-node v14.15.4
-npm 6.14.10
-mongo DB v4.4
+
+- node v14.15.4
+- npm 6.14.10
+- mongo DB v4.4
 
 ### Install
 ```
