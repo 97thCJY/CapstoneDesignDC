@@ -24,9 +24,9 @@
 
 ### Software
 
-- node v14.15.4
+- node 14.15.4
 - npm 6.14.10
-- mongo DB v4.4
+- mongo DB 4.4
 
 ### Install
 ```
