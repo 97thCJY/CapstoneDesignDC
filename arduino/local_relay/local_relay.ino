@@ -25,7 +25,7 @@
 SoftwareSerial Serial1(2, 3); // RX, TX
 
 
-char ssid[] = "guardian_lover";            // your network SSID (name)
+char ssid[] = "wlgkqhekwltkd";            // your network SSID (name)
 
 char pass[] = "qkqhcksdud1!";        // your network password
 
@@ -51,6 +51,7 @@ const int analogIn_BtoB = A2;
 
 boolean product_1 = true;//서버에서 받아오는 status 값1
 boolean product_2 = true;//서버에서 받아오는 status 값2
+boolean suncharge = true;
 
 int mVperAmp = 185;
 int RawValue= 0;
@@ -130,6 +131,14 @@ void loop() {
 
 
   //기기 제어
+  if(suncharge == true)
+  {
+    digitalWrite(relay_CtoB,LOW);
+  }
+  else
+  {
+    digitalWrite(relay_CtoB,HIGH);
+  }
   if(product_1 == true)
   {
     digitalWrite(relay_BtoA_1,LOW);
@@ -219,11 +228,12 @@ void loop() {
   if(jsonStr.length()>0){
     Serial.println("from server: "+jsonStr);
   }*/
-
-  relay_BtoA_1 = doc[0]["port"];
-  relay_BtoA_2 = doc[1]["port"];
-  product_1 = doc[0]["status"];
-  product_2 = doc[1]["status"];
+  relay_CtoB = doc[0]["port"];
+  relay_BtoA_1 = doc[1]["port"];
+  relay_BtoA_2 = doc[2]["port"];
+  suncharge = doc[0]["status"];
+  product_1 = doc[1]["status"];
+  product_2 = doc[2]["status"];
   client.flush();
   client.stop();
 

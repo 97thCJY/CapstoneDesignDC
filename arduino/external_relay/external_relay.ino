@@ -35,9 +35,11 @@ double times = 0;
 double send_amount = 0;
 double amount = 0;
 double total_Amp = 0;
-int flag = 0; // input값
+long flag = 0; // input값
+int seller = 0;
+  int buyer = 0;
 
-char ssid[] = "guardian_lover";            // your network SSID (name)
+char ssid[] = "wlgkqhekwltkd";            // your network SSID (name)
 
 char pass[] = "qkqhcksdud1!";        // your network password
 
@@ -102,15 +104,14 @@ void loop() {
     digitalWrite(relay2_1,HIGH);
   }
   if(!start){
-   if (client.connect(server, 80)) {
+    client.connect(server, 80);
 
     Serial.println("Connected to server");
 
     // Make a HTTP request
     client.println("GET /arduino/api/external/0/0/0 HTTP/1.1");
-
+    Serial.println("what?");
     client.println();
-  }
  /* 
   while (client.available()) {
 
@@ -123,15 +124,18 @@ void loop() {
   int lines_received = 0;
   String line ="";
   StaticJsonDocument<200> doc;
- 
+  
   while (client.available()) {
     String line = client.readStringUntil('\r\n');
     if(lines_received == 18){
       Serial.println("fuck");
       leng = line.length();
-      Serial.println(line);
+      Serial.println(line); 
       DeserializationError error = deserializeJson(doc, line);
-      
+    seller = doc["seller"];
+    buyer = doc["buyer"];
+    amount = doc["amount"];
+    send_amount = doc["amount_send"];
     }
     lines_received++;
   }
@@ -139,20 +143,12 @@ void loop() {
   {
     digitalWrite(relay1_2,HIGH);
     digitalWrite(relay2_1,HIGH);
-  
   }
-  if(leng == 0 ){
+  if(amount == 0){
     start = false;
-    client.flush();
-    client.stop();
-   }
+  }
   else {
     start = true;
-    int seller = doc["seller"];
-    int buyer = doc["buyer"];
-    amount = doc["amount"];
-    send_amount = doc["amount_send"];
-    
     if(seller == 1 && buyer == 2)
     {
       flag = relay1_2;
@@ -162,6 +158,8 @@ void loop() {
       flag = relay2_1;
     }
   }
+  client.flush();
+  client.stop();
  }
   else
   {
@@ -184,6 +182,9 @@ void loop() {
         Serial.println(Amps,3); // the '3' after voltage allows you to display 3 digits after decimal point
         
         total_Amp = Amps;
+
+        if(Amps < 0)
+          Amps = Amps*(-1);
         
         
         send_amount += (Voltage/1000)*Amps;
