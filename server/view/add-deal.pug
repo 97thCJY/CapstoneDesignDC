@@ -39,14 +39,11 @@ block content2
     
     script.
         const target = document.getElementById('transaction_price');
-
         const amount = document.getElementById('transaction_amount');
 
         const priceUpdate = e =>{
             const current = e.target.value;
-
             let currentString = `${current*0.108}`;
-         
             let cnt =0
             target.value = currentString + '원';
         }

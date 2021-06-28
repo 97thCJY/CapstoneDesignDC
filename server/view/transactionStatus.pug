@@ -61,6 +61,13 @@ block content2
                     var responseObj = JSON.parse(xhr.responseText);
                     total = responseObj.reqAmount;
                     pow = responseObj.amount_send;
+                    var remain = responseObj.reqAmount - responseObj.amount_send;
+                    
+                    console.log(remain, remain<20)
+                    if (remain < 20) {
+                        alert("거래 완료되었습니다.");
+                        location.href='/';
+                    }
 
                     document.getElementById("amount_send1").innerText =  responseObj.amount_send;
                     document.getElementById("amount_remain1").innerText =  responseObj.reqAmount - responseObj.amount_send;
